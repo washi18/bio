@@ -1,0 +1,16 @@
+<?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
+<?page title="E-RANTI" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="ICO/favicon.ico"?>
+<zk>
+	<style src="css/pricing.css"/>
+	<style src="css/revisar.css"/>
+	<style src="fonts/style.css"/>
+	<style src="fonts/font-awesome.css"/>
+	<style src="css/style_zk.css"/>
+	<style src="css/hotelesPorCategoria.css"/>
+	<style src="css/disponibilidad.css"/>
+	<style src="css/imagenesHotel.css"/>
+	<timer id="timerKeepAliveSession" repeats="true" delay="1800000" onTimer=""/>
+	<div viewModel="@id('vmIndex') @init('com.bioandeanexpeditions.viewModel.indexVM')">
+	</div>
+</zk>

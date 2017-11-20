@@ -1,0 +1,379 @@
+package com.bioandeanexpeditions.viewModel;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.servlet.http.HttpSession;
+
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
+import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Execution;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.util.Clients;
+
+import urn.ebay.api.PayPalAPI.GetExpressCheckoutDetailsResponseType;
+import urn.ebay.apis.CoreComponentTypes.BasicAmountType;
+
+import com.bioandeanexpeditions.dao.CConfigUrlDAO;
+import com.bioandeanexpeditions.dao.CEtiquetaDAO;
+import com.bioandeanexpeditions.dao.CFechaAlternaDAO;
+import com.bioandeanexpeditions.dao.CInterfazDAO;
+import com.bioandeanexpeditions.dao.CPaqueteDAO;
+import com.bioandeanexpeditions.dao.CPasajeroDAO;
+import com.bioandeanexpeditions.dao.CReservaCuponDAO;
+import com.bioandeanexpeditions.dao.CReservaDAO;
+import com.bioandeanexpeditions.dao.CReservaPaqueteActividadDAO;
+import com.bioandeanexpeditions.dao.CReservaPaqueteCategoriaHotelDAO;
+import com.bioandeanexpeditions.dao.CReservaPaqueteDAO;
+import com.bioandeanexpeditions.dao.CReservaPaqueteServicioDAO;
+import com.bioandeanexpeditions.extras.QRCode;
+import com.bioandeanexpeditions.model.CActividad;
+import com.bioandeanexpeditions.model.CImpuesto;
+import com.bioandeanexpeditions.model.CInterfaz;
+import com.bioandeanexpeditions.model.CPagos;
+import com.bioandeanexpeditions.model.CPaquete;
+import com.bioandeanexpeditions.model.CPasajero;
+import com.bioandeanexpeditions.model.CReserva;
+import com.bioandeanexpeditions.model.CReservaCupon;
+import com.bioandeanexpeditions.model.CReservaPaquete;
+import com.bioandeanexpeditions.model.CReservaPaqueteActividad;
+import com.bioandeanexpeditions.model.CReservaPaqueteCategoriaHotel;
+import com.bioandeanexpeditions.model.CReservaPaqueteServicio;
+import com.bioandeanexpeditions.model.CServicio;
+import com.bioandeanexpeditions.paypal.ExpressCheckout;
+import com.bioandeanexpeditions.util.CEmail;
+import com.bioandeanexpeditions.util.ScannUtil;
+import com.bioandeanexpeditions.util.Util;
+import com.lowagie.text.DocumentException;
+
+public class returnPaypalVM 
+{
+	private String codTransac;
+	private ExpressCheckout EC;
+	private GetExpressCheckoutDetailsResponseType GECResponse;
+	private CReserva oReserva;
+	private CReservaDAO reservaDao;
+	private CReservaPaqueteCategoriaHotel oReservaPaqueteCategoriaHotel;
+	private CReservaPaqueteCategoriaHotelDAO reservaPaqueteCategoriaHotelDao;
+	private CImpuesto oImpuesto;
+	private CPasajeroDAO pasajeroDao;
+	private ArrayList<String> listacFechasAlternas;
+	private ArrayList<String[]> listaSeparadaFechasAlternas;
+	private CFechaAlternaDAO fechaAlternaDao;
+	private ArrayList<CReservaPaqueteServicio> listaReservaPaqServ;
+	private ArrayList<CReservaPaqueteActividad> listaReservaPaqActi;
+	private ArrayList<CPasajero> listaPasajeros;
+	private CReservaPaqueteServicioDAO reservaPaqServDao;
+	private String fechaInicio;
+	private String fechaFin;
+	private String fechaArribo;
+	private String porcentajePago;
+	private String montoPagarSinImpuesto;
+	private String montoTotalSinImpuesto;
+	private boolean mostrarCodReserva;
+	private String codReserva;
+	private CConfigUrlDAO configUrlDao;
+	private CPagos pagos;
+	HttpSession seshttp;
+	/***************************/
+	private String[] etiqueta;
+	/***************************/
+	//=============
+	public String getCodTransac() {
+		return codTransac;
+	}
+	public void setCodTransac(String codTransac) {
+		this.codTransac = codTransac;
+	}
+	public boolean isMostrarCodReserva() {
+		return mostrarCodReserva;
+	}
+	public void setMostrarCodReserva(boolean mostrarCodReserva) {
+		this.mostrarCodReserva = mostrarCodReserva;
+	}
+	public String getCodReserva() {
+		return codReserva;
+	}
+	public void setCodReserva(String codReserva) {
+		this.codReserva = codReserva;
+	}
+	public String[] getEtiqueta() {
+		return etiqueta;
+	}
+	public void setEtiqueta(String[] etiqueta) {
+		this.etiqueta = etiqueta;
+	}
+	public CConfigUrlDAO getConfigUrlDao() {
+		return configUrlDao;
+	}
+	public void setConfigUrlDao(CConfigUrlDAO configUrlDao) {
+		this.configUrlDao = configUrlDao;
+	}
+	@Init
+	public void initVm() throws IOException, DocumentException
+	{
+		seshttp=(HttpSession)Sessions.getCurrent().getNativeSession();
+		this.etiqueta=(String[])seshttp.getAttribute("etiqueta");
+		/**RECUPERAMOS LA CONFIGURACION DE LAS URLs**/
+		configUrlDao=new CConfigUrlDAO();
+		configUrlDao.asignarConfigUrl(configUrlDao.recuperarConfigUrlDB());
+		/*************************/
+		inicializarObjetos();
+		//========Recupero el token de la session
+		String token=(String)seshttp.getAttribute("token");
+		GECResponse=new GetExpressCheckoutDetailsResponseType();
+		//recuperar los datos
+		EC=new ExpressCheckout();
+		GECResponse=EC.getExpressCheckoutTest(token);
+		String payerId=GECResponse.getGetExpressCheckoutDetailsResponseDetails().getPayerInfo().getPayerID();
+		BasicAmountType amount=GECResponse.getGetExpressCheckoutDetailsResponseDetails().getPaymentDetails().get(0).getOrderTotal();
+		//--------Se finaliza la transaccion----------
+		codTransac=EC.doExpressCheckoutTest(payerId, token,amount);
+		/**Se recupera el valor de la forma de pago 
+		 * (1: El pago efectuado es desde el correo de reserva)
+		 * (0: El pago efectuado es desde la pagina)
+		 * **/
+		mostrarCodReserva=false;
+		int formaPago=(int) seshttp.getAttribute("formaPago");
+		if(formaPago==1)
+		{
+			mostrarCodReserva=true;
+			porcentajePago=(String) seshttp.getAttribute("porcentajePago");
+			codReserva=(String)seshttp.getAttribute("codReserva");
+			String codPaquete=(String)seshttp.getAttribute("codPaquete");
+			String namePaquete=(String)seshttp.getAttribute("namePaquete");
+			String email=(String)seshttp.getAttribute("mail");
+			String contacto=(String)seshttp.getAttribute("contacto");
+			String fechaInicio=(String)seshttp.getAttribute("fechaInicio");
+			String fechaFin=(String)seshttp.getAttribute("fechaFin");
+			String nroPersonas=(String)seshttp.getAttribute("nroPersonas");
+			String telefono=(String)seshttp.getAttribute("telefono");
+			String porcentaje="";
+			String estado="";
+			String pago=""; 
+			//==RECUPERANDO EL PAQUETE==
+			CPaqueteDAO paqueteDao=new CPaqueteDAO();
+			paqueteDao.asignarPaquete(paqueteDao.recuperarPaqueteBD(codPaquete));
+			//==========================
+			String textoParcial="";
+			if(porcentajePago.equals("1"))
+			{
+				estado="PAGO PARCIAL";
+				if(paqueteDao.getoPaquete().isbModoPorcentual())
+					porcentaje=textoParcial=paqueteDao.getoPaquete().getnPorcentajeCobro()+" %";
+				else
+					porcentaje=textoParcial=etiqueta[102];
+				pago=(String)seshttp.getAttribute("pago");
+			}
+			else//100%
+			{
+				estado="PAGO TOTAL";
+				if(paqueteDao.getoPaquete().isbModoPorcentual())
+					porcentaje="100 %";
+				else
+					porcentaje=etiqueta[103];
+				pago=(String)seshttp.getAttribute("pago");
+			}
+			boolean b=reservaDao.isCorrectOperation(reservaDao.modificarMetodoPago(codReserva, estado,"PAYPAL",codTransac));
+			String pdf=Util.getPathReservas()+"reservas.pdf";
+			CEmail mail=new CEmail();
+			boolean correct=mail.enviarCorreoPagoReserva(etiqueta[199],etiqueta,namePaquete, email, contacto, codReserva, porcentaje, codTransac, pdf,textoParcial,
+														pago,fechaInicio,fechaFin,nroPersonas,telefono);
+			/**Enviamos un correo a la empresa**/
+			boolean flag=mail.enviarCorreoPagoReservaAEmpresa(email,"Pago Efectuado", namePaquete, contacto, codReserva, porcentaje, codTransac,
+															pago,fechaInicio,fechaFin,nroPersonas,telefono);
+			/******************************************************************/
+		}
+		else
+		{
+			/**Finalmente se procede a reservar **/
+			pagos=(CPagos)seshttp.getAttribute("pagos");
+			oReserva=(CReserva) seshttp.getAttribute("reserva");
+			oReservaPaqueteCategoriaHotel=(CReservaPaqueteCategoriaHotel)seshttp.getAttribute("oReservaPaqCatHotel");
+			oImpuesto=(CImpuesto)seshttp.getAttribute("oImpuesto");
+			listacFechasAlternas=(ArrayList<String>) seshttp.getAttribute("listaFechasAlternas");
+			listaSeparadaFechasAlternas=(ArrayList<String[]>) seshttp.getAttribute("listaSeparadaFechasAlternas");
+			fechaInicio=(String) seshttp.getAttribute("fechaInicio");
+			fechaFin=(String) seshttp.getAttribute("fechaFin");
+			fechaArribo=(String) seshttp.getAttribute("fechaArribo");
+			montoPagarSinImpuesto=(String) seshttp.getAttribute("montoPagarSinImpuesto");
+			montoTotalSinImpuesto=(String)seshttp.getAttribute("montoTotalSinImpuesto");
+			porcentajePago=(String) seshttp.getAttribute("porcentajePago");
+			listaReservaPaqServ=(ArrayList<CReservaPaqueteServicio>) seshttp.getAttribute("listaReservaPaqServ");
+			listaReservaPaqActi=(ArrayList<CReservaPaqueteActividad>)seshttp.getAttribute("listaReservaPaqActi");
+			listaPasajeros=(ArrayList<CPasajero>)seshttp.getAttribute("listaPasajeros");
+			reservar();
+		}
+	}
+	public void inicializarObjetos()
+	{
+		pagos=new CPagos();
+		oReserva=new CReserva();
+		oImpuesto=new CImpuesto();
+		listacFechasAlternas=new ArrayList<String>();
+		listaSeparadaFechasAlternas=new ArrayList<String[]>();
+		reservaDao=new CReservaDAO();
+		pasajeroDao=new CPasajeroDAO();
+		fechaAlternaDao=new CFechaAlternaDAO();
+		listaReservaPaqServ=new ArrayList<CReservaPaqueteServicio>();
+		listaReservaPaqActi=new ArrayList<CReservaPaqueteActividad>();
+		listaPasajeros=new ArrayList<CPasajero>();
+		reservaPaqServDao=new CReservaPaqueteServicioDAO();
+		oReservaPaqueteCategoriaHotel=new CReservaPaqueteCategoriaHotel();
+		reservaPaqueteCategoriaHotelDao=new CReservaPaqueteCategoriaHotelDAO();
+	}
+	public void reservar() throws IOException, DocumentException
+	{
+		String[] resultado=reservaDao.recuperarResultados(reservaDao.registrarReserva(oReserva));
+		String estado="";
+		if(resultado[0].equals("correcto"))
+		{
+			if(porcentajePago.equals("1"))
+				estado="PAGO PARCIAL";
+			else//100%
+				estado="PAGO TOTAL";
+			boolean b=reservaDao.isCorrectOperation(reservaDao.modificarEstadoDePago(resultado[1], estado));
+			if(oReserva.getoCupon().isOkCupon())
+			{
+				boolean a=reservaDao.isCorrectOperation(reservaDao.insertarCupon(oReserva.getcReservaCod(), oReserva.getoCupon().getnCuponCod()));
+			}
+		}
+		else
+		{
+			Clients.showNotification("La reserva no se efectuo correctamente",Clients.NOTIFICATION_TYPE_INFO,null,"top_center",2700);
+			return;
+		}
+		//Se asigna el codigo de reserva al objeto oReserva
+		oReserva.setcReservaCod(resultado[1]);
+		//===================
+		boolean b=reservaDao.isCorrectOperation(reservaDao.modificarMetodoPago(oReserva.getcReservaCod(), estado,"PAYPAL",codTransac));
+		String pdf=Util.getPathReservas()+"reservas.pdf";
+		CEmail mail=new CEmail();
+		b=mail.enviarCorreoConPago(etiqueta[200],etiqueta,oImpuesto,oReservaPaqueteCategoriaHotel,fechaInicio,fechaFin,fechaArribo,oReserva,listacFechasAlternas,montoTotalSinImpuesto,montoPagarSinImpuesto,pdf,codTransac,porcentajePago,listaPasajeros,pagos);
+		/**REGISTRAR CUPON**/
+		if(oReserva.getoCupon().isOkCupon())
+		{
+			CReservaCupon rc=new CReservaCupon();
+			rc.setcReservaCod(oReserva.getcReservaCod());
+			rc.setnCuponCod(oReserva.getoCupon().getnCuponCod());
+			CReservaCuponDAO rcDao=new CReservaCuponDAO();
+			b=rcDao.isOperationCorrect(rcDao.insertarReservaCupon(rc));
+			
+		}
+		/**Enviamos las imagenes de los documentos escaneados a la empresa**/
+		ArrayList<String> listaUrlImages=new ArrayList<String>();
+		for(CPasajero pax:listaPasajeros)
+		{
+			if(pax.isEsEdit() && pax.isSelectPasajero())
+			{
+				listaUrlImages.add(ScannUtil.getPath()+pax.getcUrlDocumento());
+			}
+		}
+		boolean flag=mail.enviarCorreoConPagoAEmpresa("Datos de Nueva Reserva y Pago",oImpuesto,oReservaPaqueteCategoriaHotel,fechaInicio,fechaFin,fechaArribo,oReserva,listacFechasAlternas,montoTotalSinImpuesto,montoPagarSinImpuesto,listaUrlImages,codTransac,porcentajePago,listaPasajeros,pagos);
+		/********Insertamos la ReservaPaquete*********/
+		CReservaPaquete oReservaPaquete=new CReservaPaquete();
+		oReservaPaquete.setcReservaCod(oReserva.getcReservaCod());
+		oReservaPaquete.setcPaqueteCod((String)seshttp.getAttribute("codigoPaquete"));
+		oReservaPaquete.setNroPasajerosPaquete(oReserva.getnNroPersonas());
+		oReservaPaquete.setnMontoTotalPaquete(Double.parseDouble(montoTotalSinImpuesto));
+		
+		CReservaPaqueteDAO reservaPaqueteDao=new CReservaPaqueteDAO();
+		Number codRP=reservaPaqueteDao.obtenerCodigoReservaPaquete(reservaPaqueteDao.insertarReservaPaquete(oReservaPaquete));
+		/******************************************************************/
+		if(oReservaPaqueteCategoriaHotel!=null)
+			if(oReservaPaqueteCategoriaHotel.isConHotel())
+			{
+				if(!oReservaPaqueteCategoriaHotel.isConCamaAdicional())
+					oReservaPaqueteCategoriaHotel.setPrecioCamaAdicional("0.00");
+				oReservaPaqueteCategoriaHotel.setnReservaPaqueteCod(codRP.longValue());
+				flag=reservaPaqueteCategoriaHotelDao.isCorrectOperation(reservaPaqueteCategoriaHotelDao.insertarReservaPaqueteCatHotel(oReservaPaqueteCategoriaHotel));
+			}
+		if(!listaReservaPaqServ.isEmpty())
+		{
+			for(int i=0;i<listaReservaPaqServ.size();i++)
+				listaReservaPaqServ.get(i).setnReservaPaqueteCod(codRP.longValue());
+			for(int i=0;i<listaReservaPaqServ.size();i++)
+			{
+				boolean correct=reservaPaqServDao.isCorrectOperation(reservaPaqServDao.insertarReservaPaqueteServicio(listaReservaPaqServ.get(i)));
+			}
+		}
+		if(!listaReservaPaqActi.isEmpty())
+		{
+			for(CReservaPaqueteActividad rpa:listaReservaPaqActi)
+			{
+				CReservaPaqueteActividadDAO rpaDao=new CReservaPaqueteActividadDAO();
+				rpa.setnReservaPaqueteCod(codRP.longValue());
+				boolean correcto=rpaDao.isCorrectOperation(rpaDao.insertarReservaPaqueteActividad(rpa));
+			}
+		}
+		CPasajeroDAO pasajeroDao=new CPasajeroDAO();
+		CInterfazDAO interfazDao=new CInterfazDAO();
+		interfazDao.asignarConfigInterfaz(interfazDao.recuperarConfigInterfazDB());
+		if(!interfazDao.getoInterfaz().isbLlenarDatosUnPax())
+		{
+			int i=1;
+			for(CPasajero p:listaPasajeros)
+			{
+				if(i>oReserva.getnNroPersonas())break;
+				p.setcReservaCod(oReserva.getcReservaCod());
+				boolean f=pasajeroDao.isOperationCorrect(pasajeroDao.insertarPasajero(p));
+				i++;
+			}
+		}else{
+			oReserva.getoPasajeroReservante().setcNombres(oReserva.getcContacto());
+			oReserva.getoPasajeroReservante().setcReservaCod(oReserva.getcReservaCod());
+			boolean f=pasajeroDao.isOperationCorrect(pasajeroDao.insertarPasajero(oReserva.getoPasajeroReservante()));
+		}
+		if(!listaSeparadaFechasAlternas.isEmpty())
+		{
+			for(int i=1;i<listaSeparadaFechasAlternas.size();i++)
+			{
+				if(!listaSeparadaFechasAlternas.get(i)[0].equals(""))
+				{
+					Calendar calendar=Calendar.getInstance();
+					calendar.set(Integer.parseInt(listaSeparadaFechasAlternas.get(i)[2]),Integer.parseInt(obtenerNroMes(listaSeparadaFechasAlternas.get(i)[1]))-1,Integer.parseInt(listaSeparadaFechasAlternas.get(i)[0]));
+					//Reservar
+					fechaAlternaDao.isOperationCorrect(fechaAlternaDao.insertarFechaAlterna(oReserva.getcReservaCod(), calendar.getTime(),calendar.getTime()));
+				}
+			}
+		}
+	}
+	@Command
+	public void regresarPaginaPrincipal()
+	{
+		try
+		{
+			Execution exec = Executions.getCurrent();
+			exec.sendRedirect(configUrlDao.getoConfigUrl().getUrlPaginaWeb(),false);
+		    exec.setVoided(true);
+		}
+		catch(Exception e)
+		{
+			
+		}
+	}
+	public String obtenerNroMes(String mes)
+	{
+		String nuevo="";
+		switch(mes)
+		{
+			case "Enero":nuevo="01";break;
+			case "Febrero":nuevo="02";break;
+			case "Marzo":nuevo="03";break;
+			case "Abril":nuevo="04";break;
+			case "Mayo":nuevo="05";break;
+			case "Junio":nuevo="06";break;
+			case "Julio":nuevo="07";break;
+			case "Agosto":nuevo="08";break;
+			case "Setiembre":nuevo="09";break;
+			case "Octubre":nuevo="10";break;
+			case "Noviembre":nuevo="11";break;
+			case "Diciembre":nuevo="12";break;
+		}
+		return nuevo;
+	}
+}

@@ -1,0 +1,72 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style  src="css/configExtras.css"/>
+	<div viewModel="@id('vmConfYourself') @init('com.bioandeanexpeditions.viewModel.ConfAltoNivelVM')">
+		 	<space></space>
+		 	<div width="100%" sclass="div_content_config">
+		 		<div sclass="div_content_config_title">
+		 			<a iconSclass="fa fa-envelope estilos-iconos div_content_config_title_a"/>
+		 			<label value="CONFIGURACIONES FUNCIONALES DEL SISTEMA" sclass="div_content_config_title_lbl"/>
+		 		</div>
+<!-- 		 		<div> -->
+<!-- 			 		<div> -->
+<!-- 			 		 	<label value="MANEJO YOURSELF: " sclass="lbl_select_title"/> -->
+<!-- 			 		 	<div> -->
+<!-- 			 		 		<radiogroup orient="vertical" sclass="select_modo_pago" onCheck="@command('cambiarEstadoYourself',estado=self.selectedItem.value) @global-command('recuperarEstadoYourself')"> -->
+<!-- 			 		 			<radio label="CON MANEJO YOURSELF" value="CON" checked="@load(vmConfYourself.oConfAltoNievelYourSelf.estadoConEntidad)"/> -->
+<!-- 			 		 			<radio label="SIN MANEJO YOURSELF" value="SIN" checked="@load(vmConfYourself.oConfAltoNievelYourSelf.estadoSinEntidad)"/> -->
+<!-- 			 		 		</radiogroup> -->
+<!-- 			 		 	</div> -->
+<!-- 			 		</div> -->
+<!-- 		 		</div> -->
+<!-- 		 		<space></space> -->
+		 		<div>
+			 		<div>
+			 		 	<label value="VISTA PRICING: " sclass="lbl_select_title"/>
+			 		 	<div>
+			 		 		<radiogroup orient="vertical" sclass="select_modo_pago" onCheck="@command('cambiarEstadoPricingPasos',estado=self.selectedItem.value) @global-command('recuperarEstadoPricing')">
+			 		 			<radio label="PRICING CON PASOS" value="CON" checked="@load(vmConfYourself.oConfAltoNievelPricing.estadoConEntidad)"/>
+			 		 			<radio label="PRICING SIN PASOS" value="SIN" checked="@load(vmConfYourself.oConfAltoNievelPricing.estadoSinEntidad)"/>
+			 		 		</radiogroup>
+			 		 	</div>
+			 		</div>
+		 		</div>
+		 		<space></space>
+		 		<div>
+			 		<div>
+			 		 	<label value="VISTA FECHA DE ARRIBO: " sclass="lbl_select_title"/>
+			 		 	<div>
+			 		 		<radiogroup orient="vertical" sclass="select_modo_pago" onCheck="@command('cambiarEstadoFechaArribo',estado=self.selectedItem.value)">
+			 		 			<radio label="CON FECHA DE ARRIBO" value="CON" checked="@load(vmConfYourself.oConfAltoNivelFechaArribo.estadoConEntidad)"/>
+			 		 			<radio label="SIN FECHA DE ARRIBO" value="SIN" checked="@load(vmConfYourself.oConfAltoNivelFechaArribo.estadoSinEntidad)"/>
+			 		 		</radiogroup>
+			 		 	</div>
+			 		</div>
+		 		</div>
+		 		<space></space>
+		 		<div>
+			 		<div>
+			 		 	<label value="VISTA DESCRIPCION E ITINERARIO: " sclass="lbl_select_title"/>
+			 		 	<div>
+			 		 		<radiogroup orient="vertical" sclass="select_modo_pago" onCheck="@command('cambiarEstadoDesIti',estado=self.selectedItem.value)">
+			 		 			<radio label="CON DESCRIPCION E ITINERARIO" value="CON" checked="@load(vmConfYourself.oConfAltoNivelDesIti.estadoConEntidad)"/>
+			 		 			<radio label="SIN DESCRIPCION E ITINERARIO" value="SIN" checked="@load(vmConfYourself.oConfAltoNivelDesIti.estadoSinEntidad)"/>
+			 		 		</radiogroup>
+			 		 	</div>
+			 		</div>
+		 		</div>
+		 		<space></space>
+		 		<div>
+			 		<div>
+			 		 	<label value="VISTA DISPONIBILIDAD DE CAMINO INKA: " sclass="lbl_select_title"/>
+			 		 	<div>
+			 		 		<radiogroup orient="vertical" sclass="select_modo_pago" onCheck="@command('cambiarEstadoMuestraDispoCaminoInka',estado=self.selectedItem.value)">
+			 		 			<radio label="MINISTERIO DE CULTURA" value="CON" checked="@load(vmConfYourself.oConfAltoNivelMuestraCaminoInka.estadoConEntidad)"/>
+			 		 			<radio label="PROPIA" value="SIN" checked="@load(vmConfYourself.oConfAltoNivelMuestraCaminoInka.estadoSinEntidad)"/>
+			 		 		</radiogroup>
+			 		 	</div>
+			 		</div>
+		 		</div>
+		 	</div>
+	</div>
+</zk>
