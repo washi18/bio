@@ -165,4 +165,8 @@ public class CUsuarioLoginDAO extends CConexion implements Serializable  {
     public List ejecutarProcedimiento(String procedimiento,Object[] values){
     	return getEjecutorSQL().ejecutarProcedimiento(procedimiento, values);
     }
+	public List eliminarUsuario(String cusuariocod) {
+		Object[] values={cusuariocod};
+		return getEjecutorSQL().ejecutarProcedimiento("pricing_sp_eliminarusuario", values);
+	}
 }

@@ -20,6 +20,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.SelectorComposer;
@@ -30,11 +31,13 @@ import org.zkoss.zul.Messagebox;
 import pe.com.erp.crypto.Encryptar;
 
 import com.bioandeanexpeditions.dao.CDestinoDAO;
+import com.bioandeanexpeditions.dao.CHotelDAO;
 import com.bioandeanexpeditions.extras.KMP;
 import com.bioandeanexpeditions.model.CCodigoPostal;
 import com.bioandeanexpeditions.model.CDestino;
 import com.bioandeanexpeditions.model.CGaleriaImageExist;
 import com.bioandeanexpeditions.model.CGaleriaImageExist4;
+import com.bioandeanexpeditions.model.CHotel;
 import com.bioandeanexpeditions.model.CServicio;
 import com.bioandeanexpeditions.model.CSubServicio;
 import com.bioandeanexpeditions.model.Nro;
@@ -527,6 +530,35 @@ public class DestinosVM{
 		//lcs.setEditingStatus(!lcs.getEditingStatus());
 		refrescaFilaTemplate(d);
    }
+	@Command
+	public void Eliminar(@BindingParam("destino") final CDestino p)
+	{
+		System.out.println("Entamos en el modulo  de viewModel Eliminar");
+		Messagebox.show("Esta seguro de Eliminar el Hotel?",
+			    "Question", Messagebox.OK | Messagebox.CANCEL,
+			    Messagebox.QUESTION,new EventListener<Event>() {						
+					@Override
+					public void onEvent(Event e) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(e.getName()))
+						{
+							//Anulamos el objeto de la BD
+							CDestinoDAO destinoDAO=new CDestinoDAO();
+							if(destinoDAO.isOperationCorrect(destinoDAO.eliminarDestino(p.getnDestinoCod())))
+							{
+								System.out.println("Estamos en viewModel+"+p.getnDestinoCod());
+								Clients.showNotification("Se Elimino Correctamente",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+							else
+							{
+								Clients.showNotification("No se pudo eliminar",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+						}
+						else if(Messagebox.ON_CANCEL.equals(e.getName()))
+						{
+			            }
+					}});
+	}
 	@Command
 	public void Activar_Desactivar_destino(@BindingParam("destino")CDestino d,@BindingParam("texto")String texto)
 	{

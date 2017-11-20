@@ -16,6 +16,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.util.Clients;
@@ -189,6 +190,33 @@ public class actividadVM
 			//lcs.setEditingStatus(!lcs.getEditingStatus());
 			refrescaFilaTemplate(a);
 	   }
+		@Command
+		public void Eliminar(@BindingParam("actividad") final CActividad p)
+		{
+			Messagebox.show("Esta seguro de Eliminar la Actividad?",
+				    "Question", Messagebox.OK | Messagebox.CANCEL,
+				    Messagebox.QUESTION,new EventListener<Event>() {						
+						@Override
+						public void onEvent(Event e) throws Exception {
+							// TODO Auto-generated method stub
+							if(Messagebox.ON_OK.equals(e.getName()))
+							{
+								//Anulamos el objeto de la BD
+								CActividadDAO actividadDAO=new CActividadDAO();
+								if(actividadDAO.isCorrectOperation(actividadDAO.eliminarActividad(p.getnActividadCod())))
+								{
+									Clients.showNotification("Se Elimino Correctamente",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+								}
+								else
+								{
+									Clients.showNotification("No se pudo eliminar",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+								}
+							}
+							else if(Messagebox.ON_CANCEL.equals(e.getName()))
+							{
+				            }
+						}});
+		}
 		@Command
 		 public void Activar_Desactivar_actividad(@BindingParam("actividad")CActividad a,@BindingParam("texto")String texto)
 		{

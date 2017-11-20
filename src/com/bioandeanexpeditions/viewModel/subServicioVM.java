@@ -20,6 +20,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.Selectors;
@@ -39,6 +40,7 @@ import com.bioandeanexpeditions.model.CGaleriaImageExist;
 import com.bioandeanexpeditions.model.CGaleriaImageExist4;
 import com.bioandeanexpeditions.model.CHotel;
 import com.bioandeanexpeditions.model.CServicio;
+import com.bioandeanexpeditions.model.CServicioConSubServicios;
 import com.bioandeanexpeditions.model.CSubServicio;
 import com.bioandeanexpeditions.model.Nro;
 import com.bioandeanexpeditions.util.CReSizeImage;
@@ -752,5 +754,32 @@ public class subServicioVM
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view)
 	{
 		Selectors.wireComponents(view, this, false);
+	}
+	@Command
+	public void Eliminar(@BindingParam("subServicio") final CSubServicio p){
+		Messagebox.show("Esta seguro de Eliminar el Sub-Servicio?", 
+				"Question", 
+				Messagebox.OK | Messagebox.CANCEL, 
+				Messagebox.QUESTION, new EventListener<Event>() {
+				@Override
+				public void onEvent(Event e) throws Exception {
+					// TODO Auto-generated method stub
+					if(Messagebox.ON_OK.equals(e.getName()))
+					{
+						//Anulamos el objeto de la BD
+						CServicioDAO subservicioDAO=new CServicioDAO();
+						if(subservicioDAO.isOperationCorrect(subservicioDAO.eliminarSubServicio(p.getnSubServicioCod())))
+						{
+							Clients.showNotification("Se Elimino Correctamente",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+						}
+						else
+						{
+							Clients.showNotification("No se pudo eliminar",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+						}
+					}
+					else if(Messagebox.ON_CANCEL.equals(e.getName()))
+					{
+		            }
+				}});
 	}
 }

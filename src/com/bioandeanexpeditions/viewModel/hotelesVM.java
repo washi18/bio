@@ -24,6 +24,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.Selectors;
@@ -36,10 +37,12 @@ import org.zkoss.zul.Window;
 
 import pe.com.erp.crypto.Encryptar;
 
+import com.bioandeanexpeditions.dao.CActividadDAO;
 import com.bioandeanexpeditions.dao.CDestinoDAO;
 import com.bioandeanexpeditions.dao.CGaleriaHotelDAO;
 import com.bioandeanexpeditions.dao.CHotelDAO;
 import com.bioandeanexpeditions.extras.KMP;
+import com.bioandeanexpeditions.model.CActividad;
 import com.bioandeanexpeditions.model.CCategoriaHotel;
 import com.bioandeanexpeditions.model.CDestino;
 import com.bioandeanexpeditions.model.CGaleriaHotel;
@@ -722,6 +725,33 @@ public class hotelesVM
 		refrescaFilaTemplate(h);
    }
 	@Command
+	public void Eliminar(@BindingParam("hotel") final CHotel p)
+	{
+		Messagebox.show("Esta seguro de Eliminar el Hotel?",
+			    "Question", Messagebox.OK | Messagebox.CANCEL,
+			    Messagebox.QUESTION,new EventListener<Event>() {						
+					@Override
+					public void onEvent(Event e) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(e.getName()))
+						{
+							//Anulamos el objeto de la BD
+							CHotelDAO hotelDAO=new CHotelDAO();
+							if(hotelDAO.isOperationCorrect(hotelDAO.eliminarHotel(p.getnHotelCod())))
+							{
+								Clients.showNotification("Se Elimino Correctamente",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+							else
+							{
+								Clients.showNotification("No se pudo eliminar",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+						}
+						else if(Messagebox.ON_CANCEL.equals(e.getName()))
+						{
+			            }
+					}});
+	}
+	@Command
 	 public void Activar_Desactivar(@BindingParam("hotel")CHotel h,@BindingParam("texto")String texto)
 	{
 		if(texto.equals("activar"))
@@ -911,6 +941,7 @@ public class hotelesVM
 			}
 		}
     }
+	
 	public void asignarRutaImagenHotel(String nombreImagen,int tipoImagen,CHotel hotel,boolean imageExist)
 	{
 		if(imageExist && estaEnLaListaImagenes(nombreImagen,hotel))return;

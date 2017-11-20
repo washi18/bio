@@ -66,7 +66,7 @@
 							</div>
 							<div zclass="div_contenedor_datos_servicio">
 					    		<space></space>
-					    		<div zclass="div_content_datos">
+					    		<div zclass="div_content_datos_cupon">
 					    			<div>
 					    				<label value="CUPON:" zclass="lbl_llenar_datos"/>
 					    				<label value="@load(each.cCupon)"/>
@@ -84,9 +84,8 @@
 					    				<label value="FECHA FIN:" zclass="lbl_llenar_datos"/>
 					    				<label value="@load(each.fechaFin)"/>
 					    			</div>
-					    			<button label="Editar"
-					    					onClick="@command('Editar',cupon=each)"
-					    					zclass="btn_editar" />					    			
+					    			<button class="fa fa-pencil" onClick="@command('Editar',cupon=each)" zclass="btn_editar" />
+					    			<button class="fa fa-trash" onClick="@command('Eliminar',cupon=each)" zclass="btn_eliminar" />					    			
 					    		</div>
 					    	</div>
 				    	</div>

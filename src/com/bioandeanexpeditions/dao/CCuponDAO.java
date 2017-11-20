@@ -86,4 +86,8 @@ public class CCuponDAO extends CConexion{
 		if(correcto)return true;
 		else return false;
 	}
+	public List eliminarCupon(int CuponCod) {
+		Object[] values={CuponCod};
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_EliminarCupon", values);
+	}
 }

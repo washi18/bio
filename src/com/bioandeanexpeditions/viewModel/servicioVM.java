@@ -17,6 +17,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -35,6 +36,7 @@ import com.bioandeanexpeditions.model.CEtiqueta;
 import com.bioandeanexpeditions.model.CGaleriaImageExist;
 import com.bioandeanexpeditions.model.CGaleriaImageExist4;
 import com.bioandeanexpeditions.model.CHotel;
+import com.bioandeanexpeditions.model.CPaquete;
 import com.bioandeanexpeditions.model.CServicio;
 import com.bioandeanexpeditions.model.Nro;
 import com.bioandeanexpeditions.util.CReSizeImage;
@@ -565,6 +567,33 @@ public class servicioVM {
 		//lcs.setEditingStatus(!lcs.getEditingStatus());
 		refrescaFilaTemplate(s);
    }
+	@Command
+	public void Eliminar(@BindingParam("servicio") final CServicio p)
+	{
+		Messagebox.show("Esta seguro de Eliminar el Servicio?",
+			    "Question", Messagebox.OK | Messagebox.CANCEL,
+			    Messagebox.QUESTION,new EventListener<Event>() {						
+					@Override
+					public void onEvent(Event e) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(e.getName()))
+						{
+							//Anulamos el objeto de la BD
+							CServicioDAO servicioDAO=new CServicioDAO();
+							if(servicioDAO.isOperationCorrect(servicioDAO.eliminarServicio(p.getnServicioCod())))
+							{
+								Clients.showNotification("Se Elimino Correctamente",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+							else
+							{
+								Clients.showNotification("No se pudo eliminar",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+						}
+						else if(Messagebox.ON_CANCEL.equals(e.getName()))
+						{
+			            }
+					}});
+	}
 	@Command
 	 public void Activar_Desactivar_servicio(@BindingParam("servicio")CServicio s,@BindingParam("texto")String texto)
 	{

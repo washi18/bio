@@ -13,14 +13,25 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Messagebox;
 
 import com.bioandeanexpeditions.dao.CUsuarioLoginDAO;
+import com.bioandeanexpeditions.model.CServicio;
 import com.bioandeanexpeditions.model.CUsuario;
 
 public class registroUsuariosVM {
 	//=========atributos=======
 	private ArrayList<CUsuario> listaUsuarios;
+	private CUsuario oUsuarioUpdate;
+	public CUsuario getoUsuarioUpdate() {
+		return oUsuarioUpdate;
+	}
+	public void setoUsuarioUpdate(CUsuario oUsuarioUpdate) {
+		this.oUsuarioUpdate = oUsuarioUpdate;
+	}
 	private CUsuarioLoginDAO usuarioDao;
 	//=====getter an setter=====
 	public ArrayList<CUsuario> getListaUsuarios() {
@@ -42,6 +53,7 @@ public class registroUsuariosVM {
 		usuarioDao=new CUsuarioLoginDAO();
 		Execution exec = Executions.getCurrent();
 	}
+	
 	@GlobalCommand
 	public void cargarDatosUsuarios()
 	{
@@ -60,6 +72,43 @@ public class registroUsuariosVM {
 		BindUtils.postNotifyChange(null, null, this,"listaUsuarios");
 	}
 	//======otros metodos=======
+	@Command
+	public void Editar(@BindingParam("usuario") CUsuario p){
+		p.setEditable(false);
+		oUsuarioUpdate.setEditable(false);
+		refrescaFilaTemplate(oUsuarioUpdate);
+		oUsuarioUpdate=p;
+		p.setEditable(!p.isEditable());
+		refrescaFilaTemplate(p);
+	}
+	@Command
+	public void Eliminar(@BindingParam("usuario") final CUsuario p){
+		Messagebox.show("Esta seguro de Eliminar este Usuario", "Question", 
+				Messagebox.OK | Messagebox.CANCEL, 
+				Messagebox.QUESTION, new EventListener<Event>() {
+			
+			@Override
+			public void onEvent(Event e) throws Exception {
+				// TODO Auto-generated method stub
+				if(Messagebox.ON_OK.equals(e.getName()))
+				{
+					//Anulamos el objeto de la BD
+					CUsuarioLoginDAO usuarioDAO=new CUsuarioLoginDAO();
+					if(usuarioDAO.isOperationCorrect(usuarioDAO.eliminarUsuario(p.getCusuariocod())))
+					{
+						Clients.showNotification("Se Elimino Correctamente",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+					}
+					else
+					{
+						Clients.showNotification("No se pudo eliminar",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+					}
+				}
+				else if(Messagebox.ON_CANCEL.equals(e.getName()))
+				{
+	            }
+			}
+		});
+	}
 	@Command
 	public void activar_desactivar_usuarios(@BindingParam("usuario")CUsuario usuario,@BindingParam("texto")String texto,@BindingParam("componente")Component comp)
 	{
@@ -91,5 +140,9 @@ public class registroUsuariosVM {
 		BindUtils.postNotifyChange(null, null, usuario, "color_desactivo");
 		BindUtils.postNotifyChange(null, null, usuario, "estadoActivo");
 		BindUtils.postNotifyChange(null, null, usuario, "estadoDesactivo");
+	}
+	public void refrescaFilaTemplate(CUsuario s)
+	{
+		BindUtils.postNotifyChange(null, null, s, "editable");
 	}
 }

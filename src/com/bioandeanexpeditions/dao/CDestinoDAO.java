@@ -138,5 +138,11 @@ public class CDestinoDAO extends CConexion
 		if(correcto)return true;
 		else return false;
 	}
+	public List eliminarDestino(int codDestino) {
+		// TODO Auto-generated method stub
+		System.out.println("Entamos en el modulo  de DAO Eliminar");
+		Object[] values={codDestino};
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_EliminarDestino", values);
+	}
 	
 }

@@ -502,31 +502,14 @@
 					    				</div>
 					    			</div>
 					    			<separator/>
-<!-- 					    			<div visible="@load(each.conCalendarioPropio)"> -->
-<!-- 					    				<button label="CALENDARIO PROPIO"/> -->
-<!-- 					    				<window> -->
-<!-- 					    					<listbox model="@load(each.listaDiasCalendarioPropio)"> -->
-<!-- 					    						<listhead><listheader></listheader></listhead> -->
-<!-- 					    						<template name="model" var="dia"> -->
-<!-- 					    							<listitem> -->
-<!-- 					    								<listcell> -->
-<!-- 					    									<div> -->
-<!-- 					    										<label value="@bind(dia.nCalendarioCod)" style="color:red;"/> -->
-<!-- 					    										<label value="@bind(dia.nDia)"/> -->
-<!-- 					    									</div> -->
-<!-- 					    								</listcell> -->
-<!-- 					    							</listitem> -->
-<!-- 					    						</template> -->
-<!-- 					    					</listbox> -->
-<!-- 					    				</window> -->
-<!-- 					    			</div> -->
+									<div zclass="div_operacion_paquete_normal">
+			    						<button label="Activado" zclass="btn_activo" visible="@bind(each.bEstado)"/>
+			    						<button label="Desactivado" zclass="btn_desactivo" visible="@bind(!each.bEstado)"/>
+			    					</div>
+			    					<separator bar="false"/>
 					    			<div zclass="div_operacion_paquete_normal">
-					    				<button label="Editar"
-					    					onClick="@command('Editar',paquete=each)"
-					    					zclass="btn_editar" />
-					    				<separator spacing="2px"></separator>
-					    				<button label="Activo" zclass="btn_activo" visible="@bind(each.bEstado)"/>
-					    				<button label="Desactivo" zclass="btn_desactivo" visible="@bind(!each.bEstado)"/>
+					    				<button class="fa fa-pencil" onClick="@command('Editar',paquete=each)" zclass="btn_editar" />
+					    				<button class="fa fa-trash" onClick="@command('Eliminar',paquete=each)" zclass="btn_eliminar" />
 					    			</div>
 					    		</div>
 					    		<separator spacing="4px" visible="@bind(each.conDestino)"/>
@@ -582,12 +565,13 @@
 					    		</div>
 					    		<separator spacing="2px"/>
 					    		<div zclass="div_operacion_paquete_responsive">
-					    			<button label="Editar"
-					    					onClick="@command('Editar',paquete=each)"
-					    					zclass="btn_editar" />
-					    			<separator spacing="2px"></separator>
-					    			<button label="Activo" zclass="btn_activo" visible="@bind(each.bEstado)"/>
-					    			<button label="Desactivo" zclass="btn_desactivo" visible="@bind(!each.bEstado)"/>
+					    			<button label="Activo" zclass="btn_activo" visible="@bind(each.bEstado)"/><!-- Responsive -->
+					    			<button label="Desactivo" zclass="btn_desactivo" visible="@bind(!each.bEstado)"/><!-- Responsive -->
+					    		</div>
+					    		<separator bar="true"/>
+					    		<div zclass="div_operacion_paquete_responsive">
+					    			<button class="fa fa-pencil" onClick="@command('Editar',paquete=each)" zclass="btn_editar" /> <!-- Responsive -->
+					    			<button class="fa fa-trash" onClick="@command('Eliminar',paquete=each)" zclass="btn_eliminar" /> <!-- Responsive -->
 					    		</div>
 					    	   </div>
 					    	</div>

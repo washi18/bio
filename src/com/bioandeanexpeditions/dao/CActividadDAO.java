@@ -78,6 +78,11 @@ public class CActividadDAO extends CConexion
 				actividad.isbEstado()};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_ModificarActividad", values);
 	}
+	public List eliminarActividad(int codActividad)
+	{
+		Object[] values={codActividad};
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_EliminarActividad", values);
+	}
 	public boolean isCorrectOperation(List lista)
 	{
 		Map row=(Map)lista.get(0);

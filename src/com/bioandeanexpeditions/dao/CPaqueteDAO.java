@@ -137,6 +137,11 @@ public class CPaqueteDAO extends CConexion
 		Object[] values={codPS};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_EliminarPaqueteServicio", values);
 	}
+	public List eliminarPaquete(String codPaquete)
+	{
+		Object[] values={codPaquete};
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_EliminarPaquete", values);
+	}
 	/**METODOS DE PAQUETE ACTIVIDAD**/
 	public List insertarPaqueteActividad(String codPaquete,int codActividad)
 	{

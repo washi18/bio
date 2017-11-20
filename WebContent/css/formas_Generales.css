@@ -553,6 +553,17 @@
 	font-size: 18px;
 	font-weight: bold;
 }
+.btn_eliminar{
+	background:#EC0000; 
+	border-color:#3EAFC5;
+	border-radius: 5px;
+	width: 50%;
+	height: 50px;
+	border: none;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+}
 .btn_actualizar{
 	background:#DA5D06; 
 	border-color:#DA5D06;

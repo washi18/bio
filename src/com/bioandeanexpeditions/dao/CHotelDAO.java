@@ -171,4 +171,9 @@ public class CHotelDAO extends CConexion
 		if(correcto)return true;
 		else return false;
 	}
+	public List eliminarHotel(int codHotel) {
+		// TODO Auto-generated method stub
+		Object[] values={codHotel};
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_EliminarHotel", values);
+	}
 }

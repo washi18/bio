@@ -253,12 +253,13 @@
 					    				<label value="@bind(each.categoria)" sclass="lbl_nombre_categorias"/>
 					    			</div>
 					    			<div zclass="div_operacion_etiqueta">
-					    				<button label="Editar"
-					    					onClick="@command('Editar',hotel=each)"
-					    					zclass="btn_editar" />
-					    				<separator spacing="2px"></separator>
-					    				<button label="Activo" zclass="btn_activo" visible="@bind(each.bEstado)"/>
-					    				<button label="Desactivo" zclass="btn_desactivo" visible="@bind(!each.bEstado)"/>
+					    				<button label="Activado" zclass="btn_activo" visible="@bind(each.bEstado)"/>
+					    				<button label="Desactivado" zclass="btn_desactivo" visible="@bind(!each.bEstado)"/>
+					    			</div>
+					    			<separator bar="false"/>
+					    			<div zclass="div_operacion_etiqueta">
+					    				<button class="fa fa-pencil" onClick="@command('Editar',hotel=each)" zclass="btn_editar" />
+					    				<button class="fa fa-trash" onClick="@command('Eliminar',hotel=each)" zclass="btn_eliminar" />
 					    			</div>
 					    		</div>
 					    		<div sclass="estilo_contenedor_costo_hotel" width="39%">

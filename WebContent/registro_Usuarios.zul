@@ -59,6 +59,10 @@
 					    		  </div>
 					    		</div>
 					    	</div>
+					    	<div zclass="div_operacion_paquete_normal">
+					    		<button class="fa fa-pencil" onClick="@command('Editar',usuario=each)" zclass="btn_editar" />
+					    		<button class="fa fa-trash" onClick="@command('Eliminar',usuario=each)" zclass="btn_eliminar" />
+					    	</div>
 				    	</div>
 				    </listcell>
 				    </listitem>

@@ -25,6 +25,7 @@ import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.Selectors;
@@ -1143,7 +1144,7 @@ public class paquetesVM {
 							actividad.getnActividadCod()));
 				}
 			}
-			boolean r = paqueteDao.isOperationCorrect(paqueteDao.insertarPaqueteCatHotel(paquete.getcPaqueteCod()));
+			boolean r = paqueteDao.isOperationCorrect(paqueteDao.modificarPaquete(paquete));
 			if(!paquete.getListaImagenes().isEmpty())
 			{
 				for(CGaleriaPaquete imagenes:paquete.getListaImagenes())
@@ -1384,7 +1385,33 @@ public class paquetesVM {
 		// lcs.setEditingStatus(!lcs.getEditingStatus());
 		refrescaFilaTemplate(p);
 	}
-
+	@Command
+	public void Eliminar(@BindingParam("paquete") final CPaquete p)
+	{
+		Messagebox.show("Esta seguro de Eliminar el Paquete?",
+			    "Question", Messagebox.OK | Messagebox.CANCEL,
+			    Messagebox.QUESTION,new EventListener<Event>() {						
+					@Override
+					public void onEvent(Event e) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(e.getName()))
+						{
+							//Anulamos el objeto de la BD
+							CPaqueteDAO paqueteDao=new CPaqueteDAO();
+							if(paqueteDao.isOperationCorrect(paqueteDao.eliminarPaquete(p.getcPaqueteCod())))
+							{
+								Clients.showNotification("Se Elimino Correctamente",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+							else
+							{
+								Clients.showNotification("No se pudo eliminar",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+						}
+						else if(Messagebox.ON_CANCEL.equals(e.getName()))
+						{
+			             }
+					}});
+	}
 	@Command
 	public void Activar_Desactivar_paquete(@BindingParam("paquete") CPaquete p, @BindingParam("texto") String texto) {
 		if (texto.equals("activar")) {

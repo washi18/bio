@@ -91,6 +91,17 @@ public class CServicioDAO extends CConexion
 	{
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_MostrarSubServicios");
 	}
+	public List eliminarServicio(int codPaquete)
+	{
+		Object[] values={codPaquete};
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_EliminarServicio", values);
+	}
+	public List eliminarSubServicio(int codServicio)
+	{
+		Object[] values={codServicio};
+		System.out.println("Codigo del subservicio : "+codServicio);
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_EliminarSubServicio", values);
+	}
 	public List buscarServiciosBD(String nombre){
 		String[] values={nombre};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_BuscarServicios",values);

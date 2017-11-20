@@ -14,10 +14,15 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Messagebox;
 
 import com.bioandeanexpeditions.dao.CCuponDAO;
+import com.bioandeanexpeditions.dao.CDestinoDAO;
 import com.bioandeanexpeditions.model.CCupon;
+import com.bioandeanexpeditions.model.CDestino;
 import com.bioandeanexpeditions.model.CHotel;
 
 public class cuponesVM {
@@ -163,6 +168,34 @@ public class cuponesVM {
 		cupon.setEditable(true);	
 		//lcs.setEditingStatus(!lcs.getEditingStatus());
 		refrescaFilaTemplate(cupon);
+	}
+	@Command
+	public void Eliminar(@BindingParam("cupon") final CCupon p)
+	{
+		System.out.println("Entamos en el modulo  de viewModel Eliminar");
+		Messagebox.show("Esta seguro de Eliminar el Hotel?",
+			    "Question", Messagebox.OK | Messagebox.CANCEL,
+			    Messagebox.QUESTION,new EventListener<Event>() {						
+					@Override
+					public void onEvent(Event e) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(e.getName()))
+						{
+							//Anulamos el objeto de la BD
+							CCuponDAO cuponDAO=new CCuponDAO();
+							if(cuponDAO.isOperationCorrect(cuponDAO.eliminarCupon(p.getnCuponCod())))
+							{
+								Clients.showNotification("Se Elimino Correctamente",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+							else
+							{
+								Clients.showNotification("No se pudo eliminar",Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 2500);
+							}
+						}
+						else if(Messagebox.ON_CANCEL.equals(e.getName()))
+						{
+			            }
+					}});
 	}
 	public void refrescaFilaTemplate(CCupon cupon)
 	{

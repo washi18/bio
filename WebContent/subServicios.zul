@@ -200,14 +200,16 @@
 					    			<div>
 					    				<label value="@bind(each.nPrecioServicio)" sclass="estilo_costo"></label>
 					    			</div>
+					    			<div zclass="div_operacion_etiqueta_subServicio">
+					    				<button label="Activado" zclass="btn_activo" visible="@bind(each.bEstado)" />
+					    				<button label="Desactivado" zclass="btn_desactivo" visible="@bind(!each.bEstado)" />
+					    			</div>
+					    			<separator bar="false"/>
 					    			<div
 					    				zclass="div_operacion_etiqueta_subServicio">
-					    				<button label="Editar"
-					    					onClick="@command('Editar',subServicio=each)"
-					    					zclass="btn_editar" />
-					    				<separator spacing="2px"></separator>
-					    				<button label="Activo" zclass="btn_activo" visible="@bind(each.bEstado)" />
-					    				<button label="Desactivo" zclass="btn_desactivo" visible="@bind(!each.bEstado)" />
+					    				<button class="fa fa-pencil" onClick="@command('Editar',subServicio=each)" zclass="btn_editar" />
+					    				<button class="fa fa-trash" onClick="@command('Eliminar',subServicio=each)" zclass="btn_eliminar" />
+					    				
 					    			</div>
 					    		</div>
 					    		<div sclass="estilo_contenedor_costo">

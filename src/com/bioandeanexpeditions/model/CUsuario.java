@@ -18,7 +18,15 @@ public class CUsuario {
 	private String color_desactivo="background:#DA0613;";
 	private boolean estadoActivo;
 	private boolean estadoDesactivo;
+	private boolean editable;
+	
 	//===========getter and setter======
+	public boolean isEditable() {
+		return editable;
+	}
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
 	public String getCusuariocod() {
 		return cusuariocod;
 	}
