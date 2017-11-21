@@ -750,6 +750,7 @@ public class hotelesVM
 						{
 			            }
 					}});
+		refrescaFilaTemplate(p);
 	}
 	@Command
 	 public void Activar_Desactivar(@BindingParam("hotel")CHotel h,@BindingParam("texto")String texto)

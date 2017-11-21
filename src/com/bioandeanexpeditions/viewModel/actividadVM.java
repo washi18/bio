@@ -216,6 +216,7 @@ public class actividadVM
 							{
 				            }
 						}});
+			refrescaFilaTemplate(p);
 		}
 		@Command
 		 public void Activar_Desactivar_actividad(@BindingParam("actividad")CActividad a,@BindingParam("texto")String texto)

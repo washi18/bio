@@ -24,20 +24,20 @@
 		       			value="@bind(vmUpdateUser.oUsuarioUpdate.cNroDoc) @save(self.value,before='actualizarUsuario')" />
 		     </div>
 		     <space></space>
-		     <div >
-		       <div style="display:flex;">
-		       	<label value="PASSWORD:" sclass="lbl_llenar_datos"/>
-		       	<space orient="vertical"></space>
-		       	<div sclass="estilo_ver_contrasenia" onClick="@command('habilitarContrasenia')">
-		       		<span sclass="icon-eye-minus"/>
-		       	</div>
-		       </div>
-		       <separator bar="true"/>
-		       <label value="La contraseña debe tener un tamaño minimo de 8 y debe contener al menos un caracter minuscula, un caracter en mayuscula,un numero y uno de estos simbolos {#,@,$,%}" zclass="estilo_aviso_password"></label>
-		       <textbox width="100%" type="password" sclass="txt_llenar_datos" placeholder="Ingrese Password" disabled="@bind(vmUpdateUser.disableContrasenia)" onChange="@command('modificarContrasenia',clave=self.value,componente=self)"
-		       			value="@bind(vmUpdateUser.oUsuarioUpdate.cClave) @save(self.value,before='actualizarUsuario')" visible="@bind(!vmUpdateUser.visibleContrasenia)"></textbox>
-		     	<textbox width="100%" sclass="txt_llenar_datos" placeholder="Ingrese Password"  disabled="@bind(!vmUpdateUser.disableContrasenia)" onChange="@command('modificarContrasenia',clave=self.value,componente=self)"
-		       			value="@bind(vmUpdateUser.oUsuarioUpdate.cClave) @save(self.value,before='actualizarUsuario')" visible="@bind(vmUpdateUser.visibleContrasenia)"></textbox>
+		     <div>
+		       	<div style="display:flex;">
+		       		<label value="PASSWORD:" sclass="lbl_llenar_datos"/>
+		       		<space orient="vertical"></space>
+		       		<div sclass="estilo_ver_contrasenia" onClick="@command('habilitarContrasenia')">
+		       			<span sclass="icon-eye-minus"/>
+		       		</div>
+		      	</div>
+		       	<separator bar="true"/>
+		       	<label value="La contraseña debe tener un tamaño minimo de 8 y debe contener al menos un caracter minuscula, un caracter en mayuscula,un numero y uno de estos simbolos {#,@,$,%}" zclass="estilo_aviso_password"></label>
+		       	<textbox width="100%" sclass="txt_llenar_datos" placeholder="Ingrese Password" disabled="@bind(vmUpdateUser.disableContrasenia)" onChange="@command('modificarContrasenia',clave=self.value,componente=self)"
+		       			 value="@bind(vmUpdateUser.oUsuarioUpdate.cClave) @save(self.value,before='actualizarUsuario')" visible="@bind(!vmUpdateUser.visibleContrasenia)" type="password"></textbox>
+		     	<textbox width="100%" sclass="txt_llenar_datos" placeholder="Ingrese Password" disabled="@bind(!vmUpdateUser.disableContrasenia)" onChange="@command('modificarContrasenia',clave=self.value,componente=self)"
+		       			 value="@bind(vmUpdateUser.oUsuarioUpdate.cClave) @save(self.value,before='actualizarUsuario')" visible="@bind(vmUpdateUser.visibleContrasenia)"></textbox>
 		     </div>
 	    </div>
 	    <space orient="vertical"></space>

@@ -500,7 +500,7 @@
 								</div>
 				    		</div>
 				    		<div sclass="div_content_actualizar">
-				    			<button label="Actualizar"
+				    			<button label="Actualizar Hola"
 				    				onClick="@command('actualizarServicio',servicio=each,componente=self)"
 				    				zclass="btn_actualizar"/>
 				    		</div>

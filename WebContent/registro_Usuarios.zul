@@ -28,12 +28,16 @@
 									<div>
 										<label value="@load(each.cnombreperfil)" zclass="nombre_depart"/>
 									</div>
-					    			<div width="60%">
+					    			<div width="80%" align="center">
 									<radiogroup sclass="style_restricciones" onCheck="@command('activar_desactivar_usuarios',usuario=each,texto=self.selectedItem.value,componente=self)">
 										<radio label="ACTIVADO" value="activar" checked="@load(each.estadoActivo)" style="@load(each.color_activo)"/>
 										<radio label="DESACTIVADO" value="desactivar" checked="@load(each.estadoDesactivo)" style="@load(each.color_desactivo)"/>
 									</radiogroup>
 								    </div>
+								    <separator bar="false"/>
+								    <div zclass="div_desktop" width="80%" align="center">
+							    		<button class="fa fa-trash"  onClick="@command('Eliminar',usuario=each)" zclass="eliminar_desk" />
+							    	</div>
 					    		</div>
 					    		<space></space>
 					    		<div zclass="div_content_datos_personales">
@@ -54,14 +58,15 @@
 					    			<div>
 					    				<label value="Telefono:" zclass="estilo_datos_personales"></label>
 					    				<space orient="vertical"></space>
-					    			   <label value="@load(each.ccelular)" zclass="estilo_datos_personales_label"></label>
+					    			   	<label value="@load(each.ccelular)" zclass="estilo_datos_personales_label"></label>
 					    			</div>
+					    			
 					    		  </div>
 					    		</div>
-					    	</div>
-					    	<div zclass="div_operacion_paquete_normal">
-					    		<button class="fa fa-pencil" onClick="@command('Editar',usuario=each)" zclass="btn_editar" />
-					    		<button class="fa fa-trash" onClick="@command('Eliminar',usuario=each)" zclass="btn_eliminar" />
+					    		<separator bar="false"/>
+					    		<div zclass="div_fone">
+							    	<button class="fa fa-trash"  onClick="@command('Eliminar',usuario=each)" zclass="eliminar_fone" />
+							    </div>
 					    	</div>
 				    	</div>
 				    </listcell>

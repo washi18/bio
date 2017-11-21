@@ -558,6 +558,7 @@ public class DestinosVM{
 						{
 			            }
 					}});
+		refrescaFilaTemplate(p);
 	}
 	@Command
 	public void Activar_Desactivar_destino(@BindingParam("destino")CDestino d,@BindingParam("texto")String texto)

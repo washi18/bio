@@ -781,5 +781,6 @@ public class subServicioVM
 					{
 		            }
 				}});
+		refrescaFilaTemplate(p);
 	}
 }

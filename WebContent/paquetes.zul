@@ -568,7 +568,7 @@
 					    			<button label="Activo" zclass="btn_activo" visible="@bind(each.bEstado)"/><!-- Responsive -->
 					    			<button label="Desactivo" zclass="btn_desactivo" visible="@bind(!each.bEstado)"/><!-- Responsive -->
 					    		</div>
-					    		<separator bar="true"/>
+					    		<separator bar="false"/>
 					    		<div zclass="div_operacion_paquete_responsive">
 					    			<button class="fa fa-pencil" onClick="@command('Editar',paquete=each)" zclass="btn_editar" /> <!-- Responsive -->
 					    			<button class="fa fa-trash" onClick="@command('Eliminar',paquete=each)" zclass="btn_eliminar" /> <!-- Responsive -->

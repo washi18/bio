@@ -546,12 +546,10 @@
 	background:#3EAFC5; 
 	border-color:#3EAFC5;
 	border-radius: 5px;
-	width: 100px;
+	width: 50%;
 	height: 50px;
 	border: none;
 	color: white;
-	font-size: 18px;
-	font-weight: bold;
 }
 .btn_eliminar{
 	background:#EC0000; 
@@ -561,14 +559,12 @@
 	height: 50px;
 	border: none;
 	color: white;
-	font-size: 18px;
-	font-weight: bold;
 }
 .btn_actualizar{
 	background:#DA5D06; 
 	border-color:#DA5D06;
 	border-radius: 5px;
-	width: 100px;
+	width: 100%;
 	height: 50px;
 	border: none;
 	color: white;
@@ -578,26 +574,24 @@
 .btn_activo{
 	background:#3BA420;
 	border-radius: 5px;
-	width: 100px;
+	width: 100%;
 	height: 50px;
 	border: none;
 	color: white;
-	font-size: 18px;
-	font-weight: bold;
 }
 .btn_desactivo{
 	background:#DA0613;
 	border-radius: 5px;
-	width: 100px;
+	width: 100%;
 	height: 50px;
 	border: none;
 	color: white;
-	font-size: 18px;
-	font-weight: bold;
 }
+
 @media (max-width:400px){
 	.btn_editar,
 	.btn_activo,
+	.btn_eliminar,
 	.btn_actualizar{
 		width: 100% !important;
 	}
@@ -608,6 +602,7 @@
     	white-space: nowrap;
 	}
 }
+
 /*==ESTILOS DEL LISTADO DE LA BASE DE DATOS==*/
 .listados.z-listbox{
 	border: none;

@@ -1411,6 +1411,7 @@ public class paquetesVM {
 						{
 			             }
 					}});
+		refrescaFilaTemplate(p);
 	}
 	@Command
 	public void Activar_Desactivar_paquete(@BindingParam("paquete") CPaquete p, @BindingParam("texto") String texto) {

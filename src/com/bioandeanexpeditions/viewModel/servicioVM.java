@@ -593,6 +593,7 @@ public class servicioVM {
 						{
 			            }
 					}});
+		refrescaFilaTemplate(p);
 	}
 	@Command
 	 public void Activar_Desactivar_servicio(@BindingParam("servicio")CServicio s,@BindingParam("texto")String texto)

@@ -196,6 +196,7 @@ public class cuponesVM {
 						{
 			            }
 					}});
+		refrescaFilaTemplate(p);
 	}
 	public void refrescaFilaTemplate(CCupon cupon)
 	{
