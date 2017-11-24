@@ -415,7 +415,7 @@ public class CEmail
 		    		"</td>";
 			btnPagoParcialPaytoPeru="<td style='margin: 0px; text-align: center;padding-bottom:15px;font-family: Titillium;'>"+
 					etiqueta[128]+"("+textoParcial+")"+
-					"<form action='http://localhost:8080/bioandeanexpeditions/PaytoPeruParcialServlet' method='POST'>"+
+					"<form action='http://localhost:8080/bioandeanexpeditions/PaytoPeruPago' method='POST'>"+
 						"<input type='hidden' name='Monto' value='"+pagoParcial+"'/>"+
 						"<input type='hidden' name='codReserva' value='"+reserva.getcReservaCod()+"'/>"+
 						"<input type='hidden' name='codPaquete' value='"+reserva.getoPaquete().getcPaqueteCod()+"'/>"+

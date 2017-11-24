@@ -40,6 +40,14 @@
 	    <servlet-name>GoMasterCard</servlet-name>
 	    <servlet-class>com.bioandeanexpeditions.MasterDiners.paymentMasterCardServlet</servlet-class>
   </servlet>
+  <servlet>
+	    <servlet-name>PaytoPeruPagoServlet</servlet-name>
+	    <servlet-class>com.bioandeanexpeditions.paypal.PaytoPeruParcialServlet</servlet-class>
+  </servlet>
+  	<servlet-mapping>
+		<servlet-name>PaytoPeruPagoServlet</servlet-name>
+		<url-pattern>/PaytoPeruPago</url-pattern>
+	</servlet-mapping>
   <servlet-mapping>
 		<servlet-name>ExpressCheckoutParcialServlet</servlet-name>
 		<url-pattern>/ExpressCheckoutPagoParcial</url-pattern>
