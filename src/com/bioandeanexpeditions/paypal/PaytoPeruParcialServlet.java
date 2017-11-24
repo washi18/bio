@@ -63,7 +63,7 @@ public class PaytoPeruParcialServlet extends HttpServlet implements javax.servle
 				 textoParcial=paqueteDao.getoPaquete().getnPorcentajeCobro()+" %";
 			 else
 				 textoParcial=etiqueta[102];
-			 
+			 System.out.println("monto parcial--> "+montoParcial+" impuesto--> "+impuestoPaytoPeru);
 			 String tax=df.format((Double.parseDouble(montoParcial)*(Double.parseDouble(impuestoPaytoPeru)/100)));
 			 String montoParcialConImpuestoPaytoPeru=df.format(Double.parseDouble(montoParcial)+Double.parseDouble(tax));
 			 
@@ -122,7 +122,7 @@ public class PaytoPeruParcialServlet extends HttpServlet implements javax.servle
 				 						out.println("display: -o-flex;");
 				 						out.println("display: flex;'>");
 				 				out.println("<div style='width:70%;font-weight:bold;font-size:20px;' align='right'>");
-				 					out.println(etiqueta[100]+": USD");
+				 					out.println(etiqueta[235]+" ("+impuestoPaytoPeru+" %): USD");
 				 				out.println("</div>");
 				 				out.println("<div style='width:30%;font-weight:bold;font-size:20px;' align='right'>");
 				 					out.println(tax);
@@ -156,7 +156,7 @@ public class PaytoPeruParcialServlet extends HttpServlet implements javax.servle
 				 				out.println("<input type='hidden' name='apellidos' value=''>");
 				 				out.println("<input type='hidden' name='descripcion' value='"+namePaquete+"'>");
 				 				out.println("<input type='submit' name='submit' border='0' width='100px'");
-				 				out.println("class='button_payment' value='"+etiqueta[218]+"'/>");
+				 				out.println("class='button_payment' value='"+etiqueta[218]+"' style='background:#3BB710;border-radius:10px;padding:5px;'/>");
 				 			out.println("</form>");
 				 		out.println("</div>");	
 				 	out.println("</div>");
