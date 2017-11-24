@@ -1077,7 +1077,7 @@
 							</div>
 						    <div sclass="div_formas_pago" width="100%">
 								<div width="100%" align="center" sclass="select_payment" style="padding:8px;">
-									<image src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"/>
+									<image src="img/payment/btn_xpressCheckout.gif"/>
 									<div width="100%">
 										<radiogroup onCheck="@command('selectPaypal',valor=self.selectedItem.value) @global-command('datosDePagoPaypal',textoPorcentaje=vmPricing.textoPorcentaje,montoTotalPorcentual=vmPricing.montoTotalPorcentual,pagos=vmPricing.pagos,etiqueta=vmPricing.etiqueta)">
 											<radio label="@bind(vmPricing.textoParcial)" value="1" sclass="radio_color" checked="@load(vmPricing.pagos.pagoParcialPaypal)"
@@ -1088,12 +1088,12 @@
 								</div>
 							</div>
 							<div>
-								<label value="@bind(vmPricing.etiqueta[231])" zclass="lbl_txt_pago_paypal"/>
+								<label value="@bind(vmPricing.etiqueta[234])" zclass="lbl_txt_pago_paypal"/>
 								<label value=":" zclass="lbl_txt_pago_paypal"/>
 							</div>
 						    <div sclass="div_formas_pago" width="100%">
 								<div width="100%" align="center" sclass="select_payment" style="padding:8px;">
-									<image src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"/>
+									<image src="img/payment/visa-mastercard.png" width="200px" height="100px"/>
 									<div width="100%">
 										<radiogroup onCheck="@command('selectPaytoPeru',valor=self.selectedItem.value) @global-command('datosDePagoPaytoPeru',textoPorcentaje=vmPricing.textoPorcentaje,montoTotalPorcentual=vmPricing.montoTotalPorcentual,pagos=vmPricing.pagos,etiqueta=vmPricing.etiqueta)">
 											<radio label="@bind(vmPricing.textoParcial)" value="1" sclass="radio_color" checked="@load(vmPricing.pagos.pagoParcialPaypal)"

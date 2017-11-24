@@ -372,6 +372,7 @@ public class CEmail
 		/****************************************/
 		String btnPagoTotalPaypal="";
 		String btnPagoParcialPaypal="";
+		String btnPagoParcialPaytoPeru="";
 //		if(!reserva.getoPaquete().isbModoPagoTotal())
 //		{
 //			btnPagoTotalPaypal="<td style='margin: 0px; text-align: center; border-right: 1px solid black;padding-bottom:15px;font-family: Titillium;'>"+
@@ -404,6 +405,25 @@ public class CEmail
 						"<input type='hidden' name='contacto' value='"+reserva.getcContacto()+"'/>"+
 						"<input type='hidden' name='language' value='"+language+"'/>"+
 						"<input type='hidden' name='impuestoPaypal' value='"+oImpuesto.getImpuestoPaypal()+"'/>"+
+						"<input type='hidden' name='fechaInicio' value='"+fechaInicio+"'/>"+
+						"<input type='hidden' name='fechaFin' value='"+fechaFin+"'/>"+
+						"<input type='hidden' name='nroPersonas' value='"+reserva.getnNroPersonas()+"'/>"+
+						"<input type='hidden' name='telefono' value='"+reserva.getcTelefono()+"'/>"+
+						"<input type='image' name='submit' border='0'"+
+		    			"src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'/>"+
+					"</form>"+
+		    		"</td>";
+			btnPagoParcialPaytoPeru="<td style='margin: 0px; text-align: center;padding-bottom:15px;font-family: Titillium;'>"+
+					etiqueta[128]+"("+textoParcial+")"+
+					"<form action='http://localhost:8080/bioandeanexpeditions/PaytoPeruParcialServlet' method='POST'>"+
+						"<input type='hidden' name='Monto' value='"+pagoParcial+"'/>"+
+						"<input type='hidden' name='codReserva' value='"+reserva.getcReservaCod()+"'/>"+
+						"<input type='hidden' name='codPaquete' value='"+reserva.getoPaquete().getcPaqueteCod()+"'/>"+
+						"<input type='hidden' name='namePaquete' value='"+reserva.getoPaquete().getcTituloIdioma1()+"'/>"+
+						"<input type='hidden' name='mail' value='"+reserva.getcEmail()+"'/>"+
+						"<input type='hidden' name='contacto' value='"+reserva.getcContacto()+"'/>"+
+						"<input type='hidden' name='language' value='"+language+"'/>"+
+						"<input type='hidden' name='impuestoPaytoPeru' value='"+oImpuesto.getImpuestoPaytoPeru()+"'/>"+
 						"<input type='hidden' name='fechaInicio' value='"+fechaInicio+"'/>"+
 						"<input type='hidden' name='fechaFin' value='"+fechaFin+"'/>"+
 						"<input type='hidden' name='nroPersonas' value='"+reserva.getnNroPersonas()+"'/>"+
@@ -530,6 +550,7 @@ public class CEmail
 								"<tr style='border:1px solid black;'>"+
 									btnPagoTotalPaypal+
 						    		btnPagoParcialPaypal+
+						    		btnPagoParcialPaytoPeru+
 								"</tr>"+
 							"</table>"+
 							"</div>"+
@@ -811,10 +832,17 @@ public class CEmail
 		if(porcentajePago.equals("1"))//pago parcial
 		{
 			String auxImpuesto="";
+			String txtImpuesto="";
 			if(pagos.isSelectPaypal())
+			{
 				auxImpuesto=df.format(Double.parseDouble(montoPagar)*(Double.parseDouble(oImpuesto.getImpuestoPaypal())/100));
+				txtImpuesto=oImpuesto.getImpuestoPaypal();
+			}
 			else if(pagos.isSelectPaytoPeru())
+			{
 				auxImpuesto=df.format(Double.parseDouble(montoPagar)*(Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100));
+				txtImpuesto=oImpuesto.getImpuestoPaytoPeru();
+			}
 			String auxImporteTotal=df.format(Double.parseDouble(montoPagar)+Double.parseDouble(auxImpuesto));
 			pagoAl= "<table width='100%' style='border:1px solid rgba(0,0,0,0.5);border-collapse: collapse;'>"+
 						"<thead style='font-family: Titillium;font-weight: bold;font-size:20px;'>"+etiqueta[197]+"</thead>"+
@@ -823,7 +851,7 @@ public class CEmail
 				    		"<td width='55%'>"+
 				    			"<table width='100%'>"+
 				    				"<tr><td style='font-family: Titillium;'>"+etiqueta[99]+" ("+textoParcial+"): USD"+"</td><td style='font-family: Titillium;color:#1A5276;' align='right'>"+montoPagar+"</td></tr>"+
-				    				"<tr><td style='font-family: Titillium;'>"+etiqueta[100]+"("+oImpuesto.getImpuestoPaypal()+"%): USD</td><td style='font-family: Titillium;color:#1A5276;' align='right'>"+auxImpuesto+"</td></tr>"+
+				    				"<tr><td style='font-family: Titillium;'>"+etiqueta[100]+"("+txtImpuesto+"%): USD</td><td style='font-family: Titillium;color:#1A5276;' align='right'>"+auxImpuesto+"</td></tr>"+
 				    				"<tr><td></td><td style='color:#1A5276;' align='right'>--------------</td></tr>"+
 				    				"<tr><td style='font-family: Titillium;'>"+etiqueta[101]+" ("+textoParcial+")"+"</td><td align='right' style='font-family: Titillium;background:#75BE5C;font-weight:bold;'>"+"USD "+auxImporteTotal+"</td></tr>"+
 				    				"<tr><td style='font-family: Titillium;'>"+etiqueta[161]+"</td><td align='right' style='font-family: Titillium;background:red;font-weight:bold;'>"+"USD "+df.format(Double.parseDouble(totalPago)-Double.parseDouble(montoPagar))+"</td></tr>"+
@@ -837,10 +865,17 @@ public class CEmail
 		{
 			/**Se obtiene el impuesto e importe total del totalPago**/
 			String impuesto="";
+			String txtImpuesto="";
 			if(pagos.isSelectPaypal())
+			{
 				impuesto=df.format(Double.parseDouble(totalPago)*(Double.parseDouble(oImpuesto.getImpuestoPaypal())/100));
+				txtImpuesto=oImpuesto.getImpuestoPaypal();
+			}
 			else if(pagos.isSelectPaytoPeru())
+			{
 				impuesto=df.format(Double.parseDouble(totalPago)*(Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100));
+				txtImpuesto=oImpuesto.getImpuestoPaytoPeru();
+			}
 			String importeTotal=df.format(Double.parseDouble(totalPago)+Double.parseDouble(impuesto));
 			/*********************************************************/
 			pagoAl="<table width='100%' style='border:1px solid rgba(0,0,0,0.5);border-collapse: collapse;'>"+
@@ -850,7 +885,7 @@ public class CEmail
 			    		"<td width='55%'>"+
 			    			"<table width='100%'>"+
 			    				"<tr><td style='font-family: Titillium;'>"+etiqueta[99]+" ( "+textoTotal+" ): USD"+"</td><td style='font-family: Titillium;color:#1A5276;' align='right'> "+totalPago+" </td></tr>"+
-			    				"<tr><td style='font-family: Titillium;'>"+etiqueta[100]+"("+oImpuesto.getImpuestoPaypal()+"%): USD</td><td style='font-family: Titillium;color:#1A5276;' align='right'> "+impuesto+" </td></tr>"+
+			    				"<tr><td style='font-family: Titillium;'>"+etiqueta[100]+"("+txtImpuesto+"%): USD</td><td style='font-family: Titillium;color:#1A5276;' align='right'> "+impuesto+" </td></tr>"+
 			    				"<tr><td></td><td style='color:#1A5276;' align='right'>--------------</td></tr>"+
 			    				"<tr><td style='font-family: Titillium;'>"+etiqueta[101]+" ( "+textoTotal+" )"+"</td><td align='right'style='font-family: Titillium;background:#75BE5C;font-weight:bold;'>"+"USD "+importeTotal+"</td></tr>"+
 			    			"</table>"+
