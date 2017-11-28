@@ -2,7 +2,7 @@
 <zk>
 <style src="css/estilo_Estadisticas.css"></style>
 <style src="css/formas_generales.css"></style>
-<div viewModel="@id('vmEst') @init('com.bioandeanexpeditions.viewModel.CEstadisticaPagosVM')">
+<div viewModel="@id('vmEst') @init('com.pricing.viewModel.CEstadisticaPagosVM')">
 		<div zclass="div_list_cell">
 		    <label value="Ingrese Año: " style="font-size: 13px; color: black; font-weight: bold;"></label>
 		    <space orient="vertical"></space>

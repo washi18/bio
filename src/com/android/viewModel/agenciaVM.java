@@ -18,9 +18,9 @@ import org.zkoss.zul.Messagebox;
 
 import com.android.dao.CAgenciaDAO;
 import com.android.model.CAgencia;
-import com.bioandeanexpeditions.dao.CConfigUrlDAO;
-import com.bioandeanexpeditions.model.CConfigURL;
-import com.bioandeanexpeditions.util.ScannUtil;
+import com.pricing.dao.CConfigUrlDAO;
+import com.pricing.model.CConfigURL;
+import com.pricing.util.ScannUtil;
 
 public class agenciaVM {
 	private CAgencia oAgencia;

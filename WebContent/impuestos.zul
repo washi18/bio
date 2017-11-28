@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"/>
 	<style  src="css/configExtras.css"/>
-	<div viewModel="@id('vmImpuesto') @init('com.bioandeanexpeditions.viewModel.impuestoYcobrosVM')">
+	<div viewModel="@id('vmImpuesto') @init('com.pricing.viewModel.impuestoYcobrosVM')">
 		<space></space>
 		<div width="100%" sclass="div_content_config">
 		 	<div width="100%" sclass="div_content_config_title">

@@ -5,7 +5,7 @@
 		closable="true"
 		position="center"
 		sclass="win_hotelesPorDestino"
-		viewModel="@id('vm') @init('com.bioandeanexpeditions.viewModel.hotelesPorCategoriaVM')">
+		viewModel="@id('vm') @init('com.pricing.viewModel.hotelesPorCategoriaVM')">
 		<window height="450px"
 				contentStyle="overflow:auto;">
 				<div width="100%" height="450px">

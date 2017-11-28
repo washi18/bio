@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"/>
 	<style src="css/estilos_reporte_reservas.css"/>
-	<div viewModel="@id('vmReserva') @init('com.bioandeanexpeditions.viewModel.reporteReservasVM')">
+	<div viewModel="@id('vmReserva') @init('com.pricing.viewModel.reporteReservasVM')">
 		<div sclass="div_opciones_busqueda_reservas" width="100%">
 			<div sclass="intervalo_fechas">
 				<div width="80%">

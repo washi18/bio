@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/estilo_configPaypal.css"/>
 	<style src="css/formas_Generales.css"/>
-	<div viewModel="@id('vmConfPaypal') @init('com.bioandeanexpeditions.viewModel.configuracionPaypalVM')" >
+	<div viewModel="@id('vmConfPaypal') @init('com.pricing.viewModel.configuracionPaypalVM')" >
 		<groupbox sclass="extras">
 		 		<caption>
 		 			<a iconSclass="fa fa-paypal estilos-iconos"/>

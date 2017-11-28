@@ -1,7 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<style src="css/configInterfaz.css"/>
-	<div viewModel="@id('vmConfigInterfaz') @init('com.bioandeanexpeditions.viewModel.ConfigInterfazVM')">
+	<div viewModel="@id('vmConfigInterfaz') @init('com.pricing.viewModel.ConfigInterfazVM')">
 		<div width="100%" sclass="div_content_config">
 			<div width="100%" sclass="div_content_config_title">
 				<a iconSclass="fa fa-industry estilos-iconos div_content_config_title_a"/>

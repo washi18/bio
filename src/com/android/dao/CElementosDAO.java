@@ -8,7 +8,7 @@ import com.android.model.CDatosGenerales;
 import com.android.model.CDestinoMovil;
 import com.android.model.CElementos;
 import com.android.model.CItems;
-import com.bioandeanexpeditions.dao.CConexion;
+import com.pricing.dao.CConexion;
 
 public class CElementosDAO extends CConexion{
 	private ArrayList<CElementos> listaElementos;

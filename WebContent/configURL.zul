@@ -2,7 +2,7 @@
 <zk>
 	<style  src="css/configExtras.css"/>
 	<style src="css/configURL.css"/>
-	<div viewModel="@id('vmConfUrl') @init('com.bioandeanexpeditions.viewModel.configUrlVM')">
+	<div viewModel="@id('vmConfUrl') @init('com.pricing.viewModel.configUrlVM')">
 		<space></space>
 		<div width="100%" sclass="div_content_config">
 			<div width="100%" sclass="div_content_config_title">

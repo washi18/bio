@@ -2,7 +2,7 @@
 <?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
 <zk>
 	<style src="css/disponibilidad.css"/>
-	<div viewModel="@id('vmDisp') @init('com.bioandeanexpeditions.viewModel.disponibilidadVM')" align="center">
+	<div viewModel="@id('vmDisp') @init('com.pricing.viewModel.disponibilidadVM')" align="center">
 <!-- 		<div sclass="div_leyenda"> -->
 <!-- 			<hbox> -->
 <!-- 				<div width="20px" height="20px" sclass="style_img_map_pri"/> -->

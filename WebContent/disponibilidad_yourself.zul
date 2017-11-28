@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/disponibilidad.css"/>
 	<style src="css/estilos_Calendario_yourself.css"/>
-	<div viewModel="@id('vmDisp_yourself') @init('com.bioandeanexpeditions.viewModel.CDisponibilidadYourselfVM')">
+	<div viewModel="@id('vmDisp_yourself') @init('com.pricing.viewModel.CDisponibilidadYourselfVM')">
 		<separator orient="horizontal"></separator>
 		<div class="cmb_lugar">
 			<label value="Destino"/>

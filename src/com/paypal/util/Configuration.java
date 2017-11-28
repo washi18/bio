@@ -6,9 +6,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.bioandeanexpeditions.dao.CConfiguracionPaypalDAO;
-import com.bioandeanexpeditions.model.CConfiguracionPaypal;
-import com.bioandeanexpeditions.model.CServicio;
+import com.pricing.dao.CConfiguracionPaypalDAO;
+import com.pricing.model.CConfiguracionPaypal;
+import com.pricing.model.CServicio;
 
 /**
  *  For a full list of configuration parameters refer in wiki page.(https://github.com/paypal/sdk-core-java/wiki/SDK-Configuration-Parameters) 
@@ -26,7 +26,7 @@ public class Configuration {
 		configMap.putAll(getConfig());
 //		/*****************************/
 		if(datosConfigPaypal.getcSignature().equals("")){
-			URL resource = Configuration.class.getResource("/com/bioandeanexpeditions/resources/"+datosConfigPaypal.getcCertName());
+			URL resource = Configuration.class.getResource("/com/pricing/resources/"+datosConfigPaypal.getcCertName());
 	        File file = null;
 	        if ( resource != null && (file = new File(resource.getFile())).exists() ) {
 	            System.out.println("Archivo existe--->"+file.getAbsolutePath());
@@ -59,8 +59,8 @@ public class Configuration {
 		Map<String,String> configMap = new HashMap<String,String>();
 		
 		// Endpoints are varied depending on whether sandbox OR live is chosen for mode
-//		configMap.put("mode", "sandbox");
-		configMap.put("mode", "live");
+		configMap.put("mode", "sandbox");
+//		configMap.put("mode", "live");
 		
 
 		// These values are defaulted in SDK. If you want to override default values, uncomment it and add your value.

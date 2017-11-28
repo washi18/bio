@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"/>
 	<style src="css/estilos_Destinos.css"/>
-	<div viewModel="@id('vmCupon') @init('com.bioandeanexpeditions.viewModel.cuponesVM')">
+	<div viewModel="@id('vmCupon') @init('com.pricing.viewModel.cuponesVM')">
 		 <div zclass="div_contenedor_nuevo" width="100%">
 			<div zclass="div_contendor_btn_nuevo" onClick="div_llenar_cupon.setVisible(true)">
 				<div zclass="div_btn_nuevo" width="180px">

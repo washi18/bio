@@ -1,7 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<style src="css/UpdateDispo.css"/>
-	<div viewModel="@id('vmUpdateDispo') @init('com.bioandeanexpeditions.viewModel.UpdateDispoVM')" >
+	<div viewModel="@id('vmUpdateDispo') @init('com.pricing.viewModel.UpdateDispoVM')" >
 		<div sclass="div_ActualizarDispo">
 			<div>
 				<combobox id="cbDispo" readonly="true" placeholder="Seleccionar destino" width="300px">

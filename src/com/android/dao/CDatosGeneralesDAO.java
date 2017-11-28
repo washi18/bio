@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.android.model.CDatosGenerales;
 import com.android.model.CElementos;
-import com.bioandeanexpeditions.dao.CConexion;
+import com.pricing.dao.CConexion;
 
 public class CDatosGeneralesDAO extends CConexion{
 	private ArrayList<CDatosGenerales> listaDatosGenerales;

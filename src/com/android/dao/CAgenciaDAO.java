@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.model.CAgencia;
-import com.bioandeanexpeditions.dao.CConexion;
+import com.pricing.dao.CConexion;
 
 public class CAgenciaDAO extends CConexion{
 	private CAgencia oAgencia;

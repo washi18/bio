@@ -5,7 +5,7 @@
 		closable="true"
 		position="center"
 		sclass="win_imagenesHotel"
-		viewModel="@id('vm') @init('com.bioandeanexpeditions.viewModel.configurarPaqueteVM')">
+		viewModel="@id('vm') @init('com.pricing.viewModel.configurarPaqueteVM')">
 		<div width="100%">
 			<groupbox sclass="extras">
 				<caption label="CONFIGURACION DE LLENADO DE DATOS DE LOS PASAJEROS" sclass="lbl_select_title"/>

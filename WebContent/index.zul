@@ -11,6 +11,6 @@
 	<style src="css/disponibilidad.css"/>
 	<style src="css/imagenesHotel.css"/>
 	<timer id="timerKeepAliveSession" repeats="true" delay="1800000" onTimer=""/>
-	<div viewModel="@id('vmIndex') @init('com.bioandeanexpeditions.viewModel.indexVM')">
+	<div viewModel="@id('vmIndex') @init('com.pricing.viewModel.indexVM')">
 	</div>
 </zk>

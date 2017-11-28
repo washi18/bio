@@ -2,7 +2,7 @@
 <?link rel="shortcut icon" type="image/x-icon" href="ICO/favicon.ico"?>
 <zk>
 	<style src="css/return_paypal.css"/>
-	<div viewModel="@id('vmReturn') @init('com.bioandeanexpeditions.viewModel.returnPaypalVM')"
+	<div viewModel="@id('vmReturn') @init('com.pricing.viewModel.returnPaypalVM')"
 		 zclass="div_content_returnPaypal">
 		 <window zclass="win_pago_exitoso">
 		 	<vbox align="center">

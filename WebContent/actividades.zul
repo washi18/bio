@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"></style>
 	<style src="css/estilos_Actividades.css"></style>
-	<div viewModel="@id('vmActividad') @init('com.bioandeanexpeditions.viewModel.actividadVM')">
+	<div viewModel="@id('vmActividad') @init('com.pricing.viewModel.actividadVM')">
 		<div zclass="div_contenedor_nuevo">
 			<div zclass="div_contendor_btn_nuevo" onClick="div_llenar_actividad.setVisible(true)">
 				<div zclass="div_btn_nuevo" width="150px">

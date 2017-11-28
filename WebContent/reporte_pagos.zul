@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"/>
 	<style src="css/estilos_reporte_pagos.css"/>
-	<div viewModel="@id('vmPagos') @init('com.bioandeanexpeditions.viewModel.reportePagosVM')">
+	<div viewModel="@id('vmPagos') @init('com.pricing.viewModel.reportePagosVM')">
 		<div sclass="div_opciones_busqueda" width="100%">
 			<div sclass="intervalo_fechas">
 				<div width="80%">

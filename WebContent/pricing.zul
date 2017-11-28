@@ -2,7 +2,7 @@
 <?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
 <?link rel="shortcut icon" type="image/x-icon" href="ICO/favicon.ico"?>
 <div sclass="div_contenedor_pricing" 
-		 viewModel="@id('vmPricing') @init('com.bioandeanexpeditions.viewModel.pricingVM')">
+		 viewModel="@id('vmPricing') @init('com.pricing.viewModel.pricingVM')">
 		<!-- ======PASO 1======== -->
 <!-- 		<space></space> -->
 	 <div sclass="contenedor_proceso_pricing">

@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.model.CDestinoMovil;
-import com.bioandeanexpeditions.dao.CConexion;
-import com.bioandeanexpeditions.model.CDestino;
-import com.bioandeanexpeditions.model.CHotel;
+import com.pricing.dao.CConexion;
+import com.pricing.model.CDestino;
+import com.pricing.model.CHotel;
 
 public class CDestinosMovilDAO extends CConexion{
 	private CDestinoMovil oDestinoMovil;

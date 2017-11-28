@@ -7,7 +7,7 @@ import java.util.Map;
 import com.android.model.CElementos;
 import com.android.model.CItems;
 import com.android.model.CSubMenu;
-import com.bioandeanexpeditions.dao.CConexion;
+import com.pricing.dao.CConexion;
 
 public class CSubMenuDAO extends CConexion{
 	private ArrayList<CSubMenu> listaSubMenu;

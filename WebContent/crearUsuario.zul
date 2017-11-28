@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"></style>
 	<style src="css/crearUser.css"/>
-  <div viewModel="@id('vmCrearUser') @init('com.bioandeanexpeditions.viewModel.crearUsuarioVM')"
+  <div viewModel="@id('vmCrearUser') @init('com.pricing.viewModel.crearUsuarioVM')"
   		zclass="div_contenedor_nuevo_creaUser">
      <div zclass="div_content_datos_nuevoUser">
      	<div>

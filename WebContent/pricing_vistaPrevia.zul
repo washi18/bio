@@ -8,7 +8,7 @@
 	<style src="css/style_zk.css"/>
 	<style src="fonts/font-awesome.css"/>
 <div sclass="div_contenedor_pricing"
-	 viewModel="@id('vmVistaPrevia') @init('com.bioandeanexpeditions.viewModel.pricing_vistaPreviaVM')"
+	 viewModel="@id('vmVistaPrevia') @init('com.pricing.viewModel.pricing_vistaPreviaVM')"
 	 width="100%">
 		<!-- ======PASO 1======== -->
 <!-- 		<space></space> -->

@@ -8,10 +8,10 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
-import com.bioandeanexpeditions.dao.CConfigUrlDAO;
-import com.bioandeanexpeditions.dao.CConfiguracionPaypalDAO;
-import com.bioandeanexpeditions.model.CConfiguracionPaypal;
 import com.paypal.util.Configuration;
+import com.pricing.dao.CConfigUrlDAO;
+import com.pricing.dao.CConfiguracionPaypalDAO;
+import com.pricing.model.CConfiguracionPaypal;
 
 import urn.ebay.api.PayPalAPI.PayPalAPIInterfaceServiceService;
 import urn.ebay.api.PayPalAPI.SetExpressCheckoutReq;

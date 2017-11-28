@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.android.model.CMenu;
 import com.android.model.CSubMenu;
-import com.bioandeanexpeditions.dao.CConexion;
+import com.pricing.dao.CConexion;
 
 public class CMenuDAO extends CConexion{
 	private ArrayList<CMenu> listaMenu;

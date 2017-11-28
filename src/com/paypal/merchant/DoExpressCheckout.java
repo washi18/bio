@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.bioandeanexpeditions.dao.CConfiguracionPaypalDAO;
-import com.bioandeanexpeditions.model.CConfiguracionPaypal;
 import com.paypal.util.Configuration;
+import com.pricing.dao.CConfiguracionPaypalDAO;
+import com.pricing.model.CConfiguracionPaypal;
 
 import urn.ebay.api.PayPalAPI.DoExpressCheckoutPaymentReq;
 import urn.ebay.api.PayPalAPI.DoExpressCheckoutPaymentRequestType;

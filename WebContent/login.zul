@@ -2,7 +2,7 @@
 <?link rel="shortcut icon" type="image/x-icon" href="ICO/favicon.ico"?>
 <zk>
 	<style src="css/Login.css"/>
-	<div viewModel="@id('vm') @init('com.bioandeanexpeditions.viewModel.LoginVM')"
+	<div viewModel="@id('vm') @init('com.pricing.viewModel.LoginVM')"
 		 sclass="div_content_general_login">
 		<div zclass="content_login">
 			<label value="ADMIN" zclass="lbl_title_login"/>

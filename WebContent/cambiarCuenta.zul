@@ -3,7 +3,7 @@
 	<style src="css/formas_Generales.css"></style>
 	<style src="css/updateUser.css"/>
 	<style src="fonts/style.css"/>
-  <div viewModel="@id('vmUpdateUser') @init('com.bioandeanexpeditions.viewModel.updateUsuarioVM')"
+  <div viewModel="@id('vmUpdateUser') @init('com.pricing.viewModel.updateUsuarioVM')"
   		zclass="div_contenedor_nuevo_updateUser">
       <div zclass="div_content_datos_updateUser">
       		<div>

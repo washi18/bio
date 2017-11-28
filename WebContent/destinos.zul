@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"/>
 	<style src="css/estilos_Destinos.css"/>
-	<div viewModel="@id('vmDestino') @init('com.bioandeanexpeditions.viewModel.DestinosVM')">
+	<div viewModel="@id('vmDestino') @init('com.pricing.viewModel.DestinosVM')">
 		 <div zclass="div_contenedor_nuevo" width="100%">
 			<div zclass="div_contendor_btn_nuevo" onClick="div_llenar_destino.setVisible(true)">
 				<div zclass="div_btn_nuevo" width="180px">

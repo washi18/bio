@@ -1,7 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<style  src="css/configExtras.css"/>
-	<div viewModel="@id('vmConfYourself') @init('com.bioandeanexpeditions.viewModel.ConfAltoNivelVM')">
+	<div viewModel="@id('vmConfYourself') @init('com.pricing.viewModel.ConfAltoNivelVM')">
 		 	<space></space>
 		 	<div width="100%" sclass="div_content_config">
 		 		<div sclass="div_content_config_title">

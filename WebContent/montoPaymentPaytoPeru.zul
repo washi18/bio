@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window viewModel="@id('vmMPPayto') @init('com.bioandeanexpeditions.viewModel.montoPaymentPaytoPeruVM')"
+	<window viewModel="@id('vmMPPayto') @init('com.pricing.viewModel.montoPaymentPaytoPeruVM')"
 			border="normal"
 			title="." 
 			sclass="win_pay"

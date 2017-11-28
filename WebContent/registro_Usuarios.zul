@@ -2,7 +2,7 @@
 <zk>
 	<style src="css/formas_generales.css"></style>
 	<style src="css/estilo_registro_Usuarios.css"></style>
-	 <div viewModel="@id('vmListaUser') @init('com.bioandeanexpeditions.viewModel.registroUsuariosVM')"
+	 <div viewModel="@id('vmListaUser') @init('com.pricing.viewModel.registroUsuariosVM')"
   		zclass="div_contenedor_registroUser">
 	<listbox sclass="listados" model="@load(vmListaUser.listaUsuarios)" vflex="true" mold="paging" pageSize="5" pagingPosition="both">
 			<listhead>

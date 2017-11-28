@@ -1,7 +1,7 @@
 <?link rel="shortcut icon" type="image/x-icon" href="ICO/favicon.ico"?>
 <?page title="PRICING" contentType="text/html;charset=UTF-8"?>
 <?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
-<div sclass="div_contenedor_pricing" viewModel="@id('vmPricing') @init('com.bioandeanexpeditions.viewModel.pricingVM')">
+<div sclass="div_contenedor_pricing" viewModel="@id('vmPricing') @init('com.pricing.viewModel.pricingVM')">
 	<div width="100%" zclass="contenedor_barra_progreso">
 	  <div zclass="subcontendor_barra_progreso">
 		<div width="100%" align="center"

@@ -4,6 +4,6 @@
 		closable="true"
 		position="center"
 		sclass="win_imagenesHotel"
-		viewModel="@id('vmDes') @init('com.bioandeanexpeditions.viewModel.descripcionPaqueteVM')">
+		viewModel="@id('vmDes') @init('com.pricing.viewModel.descripcionPaqueteVM')">
 		<html content="@bind(vmDes.descripcion)"/>
 </window>

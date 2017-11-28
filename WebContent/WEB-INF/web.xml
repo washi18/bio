@@ -26,23 +26,15 @@
 	</servlet>
 	<servlet>
 		<servlet-name>ExpressCheckoutParcialServlet</servlet-name>
-		<servlet-class>com.bioandeanexpeditions.paypal.ExpressCheckoutParcialServlet</servlet-class>
+		<servlet-class>com.pricing.paypal.ExpressCheckoutParcialServlet</servlet-class>
   </servlet>
   <servlet>
 		<servlet-name>ExpressCheckoutTotalServlet</servlet-name>
-		<servlet-class>com.bioandeanexpeditions.paypal.ExpressCheckoutTotalServlet</servlet-class>
-  </servlet>
-  <servlet>
-	    <servlet-name>GoDiners</servlet-name>
-	    <servlet-class>com.bioandeanexpeditions.MasterDiners.paymentDinersServlet</servlet-class>
-  </servlet>
-  <servlet>
-	    <servlet-name>GoMasterCard</servlet-name>
-	    <servlet-class>com.bioandeanexpeditions.MasterDiners.paymentMasterCardServlet</servlet-class>
+		<servlet-class>com.pricing.paypal.ExpressCheckoutTotalServlet</servlet-class>
   </servlet>
   <servlet>
 	    <servlet-name>PaytoPeruPagoServlet</servlet-name>
-	    <servlet-class>com.bioandeanexpeditions.paypal.PaytoPeruParcialServlet</servlet-class>
+	    <servlet-class>com.pricing.paypal.PaytoPeruParcialServlet</servlet-class>
   </servlet>
   	<servlet-mapping>
 		<servlet-name>PaytoPeruPagoServlet</servlet-name>
@@ -56,14 +48,6 @@
 		<servlet-name>ExpressCheckoutTotalServlet</servlet-name>
 		<url-pattern>/ExpressCheckoutPagoTotal</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-	    <servlet-name>GoDiners</servlet-name>
-	    <url-pattern>/GoDiners</url-pattern>
-	  </servlet-mapping>
-	<servlet-mapping>
-	    <servlet-name>GoMasterCard</servlet-name>
-	    <url-pattern>/GoMasterCard</url-pattern>
-	  </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>zkLoader</servlet-name>
 		<url-pattern>*.zul</url-pattern>
