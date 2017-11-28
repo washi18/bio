@@ -1150,6 +1150,12 @@
 							<label value="@bind(vmPricing.oReservar.cEmail)" zclass="lbl_codreserva"/>
 						</hbox>
 		 			</div>
+		 			<div zclass="div_content_cod_reserva">
+		 				<hbox>
+		 					<label value="*"/>
+							<label value="@bind(vmPricing.etiqueta[255])"/>
+						</hbox>
+		 			</div>
 		 		</vbox>
 				<space></space>
 				<button zclass="btn_aceptar_reserva" onClick="@command('regresarPaginaPrincipal')" label="@bind(vmPricing.etiqueta[67])"/>
