@@ -50,26 +50,14 @@ public class CReporteReserva {
 	private String metodoPago;
 	private String codTransaccion;
 	private Number montoParcial;
-	private String porcentajeCobro;
-	private String pagoMinimo;
+	private int porcentajeCobro;
+	private int pagoMinimo;
 	private boolean modoPorcentual;
 	private CReservaPaquete oReservaPaquete;
 	//=======getter and setter===========
 	
 	public String getCodReserva() {
 		return CodReserva;
-	}
-	public String getPorcentajeCobro() {
-		return porcentajeCobro;
-	}
-	public void setPorcentajeCobro(String porcentajeCobro) {
-		this.porcentajeCobro = porcentajeCobro;
-	}
-	public String getPagoMinimo() {
-		return pagoMinimo;
-	}
-	public void setPagoMinimo(String pagoMinimo) {
-		this.pagoMinimo = pagoMinimo;
 	}
 	public boolean isModoPorcentual() {
 		return modoPorcentual;
@@ -368,15 +356,15 @@ public class CReporteReserva {
 		visibleMarcarPagado=false;
 		metodoPago="";
 		codTransaccion="";
-		porcentajeCobro="";
-		pagoMinimo="";
+		porcentajeCobro=0;
+		pagoMinimo=0;
 		modoPorcentual=false;
 	}
 	public CReporteReserva(String codReserva, Date fechaInicio, Date fechaFin,
 			Date fecha,String nombreContacto, String Email,
 			String telefono, int nroPersonas,Number precioPersona,
 			String nombrePaquete, String categoria,String estado,int codCategoria,Double precioTotal, 
-			String porcentajeCobro,String pagoMinimo,boolean modoPorcentual) {
+			int porcentajeCobro,int pagoMinimo,boolean modoPorcentual) {
 		super();
 		this.CodReserva = codReserva;
 		this.fechaInicio = fechaInicio;
@@ -399,9 +387,9 @@ public class CReporteReserva {
 		pagoTotal=false;
 		visibleMarcarPagado=false;
 		if(this.modoPorcentual){
-			montoParcial=(Integer.parseInt(this.porcentajeCobro)*this.PrecioTotal)/100;
+			montoParcial=(this.porcentajeCobro*this.PrecioTotal)/100;
 		}else{
-			montoParcial=Integer.parseInt(this.pagoMinimo)*this.nroPersonas;
+			montoParcial=this.pagoMinimo*this.nroPersonas;
 		}
 		/**Recuperando la reserva del paquete para ver el monto total de la reserva del paquete**/
 		CReportePagosDAO reservaPaqueteDao=new CReportePagosDAO();

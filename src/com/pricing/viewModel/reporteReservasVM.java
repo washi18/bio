@@ -274,13 +274,6 @@ public class reporteReservasVM {
 		setImpuesto(reporteReservaDAO.getImpuesto());
 		reporteReservaDAO.asignarListaReporteReservas(reporteReservaDAO.recuperarReporteReservasInicialBD(fechaActual));
 		this.setListaReporteReserva(reporteReservaDAO.getListaReporteReservas());
-		if(impuesto.isModoPorcentual()){
-			valorParcial=impuesto.getPorcentajeCobro()+"%";
-			esPorcentual=true;
-		}else{
-			valorParcial=impuesto.getPagoMinimo()+" x persona";
-			esPorcentual=false;
-		}
 		BindUtils.postNotifyChange(null, null, this,"impuesto");
 		BindUtils.postNotifyChange(null, null, this,"listaReporteReserva");
 		BindUtils.postNotifyChange(null, null, this,"valorParcial");

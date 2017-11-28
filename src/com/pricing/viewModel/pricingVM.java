@@ -138,7 +138,7 @@ public class pricingVM
 	@Wire
 	Hbox hbCalAlt,hbCal;
 	//====================
-	private String urlPaypal;
+	//private String urlPaypal;
 	//====================
 	private DecimalFormat df;
 	private DecimalFormatSymbols simbolos;
@@ -256,6 +256,7 @@ public class pricingVM
 	private ConfAltoNivelDAO confAltoNivelDAO;
 	private String integrantes;
 	private String paquetes;
+	private String urlPaytoPeru;
 	private String textoParcial;
 	private String textoTotal;
 	private boolean edadSuperada;
@@ -386,7 +387,7 @@ public class pricingVM
 			this.primeraVezCalendarALt=true;
 			this.primeraVezCalendarPri=true;
 			//Inicializamos paypal express checkout
-			urlPaypal="";
+			urlPaytoPeru="";
 			textoPorcentaje="";
 			monto_Pagar_sin_impuesto="";
 			payment=false;
@@ -532,6 +533,7 @@ public class pricingVM
 			{
 				pais.setNamePais(pais.getcNombreIdioma1());
 			}
+			urlPaytoPeru="http://desarrollo.paytoperu.com/esp/payments";
 		}
 		else if(language.equals("pt-BR") || language.equals("pt-PT"))
 		{
@@ -544,6 +546,7 @@ public class pricingVM
 			{
 				pais.setNamePais(pais.getcNombreIdioma3());
 			}
+			urlPaytoPeru="http://desarrollo.paytoperu.com/eng/payments";
 		}
 		else
 		{
@@ -557,6 +560,7 @@ public class pricingVM
 			{
 				pais.setNamePais(pais.getcNombreIdioma2());
 			}
+			urlPaytoPeru="http://desarrollo.paytoperu.com/eng/payments";
 		}
 		Sessions.getCurrent().setAttribute("etiqueta", etiqueta);
 		Sessions.getCurrent().setAttribute("language", language);
@@ -569,6 +573,7 @@ public class pricingVM
 		{
 			if(language.equals("es-ES"))return;
 			language="es-ES";
+			urlPaytoPeru="http://desarrollo.paytoperu.com/esp/payments";
 			etiqueta=etiquetaDao.getIdioma().getIdioma1();
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma1());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma1());
@@ -631,6 +636,7 @@ public class pricingVM
 		{
 			if(language.equals("pt-BR"))return;
 			language="pt-BR";
+			urlPaytoPeru="http://desarrollo.paytoperu.com/eng/payments";
 			etiqueta=etiquetaDao.getIdioma().getIdioma3();
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma3());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma3());
@@ -693,6 +699,7 @@ public class pricingVM
 		{
 			if(language.equals("en-US"))return;
 			language="en-US";
+			urlPaytoPeru="http://desarrollo.paytoperu.com/eng/payments";
 			etiqueta=etiquetaDao.getIdioma().getIdioma2();
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma2());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma2());
@@ -3092,7 +3099,6 @@ public class pricingVM
 		SECResult=paypal.setExpressCheckoutTest(pagos.getTotalConImpuestoPaypal(),oReservar.getoPaquete().getcTituloIdioma1());
 		/*************************/
 		pagos.setUrlPaypal(SECResult[0]);
-		System.out.println("La url de paypal-> "+urlPaypal);
 		seshttp.setAttribute("token",SECResult[1]);
 		Window win_paypal=(Window)Executions.createComponents("/montoPaymentPaypal.zul", null, null);
 		win_paypal.doModal();
@@ -3139,7 +3145,7 @@ public class pricingVM
 		pagos.setTaxPaytoPeru(df.format(Double.parseDouble(monto_Pagar_sin_impuesto)*(Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)));
 		pagos.setTotalConImpuestoPaytoPeru(df.format(Double.parseDouble(monto_Pagar_sin_impuesto)+Double.parseDouble(pagos.getTaxPaytoPeru())));
 		/*****************/
-		String urlPaytoPeru="<form method='POST' action='http://desarrollo.paytoperu.com/esp/payments'>"+
+		String formPaytoPeru="<form method='POST' action='"+urlPaytoPeru+"'>"+
 			"<input type='hidden' name='keymerchant' value='20490712560'>"+
 			"<input type='hidden' name='codigo_transaccion' value='"+oReservar.getcReservaCod()+"'>"+
 			"<input type='hidden' name='importe' value='"+pagos.getTotalConImpuestoPaytoPeru()+"'>"+
@@ -3152,7 +3158,7 @@ public class pricingVM
 			"<input type='submit' name='submit' border='0' width='100px'"+
 				"class='button_payment' value='"+etiqueta[218]+"'/>"+
 		"</form>";
-		pagos.setUrlPaytoPeru(urlPaytoPeru);
+		pagos.setUrlPaytoPeru(formPaytoPeru);
 		/*****************/
 		Window win_paytoPeru=(Window)Executions.createComponents("/montoPaymentPaytoPeru.zul", null, null);
 		win_paytoPeru.doModal();
@@ -3410,12 +3416,6 @@ public class pricingVM
 		}
 		public void setMostrarPaypal(boolean mostrarPaypal) {
 			this.mostrarPaypal = mostrarPaypal;
-		}
-		public String getUrlPaypal() {
-			return urlPaypal;
-		}
-		public void setUrlPaypal(String urlPaypal) {
-			this.urlPaypal = urlPaypal;
 		}
 		public String getTotalConImpuestoPaypal() {
 			return totalConImpuestoPaypal;

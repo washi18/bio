@@ -32,21 +32,13 @@ public class CImpuestoDAO extends CConexion
 			oImpuesto=new CImpuesto(
 			(int)row.get("codimpuesto"),
 			(String)row.get("impuestopaypal"),
-			(String)row.get("impuestovisa"),
-			(String)row.get("impuestomastercard"),
-			(String)row.get("impuestodinnersclub"),
-			(String)row.get("porcentajecobro"),
-			(String)row.get("pagominimo"),
-			(boolean)row.get("modoporcentual"),
 			(String)row.get("impuestopaytoperu"));
 		}else
 			oImpuesto=new CImpuesto();
 	}
 	public List insertarImpuesto(CImpuesto impuesto)
 	{
-		Object[] values={impuesto.getImpuestoPaypal(),impuesto.getImpuestoVisa(),impuesto.getImpuestoMasterCard(),
-				impuesto.getImpuestoDinnersClub(),impuesto.getPorcentajeCobro(),impuesto.getPagoMinimo(),
-				impuesto.isModoPorcentual(),impuesto.getImpuestoPaytoPeru()};
+		Object[] values={impuesto.getImpuestoPaypal(),impuesto.getImpuestoPaytoPeru()};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_RegistrarImpuesto", values);
 	}
 	public boolean isOperationCorrect(List lista)

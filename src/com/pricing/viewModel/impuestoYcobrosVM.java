@@ -61,10 +61,10 @@ public class impuestoYcobrosVM
 	public boolean validoParaInsert_Update(CImpuesto impuesto,Component comp)
 	{
 		boolean valido=true;
-		if(!impuesto.isModoMinimo() && !impuesto.isModoPorcentual())
+		if(impuesto.getImpuestoPaypal()==null || impuesto.getImpuestoPaytoPeru()==null)
 		{
 			valido=false;
-			Clients.showNotification("Debe seleccionar un modo de cobro.",Clients.NOTIFICATION_TYPE_ERROR,comp,"before_start",3000);
+			Clients.showNotification("Debe ingresar ambos impuestos",Clients.NOTIFICATION_TYPE_ERROR,comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -79,39 +79,11 @@ public class impuestoYcobrosVM
 				oImpuesto.setImpuestoPaypal("0");
 				Clients.showNotification("Digite valores numericos",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 			}
-		}else if(valor==2)
-		{
-			if(!isNumberDouble(oImpuesto.getImpuestoVisa()))
-			{
-				oImpuesto.setImpuestoVisa("0");
-				Clients.showNotification("Digite valores numericos",Clients.NOTIFICATION_TYPE_ERROR,comp,"before_start",3000);
-			}
 		}else if(valor==3)
 		{
-			if(!isNumberDouble(oImpuesto.getImpuestoMasterCard()))
+			if(!isNumberDouble(oImpuesto.getImpuestoPaytoPeru()))
 			{
-				oImpuesto.setImpuestoMasterCard("0");
-				Clients.showNotification("Digite valores numericos",Clients.NOTIFICATION_TYPE_ERROR,comp,"before_start",3000);
-			}
-		}else if(valor==4)
-		{
-			if(!isNumberDouble(oImpuesto.getImpuestoDinnersClub()))
-			{
-				oImpuesto.setImpuestoDinnersClub("0");
-				Clients.showNotification("Digite valores numericos",Clients.NOTIFICATION_TYPE_ERROR,comp,"before_start",3000);
-			}
-		}else if(valor==5)
-		{
-			if(!isNumberDouble(oImpuesto.getPorcentajeCobro()))
-			{
-				oImpuesto.setPorcentajeCobro("0");
-				Clients.showNotification("Digite valores numericos",Clients.NOTIFICATION_TYPE_ERROR,comp,"before_start",3000);
-			}
-		}else if(valor==6)
-		{
-			if(!isNumberDouble(oImpuesto.getPagoMinimo()))
-			{
-				oImpuesto.setPagoMinimo("0");
+				oImpuesto.setImpuestoPaytoPeru("0");
 				Clients.showNotification("Digite valores numericos",Clients.NOTIFICATION_TYPE_ERROR,comp,"before_start",3000);
 			}
 		}
@@ -127,20 +99,6 @@ public class impuestoYcobrosVM
 		 {
 		   return false;
 		 }
-	}
-	@Command
-	@NotifyChange({"oImpuesto"})
-	public void selectModoDeCobro(@BindingParam("modo")String modo)
-	{
-		if(modo.equals("porcentaje"))
-		{
-			oImpuesto.setModoPorcentual(true);
-			oImpuesto.setModoMinimo(false);
-		}else
-		{
-			oImpuesto.setModoPorcentual(false);
-			oImpuesto.setModoMinimo(true);
-		}
 	}
 	@Command
 	@NotifyChange({"oImpuesto"})

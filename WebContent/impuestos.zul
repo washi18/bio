@@ -18,26 +18,26 @@
 		 					      sclass="txt_config_valor"/>
 		 			<label value="%" sclass="lbl_config_porcentaje"/>
 		 		</div>
+<!-- 		 		<div sclass="div_content_config_items"> -->
+<!-- 		 			<label value="Impuesto Visa:" sclass="lbl_congif_sutitle"/> -->
+<!-- 		 			<textbox value="@bind(vmImpuesto.oImpuesto.impuestoVisa)" onChange="@command('changeValorCobro',valor=2,componente=self)" width="50px" -->
+<!-- 		 					      sclass="txt_config_valor"/> -->
+<!-- 		 			<label value="%" sclass="lbl_config_porcentaje"/> -->
+<!-- 		 		</div> -->
 		 		<div sclass="div_content_config_items">
-		 			<label value="Impuesto Visa:" sclass="lbl_congif_sutitle"/>
-		 			<textbox value="@bind(vmImpuesto.oImpuesto.impuestoVisa)" onChange="@command('changeValorCobro',valor=2,componente=self)" width="50px"
-		 					      sclass="txt_config_valor"/>
-		 			<label value="%" sclass="lbl_config_porcentaje"/>
-		 		</div>
-		 		<div sclass="div_content_config_items">
-		 			<label value="Impuesto Master Card:" sclass="lbl_congif_sutitle"/>
-		 			<textbox value="@bind(vmImpuesto.oImpuesto.impuestoMasterCard)" 
+		 			<label value="Impuesto Payto Peru:" sclass="lbl_congif_sutitle"/>
+		 			<textbox value="@bind(vmImpuesto.oImpuesto.impuestoPaytoPeru)" 
 		 				onChange="@command('changeValorCobro',valor=3,componente=self)"
 		 				width="50px" sclass="txt_config_valor"/>
 		 			<label value="%" sclass="lbl_config_porcentaje"/>
 		 		</div>
-		 		<div sclass="div_content_config_items">
-		 			<label value="Impuesto Dinners Club:" sclass="lbl_congif_sutitle"/>
-		 			<textbox value="@bind(vmImpuesto.oImpuesto.impuestoDinnersClub)" 
-		 					onChange="@command('changeValorCobro',valor=4,componente=self)"
-		 					width="50px" sclass="txt_config_valor"/>
-		 			<label value="%" sclass="lbl_config_porcentaje"/>
-		 		</div>
+<!-- 		 		<div sclass="div_content_config_items"> -->
+<!-- 		 			<label value="Impuesto Dinners Club:" sclass="lbl_congif_sutitle"/> -->
+<!-- 		 			<textbox value="@bind(vmImpuesto.oImpuesto.impuestoDinnersClub)"  -->
+<!-- 		 					onChange="@command('changeValorCobro',valor=4,componente=self)" -->
+<!-- 		 					width="50px" sclass="txt_config_valor"/> -->
+<!-- 		 			<label value="%" sclass="lbl_config_porcentaje"/> -->
+<!-- 		 		</div> -->
 		 		<space></space>
 			 	<div zclass="div_content_btns_operaciones" align="center" width="100%">
 			 		<button label="ACTUALIZAR" width="100%" zclass="btn_actualizar" onClick="@command('insert_update_impuesto',componente=self) @global-command('actualizar_valores_impuesto')"/>
@@ -50,21 +50,21 @@
 		 			<label value="@bind(vmImpuesto.oImpuesto.impuestoPaypal)" sclass="lbl_config_porcentaje"/>
 		 			<label value="%" sclass="lbl_config_porcentaje"/>
 		 		</div>
+<!-- 		 		<div sclass="div_content_config_items"> -->
+<!-- 		 			<label value="Impuesto Visa:" sclass="lbl_congif_sutitle"/> -->
+<!-- 		 			<label value="@bind(vmImpuesto.oImpuesto.impuestoVisa)" sclass="lbl_config_porcentaje"/> -->
+<!-- 		 			<label value="%" sclass="lbl_config_porcentaje"/> -->
+<!-- 		 		</div> -->
 		 		<div sclass="div_content_config_items">
-		 			<label value="Impuesto Visa:" sclass="lbl_congif_sutitle"/>
-		 			<label value="@bind(vmImpuesto.oImpuesto.impuestoVisa)" sclass="lbl_config_porcentaje"/>
+		 			<label value="Impuesto Payto Peru:" sclass="lbl_congif_sutitle"/>
+		 			<label value="@bind(vmImpuesto.oImpuesto.impuestoPaytoPeru)" sclass="lbl_config_porcentaje"/>
 		 			<label value="%" sclass="lbl_config_porcentaje"/>
 		 		</div>
-		 		<div sclass="div_content_config_items">
-		 			<label value="Impuesto Master Card:" sclass="lbl_congif_sutitle"/>
-		 			<label value="@bind(vmImpuesto.oImpuesto.impuestoMasterCard)" sclass="lbl_config_porcentaje"/>
-		 			<label value="%" sclass="lbl_config_porcentaje"/>
-		 		</div>
-		 		<div sclass="div_content_config_items">
-		 			<label value="Impuesto Dinners Club:" sclass="lbl_congif_sutitle"/>
-		 			<label value="@bind(vmImpuesto.oImpuesto.impuestoDinnersClub)" sclass="lbl_config_porcentaje"/>
-		 			<label value="%" sclass="lbl_config_porcentaje"/>
-		 		</div>
+<!-- 		 		<div sclass="div_content_config_items"> -->
+<!-- 		 			<label value="Impuesto Dinners Club:" sclass="lbl_congif_sutitle"/> -->
+<!-- 		 			<label value="@bind(vmImpuesto.oImpuesto.impuestoDinnersClub)" sclass="lbl_config_porcentaje"/> -->
+<!-- 		 			<label value="%" sclass="lbl_config_porcentaje"/> -->
+<!-- 		 		</div> -->
 		 		<space></space>
 		 		<div width="100%" align="center">
 			 		<button label="EDITAR" width="200px" zclass="btn_editar" onClick="@command('Editar')"/>

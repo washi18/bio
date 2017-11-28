@@ -189,8 +189,8 @@ public class CReporteReservaDAO extends CConexion{
 					(String)row.get("ctelefono"),(int)row.get("nnropersonas"),
 					(Number)row.get("npreciopaquetepersona"),(String) row.get("ctituloidioma1"),
 					(String)row.get("ccategoriaidioma1"),
-					(String)row.get("cestado"),(int)row.get("categoriahotelcod"),total,(String)row.get("porcentajecobro"),
-					(String)row.get("pagominimo"),(boolean)row.get("modoporcentual")));
+					(String)row.get("cestado"),(int)row.get("categoriahotelcod"),total,(int)row.get("porcentajecobro"),
+					(int)row.get("pagominimo"),(boolean)row.get("modoporcentual")));
 		}
 	}
 	public void asignarValoresImpuesto(List lista){
@@ -198,12 +198,7 @@ public class CReporteReservaDAO extends CConexion{
 		Map row=(Map)lista.get(0);
 		impuesto.setCodImpuesto((int)row.get("codimpuesto"));
 		impuesto.setImpuestoPaypal((String)row.get("impuestopaypal"));
-		impuesto.setImpuestoVisa((String)row.get("impuestovisa"));
-		impuesto.setImpuestoMasterCard((String)row.get("impuestomastercard"));
-		impuesto.setImpuestoDinnersClub((String)row.get("impuestodinnersclub"));
-		impuesto.setPorcentajeCobro((String)row.get("porcentajecobro"));
-		impuesto.setPagoMinimo((String)row.get("pagominimo"));
-		impuesto.setModoPorcentual((boolean)row.get("modoporcentual"));
+		impuesto.setImpuestoPaytoPeru((String)row.get("impuestopaytoperu"));
 	}
 	public List modificarEstadoReserva(String codReserva,String estado,String metodoPago,String codTransaccion){
 		Object[]values={codReserva,estado,metodoPago,codTransaccion};
