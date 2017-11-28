@@ -69,6 +69,25 @@
     font-weight: bold;
     color: black;
 }
+.cmbx_llenar_datos{
+	background: white;
+	border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 5px;
+    box-shadow:0 0 5px rgba(0,0,0,0.1);
+	-webkit-transition: all 0.1s ease;
+	-moz-transition: all 0.1s ease;
+	-ms-transition: all 0.1s ease;
+	-o-transition: all 0.1s ease;
+	transition: all 0.1s ease;
+    height: 40px;
+    margin: 4px 0 4px 0;
+    padding-left:10px;
+    box-sizing:border-box;
+    text-align: justify;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+}
 .txt_llenar_datos:hover,
 .txt_llenar_datos:focus{
 	border: 1px solid #C40C23;
