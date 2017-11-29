@@ -432,28 +432,6 @@ public class CEmail
 		    			"src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'/>"+
 					"</form>"+
 		    		"</td>";
-//		}else
-//		{
-//			btnPagoTotalPaypal="<td style='margin: 0px; text-align: center; border-right: 1px solid black;padding-bottom:15px;font-family: Titillium;'>"+
-//					etiqueta[128]+"("+textoTotal+")"+
-//					"<form action='"+configUrlDao.getoConfigUrl().getUrlServletPagoTotal()+"' method='POST'>"+
-//						"<input type='hidden' name='Monto' value='"+totalPago+"'/>"+
-//						"<input type='hidden' name='codReserva' value='"+reserva.getcReservaCod()+"'/>"+
-//						"<input type='hidden' name='codPaquete' value='"+reserva.getoPaquete().getcPaqueteCod()+"'/>"+
-//						"<input type='hidden' name='namePaquete' value='"+reserva.getoPaquete().getcTituloIdioma1()+"'/>"+
-//						"<input type='hidden' name='mail' value='"+reserva.getcEmail()+"'/>"+
-//						"<input type='hidden' name='contacto' value='"+reserva.getcContacto()+"'/>"+
-//						"<input type='hidden' name='language' value='"+language+"'/>"+
-//						"<input type='hidden' name='impuestoPaypal' value='"+oImpuesto.getImpuestoPaypal()+"'/>"+
-//						"<input type='hidden' name='fechaInicio' value='"+fechaInicio+"'/>"+
-//						"<input type='hidden' name='fechaFin' value='"+fechaFin+"'/>"+
-//						"<input type='hidden' name='nroPersonas' value='"+reserva.getnNroPersonas()+"'/>"+
-//						"<input type='hidden' name='telefono' value='"+reserva.getcTelefono()+"'/>"+
-//						"<input type='image' name='submit' border='0'"+
-//		    			"src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'/>"+
-//					"</form>"+
-//		    		"</td>";
-//		}
 		/****************************************/
 		String mensajeHTML=
 				"<html>"+
