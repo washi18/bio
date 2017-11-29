@@ -1081,8 +1081,13 @@
 									<div width="100%">
 										<radiogroup onCheck="@command('selectPaypal',valor=self.selectedItem.value) @global-command('datosDePagoPaypal',textoPorcentaje=vmPricing.textoPorcentaje,montoTotalPorcentual=vmPricing.montoTotalPorcentual,pagos=vmPricing.pagos,etiqueta=vmPricing.etiqueta)">
 											<radio label="@bind(vmPricing.textoParcial)" value="1" sclass="radio_color" checked="@load(vmPricing.pagos.pagoParcialPaypal)"
-												visible="@load(!vmPricing.oReservar.oPaquete.bModoPagoTotal)"/>
-											<radio label="@bind(vmPricing.textoTotal)" value="2" sclass="radio_color" checked="@load(vmPricing.pagos.pagoTotalPaypal)"/>
+												visible="@load(vmPricing.oReservar.oPaquete.bModoPagoParcial)"/>
+											<radio label="@bind(vmPricing.textoParcial)" value="1" sclass="radio_color" checked="@load(vmPricing.pagos.pagoParcialPaypal)"
+												visible="@load(vmPricing.oReservar.oPaquete.bModoPagoAmbos)"/>
+											<radio label="@bind(vmPricing.textoTotal)" value="2" sclass="radio_color" checked="@load(vmPricing.pagos.pagoTotalPaypal)"
+												visible="@load(vmPricing.oReservar.oPaquete.bModoPagoAmbos)"/>
+											<radio label="@bind(vmPricing.textoTotal)" value="2" sclass="radio_color" checked="@load(vmPricing.pagos.pagoTotalPaypal)"
+												visible="@load(vmPricing.oReservar.oPaquete.bModoPagoTotal)"/>
 										</radiogroup>
 									</div>
 								</div>
@@ -1097,8 +1102,13 @@
 									<div width="100%">
 										<radiogroup onCheck="@command('selectPaytoPeru',valor=self.selectedItem.value) @global-command('datosDePagoPaytoPeru',textoPorcentaje=vmPricing.textoPorcentaje,montoTotalPorcentual=vmPricing.montoTotalPorcentual,pagos=vmPricing.pagos,etiqueta=vmPricing.etiqueta)">
 											<radio label="@bind(vmPricing.textoParcial)" value="1" sclass="radio_color" checked="@load(vmPricing.pagos.pagoParcialPaytoPeru)"
-												visible="@load(!vmPricing.oReservar.oPaquete.bModoPagoTotal)"/>
-											<radio label="@bind(vmPricing.textoTotal)" value="2" sclass="radio_color" checked="@load(vmPricing.pagos.pagoTotalPaytoPeru)"/>
+												visible="@load(vmPricing.oReservar.oPaquete.bModoPagoParcial)"/>
+											<radio label="@bind(vmPricing.textoParcial)" value="1" sclass="radio_color" checked="@load(vmPricing.pagos.pagoParcialPaytoPeru)"
+												visible="@load(vmPricing.oReservar.oPaquete.bModoPagoAmbos)"/>
+											<radio label="@bind(vmPricing.textoTotal)" value="2" sclass="radio_color" checked="@load(vmPricing.pagos.pagoTotalPaytoPeru)"
+												visible="@load(vmPricing.oReservar.oPaquete.bModoPagoAmbos)"/>
+											<radio label="@bind(vmPricing.textoTotal)" value="2" sclass="radio_color" checked="@load(vmPricing.pagos.pagoTotalPaytoPeru)"
+												visible="@load(vmPricing.oReservar.oPaquete.bModoPagoTotal)"/>
 										</radiogroup>
 									</div>
 								</div>

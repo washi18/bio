@@ -2421,7 +2421,11 @@ public class pricingVM
 		}
 		/**ENVIAR CORREO**/
 		CEmail mail=new CEmail();
-		boolean b=mail.enviarCorreoSinPago(etiqueta[184],language,oImpuesto,etiqueta,oReservaPaqCatHotel,lblFechaInicioPaso3.getValue(),lblFechaFinPaso3.getValue(),lblFechaArribo.getValue(),oReservar,listacFechasAlternas,lblMontoTotal,pagoParcial,urlPdf,listaUrlImages,listaPasajeros);
+		boolean b;
+		if(!pagos.isSelectPaytoPeru())
+			b = mail.enviarCorreoSinPago(etiqueta[184],language,oImpuesto,etiqueta,oReservaPaqCatHotel,lblFechaInicioPaso3.getValue(),lblFechaFinPaso3.getValue(),lblFechaArribo.getValue(),oReservar,listacFechasAlternas,lblMontoTotal,pagoParcial,urlPdf,listaUrlImages,listaPasajeros);
+		else
+			b = mail.enviarCorreoSinPagoPaytoPeru(etiqueta[184],language,oImpuesto,etiqueta,oReservaPaqCatHotel,lblFechaInicioPaso3.getValue(),lblFechaFinPaso3.getValue(),lblFechaArribo.getValue(),oReservar,listacFechasAlternas,lblMontoTotal,pagoParcial,urlPdf,listaUrlImages,listaPasajeros);
 		/********Insertamos la ReservaPaquete*********/
 		CReservaPaquete oReservaPaquete=new CReservaPaquete();
 		oReservaPaquete.setcReservaCod(oReservar.getcReservaCod());
@@ -3108,9 +3112,9 @@ public class pricingVM
 		"tax","totalConImpuestoPaypal","pagos"})
 	public void selectPaytoPeru(@BindingParam("valor")Object valor) throws IOException, DocumentException 
 	{
+		pagos.selectPaytoPeru();//Seleccionamos el metodo de pago PaytoPeru
 		Reservar();
 		/**********************************************************************************/
-		pagos.selectPaytoPeru();
 		seshttp.setAttribute("pagos",pagos);
 		if(valor.toString().equals("1"))//Pago parcial ya sea minimo o porcentual
 		{
@@ -3155,7 +3159,7 @@ public class pricingVM
 			"<input type='hidden' name='nombres' value='"+oReservar.getcContacto()+"'>"+
 			"<input type='hidden' name='apellidos' value='"+oReservar.getcContacto()+"'>"+
 			"<input type='hidden' name='descripcion' value='"+oReservar.getoPaquete().getTitulo()+"'>"+
-			"<input type='submit' name='submit' border='0' width='100px'"+
+			"<input type='submit' name='submit' border='0' style='width:200px;'"+
 				"class='button_payment' value='"+etiqueta[218]+"'/>"+
 		"</form>";
 		pagos.setUrlPaytoPeru(formPaytoPeru);

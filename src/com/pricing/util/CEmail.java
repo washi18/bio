@@ -633,6 +633,229 @@ public class CEmail
 		boolean b=enviarCorreoSinPagoAEmpresa("Datos de Nueva Reserva", hotel[1], oImpuesto, reserva.getoPaquete(), pasajeros[1], servicios[1], fechaInicio, fechaFin,fechaArribo, reserva, precioUniPaquete, fechaActual[1], fechas, totalPago, urlImage,actividades[1]);
 		return sendMail(reserva.getcEmail(),titulo,mensajeHTML,urlPdf,0);
 	}
+	public boolean enviarCorreoSinPagoPaytoPeru(String titulo,String language,CImpuesto oImpuesto,String[] etiqueta,CReservaPaqueteCategoriaHotel oReservaPCH,
+			String fechaInicio,String fechaFin,String fechaArribo,CReserva reserva,
+			ArrayList<String> fechasAlternas,String totalPago,String pagoParcial,
+			String urlPdf,ArrayList<String> urlImage,ArrayList<CPasajero> listaPasajeros) throws IOException, DocumentException
+	{
+		this.etiqueta=etiqueta;
+		Calendar cal=Calendar.getInstance();
+		/************************/
+		/**Obtener fecha actual**/
+		String[] fechaActual=obtenerFechaActual();
+		/**Se obtiene el impuesto e importe total del totalPago**/
+		String impuesto=df.format(Double.parseDouble(totalPago)*(Double.parseDouble(oImpuesto.getImpuestoPaypal())/100));
+		String importeTotal=df.format(Double.parseDouble(totalPago)+Double.parseDouble(impuesto));
+		/*********************************************************/
+		/**Se obtiene el precio unitario del paquete acorde al numero de pasajeros esto debido a que se aplica descuento**/
+		String precioUniPaquete=obtenerPrecioUnitarioPaquete(reserva,reserva.getoPaquete());
+		/***********************************************/
+		/**Se obtienen las fechas alternas para el html**/
+		String fechas=obtenerHtmlFechasAlternas(fechasAlternas);
+		/***********************************************
+		 * Se obtiene la categoria del hotel reservado
+		 * *********************************************
+		 */
+		String hotel[]=obtenerHtmlHotel(oReservaPCH,etiqueta);
+		/**********************************************/
+		/**Se obtienen los datos de los pasajeros**/
+		String pasajeros[]=obtenerHtmlPasajeros(listaPasajeros,etiqueta,reserva);
+		/******************************************/
+		/**Se obtienen los datos de los servicios**/
+		String servicios[]=obtenerHtmlServicios(reserva.getoPaquete().getListaServicios(),etiqueta);
+		/******************************************/
+		/**Se obtinenen los datos de las actividades**/
+		String actividades[]=obtenerHtmlActividades(reserva.getoPaquete().getListaActividades(),reserva);
+		/********************************************/
+		/**RECUPERAMOS LA CONFIGURACION DE URLs**/
+		CConfigUrlDAO configUrlDao=new CConfigUrlDAO();
+		configUrlDao.asignarConfigUrl(configUrlDao.recuperarConfigUrlDB());
+		/**OBTENEMOS LA FECHA DE ARRIBO**/
+		String arribo="";
+		if(reserva.getoPaquete().isConFechaArribo())
+			arribo="<br />"+
+					"<strong>"+etiqueta[249]+"</strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>";
+		/****************************************/
+		String textoParcial="";
+		String textoTotal="";
+		if(reserva.getoPaquete().isbModoPorcentual())
+		{
+			textoParcial=reserva.getoPaquete().getnPorcentajeCobro()+" %";
+			textoTotal="100 %";
+		}else
+		{
+			textoParcial=etiqueta[102];
+			textoTotal=etiqueta[103];
+		}
+		/****************************************/
+		String mensajeHTML=
+				"<html>"+
+					"<head>"+
+					"<style type='text/css' media='screen, print'>"+
+						"@font-face {"+
+							  "font-family: Titillium;"+
+							  "font-style: normal;"+
+							  "font-weight: 400;"+
+							  "src: local('Titillium Web Regular'), local('TitilliumWeb-Regular'), url(https://fonts.gstatic.com/s/titilliumweb/v5/7XUFZ5tgS-tD6QamInJTcSo_WB_cotcEMUw1LsIE8mM.woff2) format('woff2');"+
+							  "unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;"+
+							"}"+
+							/* latin */
+							"@font-face {"+
+							  "font-family: Titillium;"+
+							  "font-style: normal;"+
+							  "font-weight: 400;"+
+							  "src: local('Titillium Web Regular'), local('TitilliumWeb-Regular'), url(https://fonts.gstatic.com/s/titilliumweb/v5/7XUFZ5tgS-tD6QamInJTcZSnX671uNZIV63UdXh3Mg0.woff2) format('woff2');"+
+							  "unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;"+
+							"}"+
+					"</style>"+
+					"</head>"+
+					"<body>"+
+						"<div style='width:600px;background:rgb(242, 242, 242);'>"+
+							"<table style='background:white;border:1px solid rgb(204, 204, 204);color:rgb(34, 34, 34);font-family:arial,sans-serif;font-size:12.8px;margin:0px auto;width:600px;border-collapse: collapse;'>"+
+								"<tbody>"+
+									"<tr>"+
+										"<td>"+
+											"<table style='background:rgb(242, 242, 242)'>"+
+												"<tbody>"+
+													"<tr>"+
+														"<td align='left' width='20%' style='padding:8px 20px 8px 20px;'>"+
+															"<a href='"+etiqueta[212]+"' style='text-decoration:none;font-family:Titillium;'>"+
+																"<img src='"+etiqueta[211]+"' width='100' height='80' border='0' />"+
+															"</a>"+
+														"</td>"+
+														"<td style='font-family: Titillium;color:black;font-size:17px;font-weight:bold;' align='center' width='80%'>"+reserva.getoPaquete().getTitulo()+"</td>"+
+														"<td align='right' width='20%' style='padding:8px 20px 8px 20px;'>"+
+															"<a href='"+etiqueta[212]+"' style='text-decoration:none;'>"+
+																"<img src='"+etiqueta[211]+"' width='100' height='80' border='0' />"+
+															"</a>"+
+														"</td>"+
+													"</tr>"+
+												"</tbody>"+
+											"</table>"+
+										"</td>"+
+									"</tr>"+
+								"</tbody>"+
+							"</table>"+
+						"<div style='background:white;width:600px;'>"+
+							"<table width='100%' style='border:1px solid rgba(0,0,0,0.1);border-collapse: collapse;margin:0;'>"+
+										"<thead style='background:rgba(0,0,0,0.1);font-weight: bold;'>"+etiqueta[129]+"</thead>"+
+											"<tr style='border:1px solid black;'>"+
+												"<td style='margin: 0px; text-align: center; border-right: 1px solid black;padding-bottom:15px;' width='240'>"+
+													"<div style='color: #1a5276;font-family: Titillium;'>"+
+														"<strong style='text-decoration: underline;'>"+etiqueta[118]+"</strong>"+
+													"</div>"+
+													"<span style='font-family: Titillium;background-color:rgb(204, 204, 204); border-radius:3px; border:1px solid rgb(217, 217, 217); color:rgb(47, 115, 186); font-family:arial,helvetica,sans-serif; font-size:24px; font-stretch:normal; line-height:24px; padding:10px'>"+
+														"<strong>"+reserva.getcReservaCod()+"</strong>"+
+													"</span>"+
+												"</td>"+
+												"<td style='margin: 0px;padding:0px 15px;' width='308'>"+
+													"<div>"+
+														"<strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[125]+"</strong>"+
+													"</div>"+
+													"<span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+
+														"<strong>"+reserva.getcContacto()+"</strong>"+
+													"</span>"+
+													"<div>"+
+														"<strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[253]+"</strong>"+
+													"</div>"+
+													"<span>"+
+														"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaInicio+"</span></strong>"+
+														"<br />"+
+														"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaFin+"</span></strong>"+
+														arribo+
+													"</span>"+
+													"<div>"+
+														"<strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[81]+"</strong>"+
+													"</div>"+
+													"<span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+
+														"<strong>USD($) "+totalPago+"</strong>"+
+													"</span>"+
+												"</td>"+
+											"</tr>"+
+									"</table>"+
+//							"<div align='center'>"+
+//								"<div style='color:#F7653A;font-size:18px;font-weight:bold;'>"+etiqueta[126]+"</div>"+
+//							"</div>"+
+//							"<div style='font-weight:bold;'>"+etiqueta[127]+"</div>"+
+							"<div>"+
+							"<table width='100%' style='border:1px solid rgba(0,0,0,0.1);border-collapse: collapse;margin:0;'>"+
+								"<thead style='background:rgba(0,0,0,0.1);font-weight: bold;font-family: Titillium;'>"+etiqueta[79]+"</thead>"+
+								"<tr style='border:1px solid black;'>"+
+									"<td style='margin: 0px; border-right: 1px solid black;padding:8px;font-family: Titillium;'>"+
+										"<div>"+etiqueta[130]+" <strong style='color:#F7653A;font-family: Titillium;'>"+reserva.getoPaquete().getTitulo()+"</strong>"+ 
+										"</strong> "+etiqueta[133]+" <strong> "+reserva.getnNroPersonas()+" </strong> "+etiqueta[134]+"<strong> "+etiqueta[135]+" </strong>"+
+										fechas+
+										"<div><strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[250]+"</strong><br />"+
+										"<div style='font-family: Titillium;'>"+reserva.getoPaquete().getDescripcion()+"</div>"+
+					
+										"<div><strong><span style='color:rgb(255, 0, 0);'><strong><span style='color:rgb(0, 0, 0);text-decoration: underline;font-family: Titillium;'>"+etiqueta[251]+"</span></strong><br />"+
+										"<a href='"+reserva.getoPaquete().getcUrlReferenciaPaquete()+"' target='_blank'>"+reserva.getoPaquete().getcUrlReferenciaPaquete()+"</a></span></strong></div>"+
+									"</td>"+
+								"</tr>"+
+							"</table>"+
+						    "<div style='font-family: Titillium;'> "+etiqueta[138]+" </div>"+
+						    pasajeros[0]+
+						    hotel[0]+
+						    "<table width='100%' style='border:1px solid rgba(0,0,0,0.1);border-collapse: collapse;font-family: Titillium;'>"+
+						    	"<thead style='background:rgba(0,0,0,0.1);font-weight: bold;font-family: Titillium;'>"+etiqueta[80]+"</thead>"+
+						    	"<tr style='background:rgba(0,0,0,0.1);border:1px solid black;font-family: Titillium;'>"+
+						    		"<td style='border:1px solid black;font-family: Titillium;' align='center'>"+etiqueta[141]+"</td>"+
+						    		"<td style='border:1px solid black;font-family: Titillium;' align='center'>"+etiqueta[142]+"</td>"+
+						    		"<td style='border:1px solid black;font-family: Titillium;' align='center'>"+etiqueta[143]+"</td>"+
+						    		"<td style='border:1px solid black;font-family: Titillium;' align='center'>"+etiqueta[144]+"</td>"+
+						    		"<td style='border:1px solid black;font-family: Titillium;' align='center'>"+etiqueta[145]+"</td>"+
+						    	"</tr>"+
+						    	"<tr style='border:1px solid black;'>"+
+						    		"<td style='border:1px solid black;font-family: Titillium;' align='left'>"+reserva.getoPaquete().getTitulo()+"</td>"+
+						    		"<td style='border:1px solid black;font-family: Titillium;' align='center'>-</td>"+
+						    		"<td style='border:1px solid black;font-family: Titillium;' align='right'>"+precioUniPaquete+"</td>"+
+						    		"<td style='border:1px solid black;font-family: Titillium;' align='center'>"+reserva.getnNroPersonas()+"</td>"+
+						    		"<td style='border:1px solid black;color:#1A5276;font-family: Titillium;' align='right'>"+df.format(reserva.getnPrecioPaquetePersona())+"</td>"+
+						    	"</tr>"+
+						    	servicios[0]+
+						    	actividades[0]+
+						    "</table>"+
+						    "<table width='100%' style='background:rgba(0,0,0,0.02);border:1px solid black;font-family: Titillium;'>"+
+						    	"<tr>"+
+						    		"<td width='60%'></td>"+
+						    		"<td width='40%'>"+
+						    			"<table width='100%'>"+
+						    				"<tr><td>"+etiqueta[99]+"</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())+"</td></tr>"+
+						    				"<tr><td>"+etiqueta[235]+"("+oImpuesto.getImpuestoPaytoPeru()+"%)</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
+						    				"<tr><td></td><td style='color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
+						    				"<tr><td>"+etiqueta[101]+"</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo()+(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
+						    			"</table>"+
+						    		"</td>"+
+						    	"</tr>"+
+						    "</table>"+
+						    "<div style='font-family:Titillium;'>"+etiqueta[146]+"</div>"+
+						    "<div style='font-family:Titillium;'>"+etiqueta[147]+"</div>"+
+						    "<div align='left' width='100%'>"+
+							    "<table width='80%'>"+
+								    "<tr align='left'>"+
+							    		"<td><a href='"+etiqueta[214]+"'><img width='80' height='80' src='https://www.e-ranti.com/pricing_demo/img/logo_facebook.png'/></a></td>"+
+							    		"<td><a href='"+etiqueta[215]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_demo/img/youtube.png'/></a></td>"+
+							    		"<td><a href='"+etiqueta[216]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_demo/img/logo_twitter.png'/></a></td>"+
+							    		"<td style='font-family:Titillium;display:flex;padding-top:17px;box-sizing:border-box;'><img width='50' height='50' src='https://www.e-ranti.com/pricing_demo/img/wathsapp.png'/><div>"+etiqueta[151]+"</div></td>"+
+							    	"</tr>"+
+							    "</table>"+
+						    "</div>"+
+						"</div>"+
+//						  "<div style='font-size:11px;'>"+etiqueta[153]+" <strong>"+etiqueta[154]+"</strong>"+etiqueta[155]+"</div>"+
+						  "<div style='font-size:18px;color:red;font-weight:bold;font-family: Titillium;'>"+etiqueta[112]+"</div>"+
+					        "<strong style='font-family: Titillium;'>"+etiqueta[213]+"</strong>"+
+						"</div>"+
+						"<div align='center' style='background:gray;"+
+							"color:white;"+
+							"font-size:15px;font-weight:bold;width:100%;height:60px;padding:8px 0;'>"+
+							"<div style='font-family: Titillium;'>Copyright © "+cal.get(Calendar.YEAR)+" "+etiqueta[157]+"</div>"+
+						"</div>"+
+					  "</div>"+
+				"</body>"+
+			"</html>";
+		boolean b=enviarCorreoSinPagoAEmpresa("Datos de Nueva Reserva", hotel[1], oImpuesto, reserva.getoPaquete(), pasajeros[1], servicios[1], fechaInicio, fechaFin,fechaArribo, reserva, precioUniPaquete, fechaActual[1], fechas, totalPago, urlImage,actividades[1]);
+		return sendMail(reserva.getcEmail(),titulo,mensajeHTML,urlPdf,0);
+	}
 	public boolean enviarCorreoSinPagoAEmpresa(String titulo,String htmlHotel,CImpuesto oImpuesto,CPaquete paquete,String htmlPasajeros,
 			String htmlServicios,String fechaInicio,String fechaFin,String fechaArribo,CReserva reserva,String precioUniPaquete,String fechaActual,
 			String htmlFechasAlternas,String totalPago,ArrayList<String> urlImage,String htmlActividades) throws IOException, DocumentException
@@ -778,7 +1001,7 @@ public class CEmail
 								    		"<td width='60%'></td>"+
 								    		"<td width='40%'>"+
 								    		"<table width='100%'>"+
-							    				"<tr><td>Importe a pagar: MinXNroPax</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())+"</td></tr>"+
+							    				"<tr><td>Importe a pagar: MinXNroPax</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+totalPago+"</td></tr>"+
 							    				"<tr><td>Impuesto Paypal: MinXNroPax ("+oImpuesto.getImpuestoPaypal()+"%)</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
 							    				"<tr><td></td><td style='color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
 							    				"<tr><td>Total a pagar:</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo()+(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+

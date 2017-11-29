@@ -55,7 +55,8 @@ public class CPaquete
 	private boolean bModoPorcentual;// boolean
 	private boolean bModoMinimo;
 	private boolean bModoPagoTotal;// boolean
-	private boolean bModoPagoPartes;
+	private boolean bModoPagoParcial;//boolean
+	private boolean bModoPagoAmbos;
 	private Number nDescuentoMenor_Estudiante;// decimal(10,2) 
 	private boolean bSubirDocPax;// boolean 
 	private boolean bSubirDoc_Y_LlenarDatosPax;// boolean 
@@ -324,6 +325,12 @@ public class CPaquete
 	}
 	public void setbEstado(boolean bEstado) {
 		this.bEstado = bEstado;
+	}
+	public boolean isbModoPagoParcial() {
+		return bModoPagoParcial;
+	}
+	public void setbModoPagoParcial(boolean bModoPagoParcial) {
+		this.bModoPagoParcial = bModoPagoParcial;
 	}
 	public String getcDisponibilidad() {
 		return cDisponibilidad;
@@ -671,11 +678,11 @@ public class CPaquete
 	public void setbModoMinimo(boolean bModoMinimo) {
 		this.bModoMinimo = bModoMinimo;
 	}
-	public boolean isbModoPagoPartes() {
-		return bModoPagoPartes;
+	public boolean isbModoPagoAmbos() {
+		return bModoPagoAmbos;
 	}
-	public void setbModoPagoPartes(boolean bModoPagoPartes) {
-		this.bModoPagoPartes = bModoPagoPartes;
+	public void setbModoPagoAmbos(boolean bModoPagoAmbos) {
+		this.bModoPagoAmbos = bModoPagoAmbos;
 	}
 	public boolean isbAdvertencia() {
 		return bAdvertencia;
@@ -781,7 +788,8 @@ public class CPaquete
 		this.bModoPorcentual=true;
 		this.bModoMinimo=false;
 		this.bModoPagoTotal=false;
-		this.bModoPagoPartes=true;
+		this.bModoPagoParcial=false;
+		this.bModoPagoAmbos=true;
 		this.nDescuentoMenor_Estudiante=0;
 		this.bSubirDocPax=false;
 		this.bSubirDoc_Y_LlenarDatosPax=false;
@@ -825,7 +833,8 @@ public class CPaquete
 			boolean bHotelesConCamaAdicional,boolean bConCupon,
 			boolean bAdvertencia,String cTextoAdvertenciaIdioma1,
 			String cTextoAdvertenciaIdioma2,String cTextoAdvertenciaIdioma3,
-			String cTextoAdvertenciaIdioma4,String cTextoAdvertenciaIdioma5)
+			String cTextoAdvertenciaIdioma4,String cTextoAdvertenciaIdioma5,
+			boolean bModoPagoParcial)
 	{
 		this.cPaqueteCod=cPaqueteCod;
 		this.cTituloIdioma1=cTituloIdioma1;
@@ -860,6 +869,8 @@ public class CPaquete
 		this.nPagoMinimo=nPagoMinimo;
 		this.bModoPorcentual=bModoPorcentual;
 		this.bModoPagoTotal=bModoPagoTotal;
+		this.bModoPagoParcial=bModoPagoParcial;
+		this.bModoPagoAmbos=!(bModoPagoParcial || bModoPagoTotal);
 		this.nDescuentoMenor_Estudiante=nDescuentoMenor_Estudiante;
 		this.bSubirDocPax=bSubirDocPax;
 		this.bSubirDoc_Y_LlenarDatosPax=bSubirDoc_Y_LlenarDatosPax;
@@ -906,7 +917,8 @@ public class CPaquete
 			boolean bHotelesConCamaAdicional,boolean bConCupon,
 			boolean bAdvertencia,String cTextoAdvertenciaIdioma1,
 			String cTextoAdvertenciaIdioma2,String cTextoAdvertenciaIdioma3,
-			String cTextoAdvertenciaIdioma4,String cTextoAdvertenciaIdioma5) throws UnsupportedEncodingException {
+			String cTextoAdvertenciaIdioma4,String cTextoAdvertenciaIdioma5,
+			boolean bModoPagoParcial) throws UnsupportedEncodingException {
 		/*******************************/
 		simbolos= new DecimalFormatSymbols();
 		simbolos.setDecimalSeparator('.');
@@ -935,7 +947,8 @@ public class CPaquete
 		this.bModoPorcentual=bModoPorcentual;
 		this.bModoMinimo=!bModoPorcentual;
 		this.bModoPagoTotal=bModoPagoTotal;
-		this.bModoPagoPartes=!bModoPagoTotal;
+		this.bModoPagoParcial=bModoPagoParcial;
+		this.bModoPagoAmbos=!(bModoPagoParcial || bModoPagoTotal);
 		this.nDescuentoMenor_Estudiante=nDescuentoMenor_Estudiante;
 		this.bSubirDocPax=bSubirDocPax;
 		this.bSubirDoc_Y_LlenarDatosPax=bSubirDoc_Y_LlenarDatosPax;

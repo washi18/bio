@@ -22,7 +22,7 @@
 			</div>
 			<div sclass="win_div_pay">
 				<div sclass="win_div_pay_izq">
-					<label value="@bind(vmMPPaypal.etiqueta[100])" sclass="lbl_desc"/>
+					<label value="@bind(vmMPPaypal.textoTaxPaypal)" sclass="lbl_desc"/>
 				</div>
 				<div sclass="win_div_pay_der">
 					<label value="@bind(vmMPPaypal.pagos.taxPaypal)" sclass="lbl_monto"/>

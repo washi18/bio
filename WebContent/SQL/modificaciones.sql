@@ -1,3 +1,182 @@
+CREATE OR REPLACE FUNCTION Pricing_sp_RegistrarPaquete
+(
+	tituloPaqueteIdioma_1 varchar(200),
+	tituloPaqueteIdioma_2 varchar(200),
+	tituloPaqueteIdioma_3 varchar(200),
+	tituloPaqueteIdioma_4 varchar(200),
+	tituloPaqueteIdioma_5 varchar(200),
+	descripcionidioma1 text,
+	descripcionidioma2 text,
+	descripcionidioma3 text,
+	descripcionidioma4 text,
+	descripcionidioma5 text,
+	nroDias int,
+	nroNoches int,
+	precio_1 decimal(10,2),
+	precio_2 decimal(10,2),
+	precio_3 decimal(10,2),
+	precio_4 decimal(10,2),
+	precio_5 decimal(10,2),
+	manejo varchar(100),
+	dia_caminoInka int,
+	foto1 varchar(100),
+	foto2 varchar(100),
+	foto3 varchar(100),
+	foto4 varchar(100),
+	foto5 varchar(100),
+	itinerarioidioma1 text,
+	itinerarioidioma2 text,
+	itinerarioidioma3 text,
+	itinerarioidioma4 text,
+	itinerarioidioma5 text,
+	urlReferenciaPaquete text,
+	nPorcentajeCobro int,
+	nPagoMinimo int,
+	bModoPorcentual boolean, 
+	bModoPagoTotal boolean,
+	nDescuentoMenor_Estudiante decimal(10,2), 
+	bSubirDocPax boolean,
+	bSubirDoc_Y_LlenarDatosPax boolean,
+	bSubirDoc_O_LlenarDatosPax boolean, 
+	bLlenarDatosUnPax boolean,
+	bHotelesConCamaAdicional boolean,
+	bConCupon boolean,
+	bConAdvertencia boolean,
+	textoAdvertenciaIdioma1 text,
+	textoAdvertenciaIdioma2 text,
+	textoAdvertenciaIdioma3 text,
+	textoAdvertenciaIdioma4 text,
+	textoAdvertenciaIdioma5 text,
+	bModoPagoParcial boolean
+)
+RETURNS TABLE (resultado varchar(20),
+		mensaje varchar(200),
+		codPaquete varchar(10)) as
+$$
+begin
+	codPaquete=(select concat('P-',right(concat('00',count(p.cpaquetecod)+1),2)) from tpaquete p where left(p.cpaquetecod,2)='P-');
+	insert into tpaquete values(codPaquete,$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,
+								$11,$12,$13,$14,$15,$16,$17,$18,true,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,
+								$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48);
+	resultado='correcto';
+	mensaje='Datos Registrados Correctamente';
+	return Query select resultado,mensaje,codPaquete;
+end
+$$
+language plpgsql;
+CREATE OR REPLACE FUNCTION Pricing_sp_ModificarPaquetes
+(
+  Paquetecod varchar(10),
+  cTituloidioma_1 varchar(200),
+  cTituloidioma_2 varchar(200),
+  cTituloidioma_3 varchar(200),
+  cTituloidioma_4 varchar(200),
+  cTituloidioma_5 varchar(200),
+  cDescripcionidioma_1 text,
+  cDescripcionidioma_2 text,
+  cDescripcionidioma_3 text,
+  cDescripcionidioma_4 text,
+  cDescripcionidioma_5 text,
+  Dias int,
+  Noches int,
+  Preciouno decimal(10,2),
+  Preciodos decimal(10,2),
+  Preciotres decimal(10,2),
+  Preciocuatro decimal(10,2),
+  Preciocinco decimal(10,2),
+  Disponibilidad varchar(100),
+  diaCaminoInka int,
+  estado boolean,
+  foto1 varchar(100),
+  foto2 varchar(100),
+  foto3 varchar(100),
+  foto4 varchar(100),
+  foto5 varchar(100),
+  itinerarioidioma1 text,
+  itinerarioidioma2 text,
+  itinerarioidioma3 text,
+  itinerarioidioma4 text,
+  itinerarioidioma5 text,
+  urlReferenciaPaquete text,
+  porcentajeCobro int,
+  pagoMinimo int,
+  modoPorcentual boolean, 
+  modoPagoTotal boolean,
+  descuentoMenor_Estudiante decimal(10,2), 
+  subirDocPax boolean,
+  subirDoc_Y_LlenarDatosPax boolean,
+  subirDoc_O_LlenarDatosPax boolean, 
+  llenarDatosUnPax boolean,
+  hotelesConCamaAdicional boolean,
+  conCupon boolean,
+  conAdevertencia boolean,
+  textoAdvertenciaIdioma1 text,
+  textoAdvertenciaIdioma2 text,
+  textoAdvertenciaIdioma3 text,
+  textoAdvertenciaIdioma4 text,
+  textoAdvertenciaIdioma5 text,
+  modoPagoParcial boolean
+)
+RETURNS TABLE (resultado varchar(20),mensaje varchar(200),codPaquete varchar(10)) as
+$$
+begin
+	codPaquete=$1;
+	update tpaquete set ctituloidioma1=$2,
+			  ctituloidioma2=$3,
+			  ctituloidioma3=$4,
+			  ctituloidioma4=$5,
+			  ctituloidioma5=$6,
+			  cdescripcionidioma1=$7,
+			  cdescripcionidioma2=$8,
+			  cdescripcionidioma3=$9,
+			  cdescripcionidioma4=$10,
+			  cdescripcionidioma5=$11,
+			  ndias=$12,
+			  nnoches=$13,
+			  npreciouno=$14,
+			  npreciodos=$15,
+			  npreciotres=$16,
+			  npreciocuatro=$17,
+			  npreciocinco=$18,
+			  cdisponibilidad=$19,
+			  ndiacaminoinka=$20,
+			  bestado=$21,
+			  cfoto1=$22,
+			  cfoto2=$23,
+			  cfoto3=$24,
+			  cfoto4=$25,
+			  cfoto5=$26,
+			  citinerarioidioma1=$27,
+			  citinerarioidioma2=$28,
+			  citinerarioidioma3=$29,
+			  citinerarioidioma4=$30,
+			  citinerarioidioma5=$31,
+			  curlreferenciapaquete=$32,
+			  nporcentajecobro=$33,
+			  npagominimo=$34,
+			  bmodoporcentual=$35, 
+			  bmodopagototal=$36,
+			  ndescuentomenor_estudiante=$37, 
+			  bsubirdocpax=$38,
+			  bsubirdoc_y_llenardatospax=$39,
+			  bsubirdoc_o_llenardatospax=$40, 
+			  bllenardatosunpax=$41,
+			  bhotelesconcamaadicional=$42,
+			  bconcupon=$43,
+			  badvertencia=$44,
+			  ctextoadvertenciaidioma1=$45,
+			  ctextoadvertenciaidioma2=$46,
+			  ctextoadvertenciaidioma3=$47,
+			  ctextoadvertenciaidioma4=$48,
+			  ctextoadvertenciaidioma5=$49,
+			  bmodopagoparcial=$50
+			  where cpaquetecod=$1;
+	resultado='correcto';
+	mensaje='Datos Actualizados Correctamente';
+	return Query select resultado,mensaje,codPaquete;
+end
+$$
+LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION Pricing_sp_BuscarReservasInicial(
 		fechaActual varchar(12)
 )
@@ -215,6 +394,9 @@ ALTER TABLE tlistaproceso
   
 ALTER TABLE timpuesto ADD COLUMN impuestoPaytoPeru varchar(5) DEFAULT '10';
 alter table timpuesto alter column impuestoPaytoPeru drop default;
+
+alter table tpaquete add column bModoPagoParcial boolean default false;
+alter table tpaquete alter column bModoPagoParcial drop default;
 
 create table TPagoPaytoPeru
 (

@@ -64,8 +64,9 @@
 				<caption label="CONFIGURACION DEL PAGO TOTAL/PARCIAL" sclass="lbl_select_title"/>
 				<div>
 					<radiogroup sclass="select_modo_pago" orient="vertical" onCheck="@command('selectConfigParcialTotal',opcion=self.selectedItem.value)">
-						<radio label="Se puede pagar parcialmente" value="1" checked="@load(vm.oPaquete.bModoPagoPartes)"/>
-						<radio label="El pago es total" value="2" checked="@load(vm.oPaquete.bModoPagoTotal)"/>
+						<radio label="Se puede pagar Total y parcialmente" value="1" checked="@load(vm.oPaquete.bModoPagoAmbos)"/>
+						<radio label="Sólo pago Total" value="2" checked="@load(vm.oPaquete.bModoPagoTotal)"/>
+						<radio label="Sólo pago Parcial" value="3" checked="@load(vm.oPaquete.bModoPagoParcial)"/>
 					</radiogroup>
 				</div>
 			</groupbox>

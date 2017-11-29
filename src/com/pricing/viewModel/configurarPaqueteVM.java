@@ -94,14 +94,20 @@ public class configurarPaqueteVM {
 	@NotifyChange({"oPaquete"})
 	public void selectConfigParcialTotal(@BindingParam("opcion")String opcion)
 	{
-		if(opcion.toString().equals("1"))//Hoteles con cama adicional
+		if(opcion.toString().equals("1"))
 		{
-			oPaquete.setbModoPagoPartes(true);
+			oPaquete.setbModoPagoAmbos(true);
 			oPaquete.setbModoPagoTotal(false);
-		}else//Hoteles sin cama adicional
+			oPaquete.setbModoPagoParcial(false);
+		}else if(opcion.toString().equals("2"))
 		{
-			oPaquete.setbModoPagoPartes(false);
+			oPaquete.setbModoPagoAmbos(false);
 			oPaquete.setbModoPagoTotal(true);
+			oPaquete.setbModoPagoParcial(false);
+		}else{
+			oPaquete.setbModoPagoAmbos(false);
+			oPaquete.setbModoPagoTotal(false);
+			oPaquete.setbModoPagoParcial(true);
 		}
 	}
 	@Command

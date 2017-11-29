@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 
+import com.pricing.dao.CImpuestoDAO;
 import com.pricing.model.CPagos;
 
 public class montoPaymentPaypalVM {
@@ -16,6 +17,7 @@ public class montoPaymentPaypalVM {
 	private String montoTotalPorcentual;
 	private CPagos pagos;
 	private String[] etiqueta;
+	private String textoTaxPaypal;
 	HttpSession seshttp;
 	//===============================
 	public String getTextoPorcentaje() {
@@ -42,6 +44,12 @@ public class montoPaymentPaypalVM {
 	public void setPagos(CPagos pagos) {
 		this.pagos = pagos;
 	}
+	public String getTextoTaxPaypal() {
+		return textoTaxPaypal;
+	}
+	public void setTextoTaxPaypal(String textoTaxPaypal) {
+		this.textoTaxPaypal = textoTaxPaypal;
+	}
 	//================================
 	@Init
 	public void initVM()
@@ -49,7 +57,7 @@ public class montoPaymentPaypalVM {
 		this.pagos=new CPagos();
 	}
 	@GlobalCommand
-	@NotifyChange({"textoPorcentaje","montoTotalPorcentual","etiqueta","pagos"})
+	@NotifyChange({"textoPorcentaje","montoTotalPorcentual","etiqueta","pagos","textoTaxPaypal"})
 	public void datosDePagoPaypal(@BindingParam("textoPorcentaje")String txtPorcentaje,
 			@BindingParam("montoTotalPorcentual")String montoTotalPorcentual,
 			@BindingParam("pagos")CPagos pagos,
@@ -59,6 +67,9 @@ public class montoPaymentPaypalVM {
 		this.montoTotalPorcentual=montoTotalPorcentual;
 		this.pagos=pagos;
 		this.etiqueta=etiqueta;
+		CImpuestoDAO impuestoDao=new CImpuestoDAO();
+		impuestoDao.recuperarImpuestosBD();
+		this.textoTaxPaypal=etiqueta[100]+"("+impuestoDao.getoImpuesto().getImpuestoPaypal()+" %)";
 	}
 	@Command
 	public void cerrarVentanaPago()

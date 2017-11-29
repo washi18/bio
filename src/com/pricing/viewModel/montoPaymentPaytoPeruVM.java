@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 
+import com.pricing.dao.CImpuestoDAO;
 import com.pricing.model.CPagos;
 
 public class montoPaymentPaytoPeruVM {
@@ -16,6 +17,7 @@ public class montoPaymentPaytoPeruVM {
 	private String montoTotalPorcentual;
 	private CPagos pagos;
 	private String[] etiqueta;
+	private String textoTaxPaytoPeru;
 	HttpSession seshttp;
 	//===============================
 	public String getTextoPorcentaje() {
@@ -42,6 +44,12 @@ public class montoPaymentPaytoPeruVM {
 	public void setPagos(CPagos pagos) {
 		this.pagos = pagos;
 	}
+	public String getTextoTaxPaytoPeru() {
+		return textoTaxPaytoPeru;
+	}
+	public void setTextoTaxPaytoPeru(String textoTaxPaytoPeru) {
+		this.textoTaxPaytoPeru = textoTaxPaytoPeru;
+	}
 	//================================
 	@Init
 	public void initVM()
@@ -49,7 +57,7 @@ public class montoPaymentPaytoPeruVM {
 		this.pagos=new CPagos();
 	}
 	@GlobalCommand
-	@NotifyChange({"textoPorcentaje","montoTotalPorcentual","etiqueta","pagos"})
+	@NotifyChange({"textoPorcentaje","montoTotalPorcentual","etiqueta","pagos","textoTaxPaytoPeru"})
 	public void datosDePagoPaytoPeru(@BindingParam("textoPorcentaje")String txtPorcentaje,
 			@BindingParam("montoTotalPorcentual")String montoTotalPorcentual,
 			@BindingParam("pagos")CPagos pagos,
@@ -59,6 +67,9 @@ public class montoPaymentPaytoPeruVM {
 		this.montoTotalPorcentual=montoTotalPorcentual;
 		this.pagos=pagos;
 		this.etiqueta=etiqueta;
+		CImpuestoDAO impuestoDao=new CImpuestoDAO();
+		impuestoDao.recuperarImpuestosBD();
+		this.textoTaxPaytoPeru=etiqueta[235]+"("+impuestoDao.getoImpuesto().getImpuestoPaytoPeru()+" %)";
 	}
 	@Command
 	public void cerrarVentanaPago()

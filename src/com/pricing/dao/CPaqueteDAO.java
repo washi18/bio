@@ -70,7 +70,8 @@ public class CPaqueteDAO extends CConexion
 				(boolean)row.get("bconcupon"),(boolean)row.get("badvertencia"),
 				(String)row.get("ctextoadvertenciaidioma1"),(String)row.get("ctextoadvertenciaidioma2"),
 				(String)row.get("ctextoadvertenciaidioma3"),(String)row.get("ctextoadvertenciaidioma4"),
-				(String)row.get("ctextoadvertenciaidioma5"));
+				(String)row.get("ctextoadvertenciaidioma5"),
+				(boolean)row.get("bmodopagoparcial"));
 	}
 	public void asignarListaPaquetes(List lista) throws UnsupportedEncodingException
 	{
@@ -99,7 +100,8 @@ public class CPaqueteDAO extends CConexion
 					(boolean)row.get("bconcupon"),(boolean)row.get("badvertencia"),
 					(String)row.get("ctextoadvertenciaidioma1"),(String)row.get("ctextoadvertenciaidioma2"),
 					(String)row.get("ctextoadvertenciaidioma3"),(String)row.get("ctextoadvertenciaidioma4"),
-					(String)row.get("ctextoadvertenciaidioma5")));
+					(String)row.get("ctextoadvertenciaidioma5"),
+					(boolean)row.get("bmodopagoparcial")));
 		}
 	}
 	public List buscarPaquetesBD(String nombre){
@@ -123,7 +125,7 @@ public class CPaqueteDAO extends CConexion
 				paquete.isbLlenarDatosUnPax(),paquete.isbHotelesConCamaAdicional(),paquete.isbConCupon(),
 				paquete.isbAdvertencia(),paquete.getcTextoAdvertenciaIdioma1(),paquete.getcTextoAdvertenciaIdioma2(),
 				paquete.getcTextoAdvertenciaIdioma3(),paquete.getcTextoAdvertenciaIdioma4(),
-				paquete.getcTextoAdvertenciaIdioma5()};
+				paquete.getcTextoAdvertenciaIdioma5(),paquete.isbModoPagoParcial()};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_RegistrarPaquete", values);
 	}
 	/**METODOS DE PAQUETE SERVICIO**/
@@ -202,7 +204,7 @@ public class CPaqueteDAO extends CConexion
 				paquete.isbLlenarDatosUnPax(),paquete.isbHotelesConCamaAdicional(),paquete.isbConCupon(),
 				paquete.isbAdvertencia(),paquete.getcTextoAdvertenciaIdioma1(),paquete.getcTextoAdvertenciaIdioma2(),
 				paquete.getcTextoAdvertenciaIdioma3(),paquete.getcTextoAdvertenciaIdioma4(),
-				paquete.getcTextoAdvertenciaIdioma5()};
+				paquete.getcTextoAdvertenciaIdioma5(),paquete.isbModoPagoParcial()};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_ModificarPaquetes", values);
 	}
 	public List modificarImagenesPaquete(CPaquete paquete)

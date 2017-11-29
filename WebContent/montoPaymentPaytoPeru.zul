@@ -22,7 +22,7 @@
 			</div>
 			<div sclass="win_div_pay">
 				<div sclass="win_div_pay_izq">
-					<label value="@bind(vmMPPayto.etiqueta[100])" sclass="lbl_desc"/>
+					<label value="@bind(vmMPPayto.textoTaxPaytoPeru)" sclass="lbl_desc"/>
 				</div>
 				<div sclass="win_div_pay_der">
 					<label value="@bind(vmMPPayto.pagos.taxPaytoPeru)" sclass="lbl_monto"/>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<div align="center" style="padding:10px;">
-				<html content="@bind(vmMPPayto.pagos.urlPaytoPeru)"/>
+				<html content="@bind(vmMPPayto.pagos.urlPaytoPeru)" width="80%"/>
 			</div>
 		</div>
 	</window>
