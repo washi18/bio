@@ -1,4 +1,5 @@
 <?page title="Etiquetas" contentType="text/html;charset=UTF-8"?>
+<!-- Comentario extra -->
 <zk>
     <style src="css/formas_Generales.css"/>
     <style src="css/estilos_Etiqueta.css"/>
