@@ -151,10 +151,14 @@ public class etiquetaVM
 	    BindUtils.postNotifyChange(null, null, this,"listaEtiquetas");
 	}
 	@Command
-	public void buscarEtiquetas(@BindingParam("nombre")String nombre){
-		etiquetaDao.asignarListaEtiquetas(etiquetaDao.buscarEtiquetasBD(nombre));
-		setListaEtiquetas(etiquetaDao.getListaEtiquetas());
-		BindUtils.postNotifyChange(null, null, this, "listaEtiquetas");
+	public void buscarEtiquetas(@BindingParam("nombre")String nombre,@BindingParam("txtbuscar")boolean tipo){
+		if(tipo){
+			etiquetaDao.asignarListaEtiquetas(etiquetaDao.buscarEtiquetasBD(nombre));
+			setListaEtiquetas(etiquetaDao.getListaEtiquetas());
+			BindUtils.postNotifyChange(null, null, this, "listaEtiquetas");
+		}else{
+			System.out.println("Esto es un filtro por procesos");
+		}
 	}
 	
 	@Command
