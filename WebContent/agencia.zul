@@ -39,6 +39,11 @@
 				   		<datebox value="@bind(vmAgencia.oAgencia.dFechaCreacion)" readonly="true" onChange="@command('detFechaCreacion',fecha=self.value)"/>
 				   </div>
 				   <separator bar="true"/>
+				   <div>
+				   		<label value="RUC DE LA EMPRESA:" sclass="lbl_llenar_datos"/>
+				   		<textbox placeholder="Ingrese RUC" value="@bind(vmAgencia.oAgencia.cRuc)" sclass="txt_llenar_datos"></textbox>
+				   </div>
+				   <separator bar="true"/>
 				   <div zclass="div_content_btns_operaciones" align="center" width="100%">
 				 		<button label="GUARDAR" width="100%" zclass="btn_guardar" onClick="@command('insert_update_Agencia',componente=self)"/>
 				 		<button label="CANCELAR" width="100%" zclass="btn_editar" onClick="@command('Cancelar')"/>
@@ -73,6 +78,11 @@
 				   <div>
 				   		<label value="FECHA DE CREACION:" sclass="lbl_llenar_datos"/>
 				   		<label value="@bind(vmAgencia.fecha)"/>
+				   </div>
+				   <separator bar="true"/>
+				   <div>
+				   		<label value="RUC DE LA EMPRESA:" sclass="lbl_llenar_datos"/>
+				   		<label value="@bind(vmAgencia.oAgencia.cRuc)"/>
 				   </div>
 				   <separator bar="true"/>
 				   <div width="100%" align="center">

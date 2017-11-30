@@ -62,6 +62,7 @@ import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Vbox;
 import org.zkoss.zul.Window;
 
+import com.android.dao.CAgenciaDAO;
 import com.lowagie.text.DocumentException;
 import com.pricing.dao.CActividadDAO;
 import com.pricing.dao.CConfigUrlDAO;
@@ -3149,8 +3150,11 @@ public class pricingVM
 		pagos.setTaxPaytoPeru(df.format(Double.parseDouble(monto_Pagar_sin_impuesto)*(Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)));
 		pagos.setTotalConImpuestoPaytoPeru(df.format(Double.parseDouble(monto_Pagar_sin_impuesto)+Double.parseDouble(pagos.getTaxPaytoPeru())));
 		/*****************/
+		CAgenciaDAO agenciaDao=new CAgenciaDAO();
+		String cRuc=agenciaDao.getoAgencia().getcRuc();
+		/*****************/
 		String formPaytoPeru="<form method='POST' action='"+urlPaytoPeru+"'>"+
-			"<input type='hidden' name='keymerchant' value='20490712560'>"+
+			"<input type='hidden' name='keymerchant' value='"+cRuc+"'>"+
 			"<input type='hidden' name='codigo_transaccion' value='"+oReservar.getcReservaCod()+"'>"+
 			"<input type='hidden' name='importe' value='"+pagos.getTotalConImpuestoPaytoPeru()+"'>"+
 			"<input type='hidden' name='items' value='1'>"+

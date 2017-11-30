@@ -36,14 +36,15 @@ public class CAgenciaDAO extends CConexion{
 			oAgencia=new CAgencia((String)row.get("cagenciacod"), 
 					(String)row.get("crazonsocial"),(String)row.get("cdireccion"), 
 					(String)row.get("ctelefono"),(String)row.get("cpaginaweb"),(String)row.get("cemail"), 
-					(Date)row.get("dfechacreacion"));
+					(Date)row.get("dfechacreacion"),(String)row.get("cruc"));
 		}else
 			oAgencia=new CAgencia();
 	}
 	public List insertarAgencia(CAgencia agencia)
 	{
 		Object[] values={agencia.getcRazonSocial(),agencia.getcDireccion(),
-				agencia.getcTelefono(),agencia.getcPaginaWeb(),agencia.getcEmail(),agencia.getdFechaCreacion()};
+				agencia.getcTelefono(),agencia.getcPaginaWeb(),agencia.getcEmail(),
+				agencia.getdFechaCreacion(),agencia.getcRuc()};
 		return getEjecutorSQL().ejecutarProcedimiento("Android_sp_RegistrarAgencia", values);
 	}
 	public boolean isOperationCorrect(List lista)

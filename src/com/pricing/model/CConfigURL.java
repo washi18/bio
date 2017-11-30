@@ -7,8 +7,8 @@ public class CConfigURL
 	private String urlPaginaWeb;// text,
 	private String urlLogoEmpresa;// text,
 	private String logoEmpresa;// text,
-	private String urlServletPagoParcial;// text,
-	private String urlServletPagoTotal;// text,
+	private String urlServletPagoParcialPaypal;// text,
+	private String urlServletPagoParcialPaytoPeru;// text,
 	private String urlTerminosYCondiciones;// text,
 	private boolean editable;
 	/****************/
@@ -42,17 +42,17 @@ public class CConfigURL
 	public void setLogoEmpresa(String logoEmpresa) {
 		this.logoEmpresa = logoEmpresa;
 	}
-	public String getUrlServletPagoParcial() {
-		return urlServletPagoParcial;
+	public String getUrlServletPagoParcialPaypal() {
+		return urlServletPagoParcialPaypal;
 	}
-	public void setUrlServletPagoParcial(String urlServletPagoParcial) {
-		this.urlServletPagoParcial = urlServletPagoParcial;
+	public void setUrlServletPagoParcialPaypal(String urlServletPagoParcialPaypal) {
+		this.urlServletPagoParcialPaypal = urlServletPagoParcialPaypal;
 	}
-	public String getUrlServletPagoTotal() {
-		return urlServletPagoTotal;
+	public String getUrlServletPagoParcialPaytoPeru() {
+		return urlServletPagoParcialPaytoPeru;
 	}
-	public void setUrlServletPagoTotal(String urlServletPagoTotal) {
-		this.urlServletPagoTotal = urlServletPagoTotal;
+	public void setUrlServletPagoParcialPaytoPeru(String urlServletPagoParcialPaytoPeru) {
+		this.urlServletPagoParcialPaytoPeru = urlServletPagoParcialPaytoPeru;
 	}
 	public String getUrlTerminosYCondiciones() {
 		return urlTerminosYCondiciones;
@@ -73,22 +73,22 @@ public class CConfigURL
 		this.urlPaginaWeb = "";
 		this.urlLogoEmpresa = "";
 		this.logoEmpresa = "/img/logo_default.png";
-		this.urlServletPagoParcial = "";
-		this.urlServletPagoTotal = "";
+		this.urlServletPagoParcialPaypal = "";
+		this.urlServletPagoParcialPaytoPeru = "";
 		this.urlTerminosYCondiciones="";
 		this.editable=false;
 	}
 	public CConfigURL(int nConfigUrlCod, String urlReturnPaypal,
 			String urlPaginaWeb, String urlLogoEmpresa, String logoEmpresa,
-			String urlServletPagoParcial, String urlServletPagoTotal,
+			String urlServletPagoParcialPaypal, String urlServletPagoParcialPaytoPeru,
 			String urlTerminosYCondiciones) {
 		this.nConfigUrlCod = nConfigUrlCod;
 		this.urlReturnPaypal = urlReturnPaypal;
 		this.urlPaginaWeb = urlPaginaWeb;
 		this.urlLogoEmpresa = urlLogoEmpresa;
 		this.logoEmpresa = logoEmpresa;
-		this.urlServletPagoParcial = urlServletPagoParcial;
-		this.urlServletPagoTotal = urlServletPagoTotal;
+		this.urlServletPagoParcialPaypal = urlServletPagoParcialPaypal;
+		this.urlServletPagoParcialPaytoPeru = urlServletPagoParcialPaytoPeru;
 		this.urlTerminosYCondiciones = urlTerminosYCondiciones;
 		this.editable = false;
 	}

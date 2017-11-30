@@ -10,6 +10,7 @@ public class CAgencia {
 	private String cPaginaWeb;// varchar(100),			--pagina web de la agencia
 	private String cEmail;// varchar(100),				--email de la agencia
 	private Date dFechaCreacion;// timestamp,
+	private String cRuc;//varchar(11)
 	private boolean editable;
 	//========================
 	public String getcAgenciaCod() {
@@ -60,19 +61,25 @@ public class CAgencia {
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
+	public String getcRuc() {
+		return cRuc;
+	}
+	public void setcRuc(String cRuc) {
+		this.cRuc = cRuc;
+	}
 	//=====================
 	public CAgencia() {
 		// TODO Auto-generated constructor stub
-		this.cRazonSocial="";
 		this.cRazonSocial="";
 		this.cDireccion="";
 		this.cTelefono="";
 		this.cPaginaWeb="";
 		this.cEmail="";
+		this.cRuc="";
 		this.editable=false;
 	}
 	public CAgencia(String cAgenciaCod, String cRazonSocial, String cDireccion, String cTelefono, String cPaginaWeb,
-			String cEmail, Date dFechaCreacion) {
+			String cEmail, Date dFechaCreacion,String cRuc) {
 		this.cAgenciaCod = cAgenciaCod;
 		this.cRazonSocial = cRazonSocial;
 		this.cDireccion = cDireccion;
@@ -80,6 +87,7 @@ public class CAgencia {
 		this.cPaginaWeb = cPaginaWeb;
 		this.cEmail = cEmail;
 		this.dFechaCreacion = dFechaCreacion;
+		this.cRuc=cRuc;
 		this.editable=false;
 	}
 }

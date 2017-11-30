@@ -156,7 +156,7 @@ public class PaytoPeruParcialServlet extends HttpServlet implements javax.servle
 				 				out.println("<input type='hidden' name='apellidos' value=''>");
 				 				out.println("<input type='hidden' name='descripcion' value='"+namePaquete+"'>");
 				 				out.println("<input type='submit' name='submit' border='0' width='100px'");
-				 				out.println("class='button_payment' value='"+etiqueta[218]+"' style='background:#3BB710;border-radius:10px;padding:5px;'/>");
+				 				out.println("class='button_payment' value='"+etiqueta[218]+"' style='background:#3BB710;border-radius:5px;border:none;padding:10px;width:130px;font-size:18px;color:white;font-weight:bold;cursor:pointer;'/>");
 				 			out.println("</form>");
 				 		out.println("</div>");	
 				 	out.println("</div>");

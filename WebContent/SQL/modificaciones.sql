@@ -1,3 +1,31 @@
+ALTER TABLE tagencia ADD COLUMN cRuc varchar(11) DEFAULT '20490712560';
+alter table tagencia alter column cRuc drop default;
+create or replace function Android_sp_RegistrarAgencia
+(
+        razonSocial varchar(150),			--razon social de la agencia
+	direccion varchar(150),			--direccion de la agencia
+	telefono varchar(50),				--telefonos de la agencia
+	paginaWeb varchar(100),			--pagina web de la agencia
+	email varchar(100),				--email de la agencia
+	fechaCreacion date,
+	ruc varchar(11)
+)
+returns table(resultado varchar(20),mensaje varchar(200),codAgencia varchar(20))as
+$$
+begin
+	codAgencia=(select cagenciacod from tagencia);
+	if(codAgencia is null)then
+		insert into tagencia values('A-1',$1,$2,$3,$4,$5,$6,$7);
+	else
+		update tagencia set crazonsocial=$1,cdireccion=$2,ctelefono=$3,cpaginaweb=$4,cemail=$5, dfechacreacion=$6, cruc=$7 where cagenciacod='A-1';
+	end if;
+	codAgencia='A-1';
+	resultado='correcto';
+	mensaje='Datos Registrados Correctamente';
+	return Query select resultado,mensaje,codAgencia;
+end
+$$
+language plpgsql;
 CREATE OR REPLACE FUNCTION Pricing_sp_RegistrarPaquete
 (
 	tituloPaqueteIdioma_1 varchar(200),

@@ -31,13 +31,13 @@
 				<div sclass="div_content_config_items">
 					<label value="URL del servlet de Paypal para pago Parcial:" sclass="lbl_congif_sutitle"/>
 					<div>
-						<textbox value="@bind(vmConfUrl.oConfigUrl.urlServletPagoParcial)" sclass="txt_config_valor"/>
+						<textbox value="@bind(vmConfUrl.oConfigUrl.urlServletPagoParcialPaypal)" sclass="txt_config_valor"/>
 					</div>
 				</div>
 				<div sclass="div_content_config_items">
-					<label value="URL del servlet de Paypal para pago Total:" sclass="lbl_congif_sutitle"/>
+					<label value="URL del servlet de PaytoPeru para pago Parcial:" sclass="lbl_congif_sutitle"/>
 					<div>
-						<textbox value="@bind(vmConfUrl.oConfigUrl.urlServletPagoTotal)" sclass="txt_config_valor"/>
+						<textbox value="@bind(vmConfUrl.oConfigUrl.urlServletPagoParcialPaytoPeru)" sclass="txt_config_valor"/>
 					</div>
 				</div>
 				<div sclass="div_content_config_items">
@@ -80,13 +80,13 @@
 				<div sclass="div_content_config_items">
 					<label value="URL del servlet de Paypal para pago Parcial:" sclass="lbl_congif_sutitle"/>
 					<div>
-						<a label="@bind(vmConfUrl.oConfigUrl.urlServletPagoParcial)"/>
+						<a label="@bind(vmConfUrl.oConfigUrl.urlServletPagoParcialPaypal)"/>
 					</div>
 				</div>
 				<div sclass="div_content_config_items">
-					<label value="URL del servlet de Paypal para pago Total:" sclass="lbl_congif_sutitle"/>
+					<label value="URL del servlet de PaytoPeru para pago Parcial:" sclass="lbl_congif_sutitle"/>
 					<div>
-						<a label="@bind(vmConfUrl.oConfigUrl.urlServletPagoTotal)"/>
+						<a label="@bind(vmConfUrl.oConfigUrl.urlServletPagoParcialPaytoPeru)"/>
 					</div>
 				</div>
 				<div sclass="div_content_config_items">

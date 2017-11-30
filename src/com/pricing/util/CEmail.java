@@ -318,16 +318,14 @@ public class CEmail
 	public boolean enviarCorreoSinPago(String titulo,String language,CImpuesto oImpuesto,String[] etiqueta,CReservaPaqueteCategoriaHotel oReservaPCH,
 			String fechaInicio,String fechaFin,String fechaArribo,CReserva reserva,
 			ArrayList<String> fechasAlternas,String totalPago,String pagoParcial,
-			String urlPdf,ArrayList<String> urlImage,ArrayList<CPasajero> listaPasajeros) throws IOException, DocumentException
+			String urlPdf,ArrayList<String> urlImage,
+			ArrayList<CPasajero> listaPasajeros) throws IOException, DocumentException
 	{
 		this.etiqueta=etiqueta;
 		Calendar cal=Calendar.getInstance();
 		/************************/
 		/**Obtener fecha actual**/
 		String[] fechaActual=obtenerFechaActual();
-		/**Se obtiene el impuesto e importe total del totalPago**/
-		String impuesto=df.format(Double.parseDouble(totalPago)*(Double.parseDouble(oImpuesto.getImpuestoPaypal())/100));
-		String importeTotal=df.format(Double.parseDouble(totalPago)+Double.parseDouble(impuesto));
 		/*********************************************************/
 		/**Se obtiene el precio unitario del paquete acorde al numero de pasajeros esto debido a que se aplica descuento**/
 		String precioUniPaquete=obtenerPrecioUnitarioPaquete(reserva,reserva.getoPaquete());
@@ -369,13 +367,52 @@ public class CEmail
 			textoParcial=etiqueta[102];
 			textoTotal=etiqueta[103];
 		}
+		/*****************************************/
+		String muestraPagoParcialPaypal="";
+		String muestraPagoParcialPaytoPeru="";
+		if(reserva.getoPaquete().isbModoPorcentual())
+		{
+			muestraPagoParcialPaypal="<td width='50%' style='border-style: solid;'>"+
+								    		"<table width='100%'>"+
+							    				"<tr><td>"+etiqueta[99]+"("+reserva.getoPaquete().getnPorcentajeCobro()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)+"</td></tr>"+
+							    				"<tr><td>"+etiqueta[100]+"("+oImpuesto.getImpuestoPaypal()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
+							    				"<tr><td></td><td style='font-weight:bold;font-size:17px;color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
+							    				"<tr><td>"+etiqueta[101]+"("+reserva.getoPaquete().getnPorcentajeCobro()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)+((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
+							    			"</table>"+
+							    		"</td>";
+			muestraPagoParcialPaytoPeru="<td width='50%' style='border-style: solid;'>"+
+		    		"<table width='100%'>"+
+		    		"<tr><td>"+etiqueta[99]+"("+reserva.getoPaquete().getnPorcentajeCobro()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)+"</td></tr>"+
+    				"<tr><td>"+etiqueta[235]+"("+oImpuesto.getImpuestoPaytoPeru()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
+    				"<tr><td></td><td style='font-weight:bold;font-size:17px;color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
+    				"<tr><td>"+etiqueta[101]+"("+reserva.getoPaquete().getnPorcentajeCobro()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)+((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
+	    			"</table>"+
+	    		"</td>";
+		}else
+		{
+			muestraPagoParcialPaypal="<td width='50%' style='border-style: solid;'>"+
+				"<table width='100%'>"+
+					"<tr><td>"+etiqueta[99]+"("+etiqueta[102]+") </td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())+"</td></tr>"+
+					"<tr><td>"+etiqueta[100]+"("+oImpuesto.getImpuestoPaypal()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
+					"<tr><td></td><td style='font-weight:bold;font-size:17px;color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
+					"<tr><td>"+etiqueta[101]+"("+etiqueta[102]+") </td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo()+(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
+				"</table>"+
+			"</td>";
+			muestraPagoParcialPaytoPeru="<td width='50%' style='border-style: solid;'>"+
+					"<table width='100%'>"+
+						"<tr><td>"+etiqueta[99]+"("+etiqueta[102]+") </td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())+"</td></tr>"+
+						"<tr><td>"+etiqueta[235]+"("+oImpuesto.getImpuestoPaytoPeru()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
+						"<tr><td></td><td style='font-weight:bold;font-size:17px;color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
+						"<tr><td>"+etiqueta[101]+"("+etiqueta[102]+") </td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo()+(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
+					"</table>"+
+				"</td>";
+		}
 		/****************************************/
-		String btnPagoTotalPaypal="";
 		String btnPagoParcialPaypal="";
 		String btnPagoParcialPaytoPeru="";
 			btnPagoParcialPaypal="<td style='margin: 0px; text-align: center;padding-bottom:15px;font-family: Titillium;'>"+
 					etiqueta[128]+"("+textoParcial+")"+
-					"<form action='"+configUrlDao.getoConfigUrl().getUrlServletPagoParcial()+"' method='POST'>"+
+					"<form action='"+configUrlDao.getoConfigUrl().getUrlServletPagoParcialPaypal()+"' method='POST'>"+
 						"<input type='hidden' name='Monto' value='"+pagoParcial+"'/>"+
 						"<input type='hidden' name='codReserva' value='"+reserva.getcReservaCod()+"'/>"+
 						"<input type='hidden' name='codPaquete' value='"+reserva.getoPaquete().getcPaqueteCod()+"'/>"+
@@ -389,12 +426,12 @@ public class CEmail
 						"<input type='hidden' name='nroPersonas' value='"+reserva.getnNroPersonas()+"'/>"+
 						"<input type='hidden' name='telefono' value='"+reserva.getcTelefono()+"'/>"+
 						"<input type='image' name='submit' border='0'"+
-		    			"src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'/>"+
+		    			"src='https://www.e-ranti.com/pricing_demo/img/payment/btn_xpressCheckout.gif'/>"+
 					"</form>"+
 		    		"</td>";
 			btnPagoParcialPaytoPeru="<td style='margin: 0px; text-align: center;padding-bottom:15px;font-family: Titillium;'>"+
 					etiqueta[128]+"("+textoParcial+")"+
-					"<form action='http://localhost:8080/bioandeanexpeditions/PaytoPeruPago' method='POST'>"+
+					"<form action='"+configUrlDao.getoConfigUrl().getUrlServletPagoParcialPaytoPeru()+"' method='POST'>"+
 						"<input type='hidden' name='Monto' value='"+pagoParcial+"'/>"+
 						"<input type='hidden' name='codReserva' value='"+reserva.getcReservaCod()+"'/>"+
 						"<input type='hidden' name='codPaquete' value='"+reserva.getoPaquete().getcPaqueteCod()+"'/>"+
@@ -407,8 +444,8 @@ public class CEmail
 						"<input type='hidden' name='fechaFin' value='"+fechaFin+"'/>"+
 						"<input type='hidden' name='nroPersonas' value='"+reserva.getnNroPersonas()+"'/>"+
 						"<input type='hidden' name='telefono' value='"+reserva.getcTelefono()+"'/>"+
-						"<input type='image' name='submit' border='0'"+
-		    			"src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'/>"+
+						"<input type='image' name='submit' border='0' style='width:180px'"+
+		    			"src='https://www.e-ranti.com/pricing_demo/img/payment/visa-mastercard.png'/>"+
 					"</form>"+
 		    		"</td>";
 		/****************************************/
@@ -505,7 +542,6 @@ public class CEmail
 							"<table width='100%' style='border:1px solid rgba(0,0,0,0.1);border-collapse: collapse;margin:0;'>"+
 								"<thead style='background:rgba(0,0,0,0.1);font-weight: bold;font-family: Titillium;'>"+etiqueta[78]+"</thead>"+
 								"<tr style='border:1px solid black;'>"+
-									btnPagoTotalPaypal+
 						    		btnPagoParcialPaypal+
 						    		btnPagoParcialPaytoPeru+
 								"</tr>"+
@@ -551,15 +587,8 @@ public class CEmail
 						    "</table>"+
 						    "<table width='100%' style='background:rgba(0,0,0,0.02);border:1px solid black;font-family: Titillium;'>"+
 						    	"<tr>"+
-						    		"<td width='60%'></td>"+
-						    		"<td width='40%'>"+
-						    			"<table width='100%'>"+
-						    				"<tr><td>"+etiqueta[99]+"</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())+"</td></tr>"+
-						    				"<tr><td>"+etiqueta[100]+"("+oImpuesto.getImpuestoPaypal()+"%)</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
-						    				"<tr><td></td><td style='color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
-						    				"<tr><td>"+etiqueta[101]+"</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo()+(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
-						    			"</table>"+
-						    		"</td>"+
+						    	muestraPagoParcialPaytoPeru+
+						    	muestraPagoParcialPaypal+
 						    	"</tr>"+
 						    "</table>"+
 						    "<div style='font-family:Titillium;'>"+etiqueta[146]+"</div>"+
@@ -600,9 +629,6 @@ public class CEmail
 		/************************/
 		/**Obtener fecha actual**/
 		String[] fechaActual=obtenerFechaActual();
-		/**Se obtiene el impuesto e importe total del totalPago**/
-		String impuesto=df.format(Double.parseDouble(totalPago)*(Double.parseDouble(oImpuesto.getImpuestoPaypal())/100));
-		String importeTotal=df.format(Double.parseDouble(totalPago)+Double.parseDouble(impuesto));
 		/*********************************************************/
 		/**Se obtiene el precio unitario del paquete acorde al numero de pasajeros esto debido a que se aplica descuento**/
 		String precioUniPaquete=obtenerPrecioUnitarioPaquete(reserva,reserva.getoPaquete());
@@ -772,19 +798,6 @@ public class CEmail
 						    	servicios[0]+
 						    	actividades[0]+
 						    "</table>"+
-						    "<table width='100%' style='background:rgba(0,0,0,0.02);border:1px solid black;font-family: Titillium;'>"+
-						    	"<tr>"+
-						    		"<td width='60%'></td>"+
-						    		"<td width='40%'>"+
-						    			"<table width='100%'>"+
-						    				"<tr><td>"+etiqueta[99]+"</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())+"</td></tr>"+
-						    				"<tr><td>"+etiqueta[235]+"("+oImpuesto.getImpuestoPaytoPeru()+"%)</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
-						    				"<tr><td></td><td style='color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
-						    				"<tr><td>"+etiqueta[101]+"</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo()+(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
-						    			"</table>"+
-						    		"</td>"+
-						    	"</tr>"+
-						    "</table>"+
 						    "<div style='font-family:Titillium;'>"+etiqueta[146]+"</div>"+
 						    "<div style='font-family:Titillium;'>"+etiqueta[147]+"</div>"+
 						    "<div align='left' width='100%'>"+
@@ -826,6 +839,46 @@ public class CEmail
 		if(reserva.getoPaquete().isConFechaArribo())
 			arribo="<br />"+
 		"<strong>Estadia en Cusco hasta: </strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>";
+		/*****************************************/
+		String muestraPagoParcialPaypal="";
+		String muestraPagoParcialPaytoPeru="";
+		if(reserva.getoPaquete().isbModoPorcentual())
+		{
+			muestraPagoParcialPaypal="<td width='50%' style='border-style: solid;'>"+
+								    		"<table width='100%'>"+
+							    				"<tr><td>Importe a pagar("+reserva.getoPaquete().getnPorcentajeCobro()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)+"</td></tr>"+
+							    				"<tr><td>Impuesto Paypal("+oImpuesto.getImpuestoPaypal()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
+							    				"<tr><td></td><td style='font-weight:bold;font-size:17px;color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
+							    				"<tr><td>Importe Total("+reserva.getoPaquete().getnPorcentajeCobro()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)+((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
+							    			"</table>"+
+							    		"</td>";
+			muestraPagoParcialPaytoPeru="<td width='50%' style='border-style: solid;'>"+
+		    		"<table width='100%'>"+
+		    		"<tr><td>Importe a pagar("+reserva.getoPaquete().getnPorcentajeCobro()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)+"</td></tr>"+
+    				"<tr><td>Impuesto PaytoPeru("+oImpuesto.getImpuestoPaytoPeru()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
+    				"<tr><td></td><td style='font-weight:bold;font-size:17px;color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
+    				"<tr><td>Importe Total("+reserva.getoPaquete().getnPorcentajeCobro()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)+((Double.parseDouble(totalPago)*reserva.getoPaquete().getnPorcentajeCobro())/100)*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
+	    			"</table>"+
+	    		"</td>";
+		}else
+		{
+			muestraPagoParcialPaypal="<td width='50%' style='border-style: solid;'>"+
+				"<table width='100%'>"+
+					"<tr><td>Importe a pagar("+etiqueta[102]+") </td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())+"</td></tr>"+
+					"<tr><td>Impuesto Paypal("+oImpuesto.getImpuestoPaypal()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
+					"<tr><td></td><td style='font-weight:bold;font-size:17px;color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
+					"<tr><td>Importe Total("+etiqueta[102]+") </td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo()+(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
+				"</table>"+
+			"</td>";
+			muestraPagoParcialPaytoPeru="<td width='50%' style='border-style: solid;'>"+
+					"<table width='100%'>"+
+						"<tr><td>Importe a pagar("+etiqueta[102]+") </td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())+"</td></tr>"+
+						"<tr><td>Impuesto PaytoPeru("+oImpuesto.getImpuestoPaytoPeru()+" %)</td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
+						"<tr><td></td><td style='font-weight:bold;font-size:17px;color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
+						"<tr><td>Importe Total("+etiqueta[102]+") </td><td style='font-weight:bold;font-size:17px;color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo()+(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaytoPeru())/100)+"</td></tr>"+
+					"</table>"+
+				"</td>";
+		}
 		/*********************************************************/
 		String mensajeHTML=
 				"<html>"+
@@ -955,15 +1008,8 @@ public class CEmail
 								    "</table>"+
 								    "<table width='100%' style='background:rgba(0,0,0,0.02);border:1px solid black;'>"+
 								    	"<tr>"+
-								    		"<td width='60%'></td>"+
-								    		"<td width='40%'>"+
-								    		"<table width='100%'>"+
-							    				"<tr><td>Importe a pagar: MinXNroPax</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+totalPago+"</td></tr>"+
-							    				"<tr><td>Impuesto Paypal: MinXNroPax ("+oImpuesto.getImpuestoPaypal()+"%)</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format((reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
-							    				"<tr><td></td><td style='color:#1A5276;font-family: Titillium;' align='right'>-------------</td></tr>"+
-							    				"<tr><td>Total a pagar:</td><td style='color:#1A5276;margin-right:0;font-family: Titillium;' align='right'>"+df.format(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo()+(reserva.getnNroPersonas()*reserva.getoPaquete().getnPagoMinimo())*Double.parseDouble(oImpuesto.getImpuestoPaypal())/100)+"</td></tr>"+
-							    			"</table>"+
-								    		"</td>"+
+								    		muestraPagoParcialPaytoPeru+
+								    		muestraPagoParcialPaypal+
 								    	"</tr>"+
 								    "</table>"+
 								    "<div style='font-family:Titillium;color:red;font-size:25px;'>PENDIENTE DE PAGO</div>"+

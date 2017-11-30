@@ -44,7 +44,7 @@ public class CConfigUrlDAO extends CConexion
 	{
 		Object[] values={configUrl.getUrlReturnPaypal(),configUrl.getUrlPaginaWeb(),
 				configUrl.getUrlLogoEmpresa(),configUrl.getLogoEmpresa(),
-				configUrl.getUrlServletPagoParcial(),configUrl.getUrlServletPagoTotal(),
+				configUrl.getUrlServletPagoParcialPaypal(),configUrl.getUrlServletPagoParcialPaytoPeru(),
 				configUrl.getUrlTerminosYCondiciones()};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_RegistrarConfigURL", values);
 	}
