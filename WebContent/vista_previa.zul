@@ -1,0 +1,7 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<popup viewModel="@id('vm') @init('com.pricing.viewModel.vista_previaVM')">
+   <div zclass="popup_div_content_imagen_proceso" width="auto" height="auto">
+   	<image src="@bind(vm.ruta)" width="700px" ></image>
+   </div>
+</popup>

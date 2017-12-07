@@ -5,28 +5,35 @@
     <style src="css/estilos_Etiqueta.css"/>
 	<div viewModel="@id('vmEtiqueta') @init('com.pricing.viewModel.etiquetaVM')">
 		<separator spacing="2px"></separator>
-		<div zclass="div_filtros">
-			<div sclass="div_busqueda_etiqueta">
-				<!-- Buscar etiquetas mediante txt -->
-				<div zclass="div_filtro">
-					<textbox id="txtNombre" placeholder="Ingrese busqueda"
-						sclass="txt_llenar_datos"
-						onOK="@command('buscarEtiquetas',nombre=self.value)">
-					</textbox>
-					<space orient="vertical"></space>
-					<button iconSclass="fa fa-search" height="30px" zclass="estilo_btn_buscar" onClick="@command('buscarEtiquetas',nombre=txtNombre.value,txtbuscar=true)"></button>
-				</div>
-				<separator bar="false"/>
-				<!-- Buscar etiquetas mediante combobox -->
-				<div zclass="div_filtro">
-					<combobox sclass="combo_procesos" model="@load(vmEtiqueta.listaEtiquetas)" value="@bind(each.cIdioma1)" placeholder="Elegir proceso" onChange="@command('buscarEtiquetas',codProceso=self.selectedItem.value,txtbuscar=false)" width="150px">
-						<template name="model" var="etiqueta">
-							<comboitem label="@load(etiqueta.cIdioma1)" value="@load(etiqueta.codEtiqueta)"/>
-						</template>
-					</combobox>
-				</div>
+		<div zclass="div_busqueda_etiqueta">
+			<!-- Buscar etiquetas mediante txt -->
+			<div zclass="div_filtro">
+				<textbox id="txtNombre" placeholder="Ingrese busqueda" sclass="txt_llenar_datos" onOK="@command('buscarEtiquetas',nombre=self.value)"/>
+				<space orient="vertical"></space>
+				<button iconSclass="fa fa-search" height="30px" zclass="estilo_btn_buscar" onClick="@command('buscarEtiquetas',nombre=txtNombre.value)"></button>
+			</div>
+			<separator bar="false"/>
+			<!-- Buscar etiquetas mediante combobox -->
+			<div zclass="div_filtro">
+				<combobox id="cmbProceso" model="@load(vmEtiqueta.listaProcesos)" placeholder="Elegir proceso" 
+						  onChange="@command('buscarEtiquetasxProceso',nombre=self.selectedItem.value)" 
+						  onOK="@command('buscarEtiquetasxProceso',nombre=self.selectedItem.value)" sclass="combo_procesos" width="300px">
+					<template name="model">
+						<comboitem label="@load(each.descripcion)" value="@load(each.nroproceso)"/>
+					</template>
+				</combobox>
+				<!-- boton para imagen de muestra -->
+				<button label="VISTA PREVIA" zclass="estilo_vista_previa" 
+				onClick="@command('mostrarImagenProceso',nombre=cmbProceso.selectedItem.value,componente=self) @global-command('recuperarImagendeProcesos',proceso=cmbProceso.selectedItem.value)"/>
 			</div>
 		</div>
+		
+		<window mode="modal" sclass="win_imagenesHotel" visible="@load(vmEtiqueta.vistaprevia)" position="center">
+			<button label="X" onClick="@command('cerrarVistaPrevia')" zclass="btn_cerrar_descHotel"/>
+			<image src="/img/vpn.png" width="100%"/>
+			<image src="/img/vpp.png" width="100%"/>
+		</window>
+		
 		<separator spacing="4px"></separator>
 		<div>
 			<listbox sclass="listados" model="@bind(vmEtiqueta.listaEtiquetas) @template((each.editable)? 'modeleditable':'noeditable')" mold="paging" pageSize="10"  pagingPosition="both">

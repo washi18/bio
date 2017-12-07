@@ -264,7 +264,7 @@ public class reporteReservasVM {
 		/**Obtencion de las etiquetas de la base de datos**/
 		/**Asignacion de las etiquetas a la listaEtiquetas**/
 		
-		actualizar_valores_impuesto();
+		//actualizar_valores_impuesto();
 	}
 	
 	/* recuperamos valores de timpuesto y treserva*/

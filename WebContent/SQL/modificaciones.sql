@@ -205,6 +205,30 @@ begin
 end
 $$
 LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION Pricing_sp_BuscarReservas(
+	fechaInicio varchar(12),
+	fechaFin varchar(12)
+)
+RETURNS table (creservacod varchar(12),dfechainicio Date,dfechafin Date,dfecha timestamp,categoriaHotelcod int,ccontacto varchar(12),
+cemail varchar(100),ctelefono varchar(50),nnropersonas int,npreciopaquetepersona numeric,ctituloidioma1 varchar(200),
+ccategoriaidioma1 varchar(200),cestado varchar(20),porcentajecobro int,pagominimo int,modoporcentual boolean) AS
+$$
+	select r.creservacod,r.dfechainicio,r.dfechafin,r.dfecha,COALESCE( c.categoriahotelcod, 0 ),r.ccontacto,r.cemail,r.ctelefono,r.nnropersonas,r.npreciopaquetepersona,
+		p.ctituloidioma1,c.ccategoriaidioma1,r.cestado,p.nporcentajecobro,p.npagominimo,p.bmodoporcentual
+			from treserva as r 
+			left join treservapaquete as rp on(r.creservacod=rp.creservacod)
+			left join treservapaquetecategoriahotel as rpch on(rp.nreservapaquetecod=rpch.nreservapaquetecod)
+			left join tpaquetecategoriahotel as pch on(rpch.codpaquetecategoriah=pch.codpaquetecategoriah)
+			left join tcategoriahotel as c on(pch.categoriahotelcod=c.categoriahotelcod)
+			left join tpaquete as p on(p.cpaquetecod=rp.cpaquetecod)
+			where (to_date($1,'yyyy-MM-dd')<=r.dfecha and r.dfecha<=(to_date($2,'yyyy-MM-dd'))+'1 day'::interval) and r.cestado='PENDIENTE DE PAGO'
+			group by r.creservacod,r.dfechainicio,r.dfechafin,r.dfecha,c.categoriahotelcod,r.ccontacto,r.cemail,r.ctelefono,r.nnropersonas,r.npreciopaquetepersona,
+					p.ctituloidioma1,c.ccategoriaidioma1,r.cestado,p.nporcentajecobro,p.npagominimo,p.bmodoporcentual
+			order by r.dfecha desc;
+$$
+  LANGUAGE sql;
+
+  
 CREATE OR REPLACE FUNCTION Pricing_sp_BuscarReservasInicial(
 		fechaActual varchar(12)
 )

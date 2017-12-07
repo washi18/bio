@@ -45,11 +45,18 @@ public class CEtiquetaDAO extends CConexion
 		String[] values={nombre};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_BuscarEtiquetas",values);
 	}
+	
+	public List buscarEtiquetasxProceso(String nombre){
+		int aux=Integer.parseInt(nombre);
+		Object[] values={aux};
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_buscarEtiquetaxProceso",values);
+	}
 	/**
 	 * Este metodo es para asignar a la lista de etiquetas y 
 	 * puedan ser modificados por el administrador
 	 * @param lista
 	 */
+	
 	public void asignarListaEtiquetas(List lista)
 	{
 		listaEtiquetas=new ArrayList<CEtiqueta>();
@@ -61,6 +68,19 @@ public class CEtiquetaDAO extends CConexion
 					(String)row.get("cidioma3"), (String)row.get("cidioma4"),
 					(String)row.get("cidioma5")));
 		}
+	}
+	public ArrayList<CEtiqueta> asignarListaEtiquetasProceso(List lista)
+	{
+		listaEtiquetas=new ArrayList<CEtiqueta>();
+		for(int i=0;i<lista.size();i++)
+		{
+			Map row=(Map)lista.get(i);
+			listaEtiquetas.add(new CEtiqueta((int)row.get("codetiqueta"),
+					(String)row.get("cidioma1"),(String)row.get("cidioma2"),
+					(String)row.get("cidioma3"), (String)row.get("cidioma4"),
+					(String)row.get("cidioma5")));
+		}
+		return listaEtiquetas;
 	}
 	public void asignarEtiquetaIdiomas(List lista)
 	{

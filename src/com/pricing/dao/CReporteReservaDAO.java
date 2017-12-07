@@ -183,14 +183,22 @@ public class CReporteReservaDAO extends CConexion{
 			Map row=(Map)lista.get(i);
 			Number a=(Number)row.get("npreciopaquetepersona");
 			double total=a.doubleValue();
+			System.out.println((String)row.get("creservacod")+" - "+(Date)row.get("dfechainicio")+" - "+ 
+					(Date)row.get("dfechafin")+" - "+(Date)row.get("dfecha")+" - "+
+					(String)row.get("ccontacto")+" - "+(String)row.get("cemail")+" - "+
+					(String)row.get("ctelefono")+" - "+(Integer)row.get("nnropersonas")+" - "+
+					(Number)row.get("npreciopaquetepersona")+" - "+(String) row.get("ctituloidioma1")+" - "+
+					(String)row.get("ccategoriaidioma1")+" - "+
+					(String)row.get("cestado")+" - "+(Integer)row.get("categoriahotelcod")+" - "+total+" - "+(Integer)row.get("porcentajecobro")+" - "+
+					(Integer)row.get("pagominimo"));
 			listaReporteReservas.add(new CReporteReserva((String)row.get("creservacod"),(Date)row.get("dfechainicio"), 
 					(Date)row.get("dfechafin"),(Date)row.get("dfecha"),
 					(String)row.get("ccontacto"),(String)row.get("cemail"),
-					(String)row.get("ctelefono"),(int)row.get("nnropersonas"),
+					(String)row.get("ctelefono"),(Integer)row.get("nnropersonas"),
 					(Number)row.get("npreciopaquetepersona"),(String) row.get("ctituloidioma1"),
 					(String)row.get("ccategoriaidioma1"),
-					(String)row.get("cestado"),(int)row.get("categoriahotelcod"),total,(int)row.get("porcentajecobro"),
-					(int)row.get("pagominimo"),(boolean)row.get("modoporcentual")));
+					(String)row.get("cestado"),(Integer)row.get("categoriahotelcod"),total,(Integer)row.get("porcentajecobro"),
+					(Integer)row.get("pagominimo"),(boolean)row.get("modoporcentual")));
 		}
 	}
 	public void asignarValoresImpuesto(List lista){

@@ -2,12 +2,15 @@ package com.pricing.viewModel;
 
 import java.util.ArrayList;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.util.Clients;
 
+import com.itextpdf.text.List;
 import com.pricing.dao.*;
 import com.pricing.model.*;
 
@@ -36,15 +39,12 @@ public class procesosVM {
 	}
 	//procesos
 	@Init
-	public void initP(){
-		oProceso=new CProceso();
-		procesoDao=new CProcesoDAO();
-		listaProceso=new ArrayList<CProceso>();
+	public void initPro(){
+		
 	}
-	@Command
-	public void selectCodProceso(@BindingParam("codProceso")Object cod,@BindingParam("idCbproceso")Component comp)
-	{
-		System.out.println("este es el codigo del proceso: "+cod.toString()+"-->");
-		int codProceso=Integer.parseInt(cod.toString());
+	public void recuperarProcesos(){
+		List t=(List) procesoDao.obtenerDescripcionProceso();
+		
 	}
+	
 }
