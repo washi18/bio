@@ -18,13 +18,13 @@
 				</div>
 				<separator bar="false"/>
 				<!-- Buscar etiquetas mediante combobox -->
-				<div zclass="div_filtro">
-					<combobox sclass="combo_procesos" model="@load(vmEtiqueta.listaEtiquetas)" value="@bind(each.cIdioma1)" placeholder="Elegir proceso" onChange="@command('buscarEtiquetas',codProceso=self.selectedItem.value,txtbuscar=false)" width="150px">
-						<template name="model" var="etiqueta">
-							<comboitem label="@load(etiqueta.cIdioma1)" value="@load(etiqueta.codEtiqueta)"/>
-						</template>
-					</combobox>
-				</div>
+<!-- 				<div zclass="div_filtro"> -->
+<!-- 					<combobox sclass="combo_procesos" model="@load(vmEtiqueta.listaEtiquetas)" value="@bind(each.cIdioma1)" placeholder="Elegir proceso" onChange="@command('buscarEtiquetas',codProceso=self.selectedItem.value,txtbuscar=false)" width="150px"> -->
+<!-- 						<template name="model" var="etiqueta"> -->
+<!-- 							<comboitem label="@load(etiqueta.cIdioma1)" value="@load(etiqueta.codEtiqueta)"/> -->
+<!-- 						</template> -->
+<!-- 					</combobox> -->
+<!-- 				</div> -->
 			</div>
 		</div>
 		<separator spacing="4px"></separator>

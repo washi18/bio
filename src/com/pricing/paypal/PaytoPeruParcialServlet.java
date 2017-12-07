@@ -66,7 +66,13 @@ public class PaytoPeruParcialServlet extends HttpServlet implements javax.servle
 			 System.out.println("monto parcial--> "+montoParcial+" impuesto--> "+impuestoPaytoPeru);
 			 String tax=df.format((Double.parseDouble(montoParcial)*(Double.parseDouble(impuestoPaytoPeru)/100)));
 			 String montoParcialConImpuestoPaytoPeru=df.format(Double.parseDouble(montoParcial)+Double.parseDouble(tax));
-			 
+			 /***********/
+			 String url="";
+			 if(language.equals("es-ES"))
+				 url="http://desarrollo.paytoperu.com/esp/payments";
+			 else
+				 url="http://desarrollo.paytoperu.com/eng/payments";
+			 /***********/
 			 try(PrintWriter out=response.getWriter())
 			 {
 				 out.println("<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>");
@@ -145,7 +151,7 @@ public class PaytoPeruParcialServlet extends HttpServlet implements javax.servle
 				 				out.println("</div>");
 				 			out.println("</div>");
 				 			out.println("<br/>");
-				 			out.println("<form method='POST' action='http://desarrollo.paytoperu.com/esp/payments'>");
+				 			out.println("<form method='POST' action='"+url+"'>");
 				 				out.println("<input type='hidden' name='keymerchant' value='20490712560'>");
 				 				out.println("<input type='hidden' name='codigo_transaccion' value='"+codReserva+"'>");
 				 				out.println("<input type='hidden' name='importe' value='"+montoParcialConImpuestoPaytoPeru+"'>");
