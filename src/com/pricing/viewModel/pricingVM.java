@@ -523,7 +523,16 @@ public class pricingVM
 		paisDao.asignarPaises(paisDao.recuperarPaisesBD());
 		listaPaises=new ArrayList<CPais>();
 		setListaPaises(paisDao.getListaPaises());
-		if(language.equals("es-ES"))
+		if(language.equals("es-ES")|| language.equals("es")||
+				language.equals("es-MX")|| language.equals("es-GT")||
+				language.equals("es-CR")|| language.equals("es-pa")||
+				language.equals("es-DO")|| language.equals("es-VE")||
+				language.equals("es-CO")|| language.equals("es-PE")||
+				language.equals("es-AR")|| language.equals("es-EC")||
+				language.equals("es-CL")|| language.equals("es-UY")||
+				language.equals("es-PY")|| language.equals("es-BO")||
+				language.equals("es-SV")|| language.equals("es-HN")||
+				language.equals("es-N"))
 		{
 			etiqueta=etiquetaDao.getIdioma().getIdioma1();
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma1());
@@ -534,9 +543,9 @@ public class pricingVM
 			{
 				pais.setNamePais(pais.getcNombreIdioma1());
 			}
-			urlPaytoPeru="http://desarrollo.paytoperu.com/esp/payments";
 		}
-		else if(language.equals("pt-BR") || language.equals("pt-PT"))
+		else if(language.equals("pt-BR") || language.equals("pt-PT")||
+				language.equals("pt"))
 		{
 			etiqueta=etiquetaDao.getIdioma().getIdioma3();
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma3());
@@ -547,7 +556,6 @@ public class pricingVM
 			{
 				pais.setNamePais(pais.getcNombreIdioma3());
 			}
-			urlPaytoPeru="http://desarrollo.paytoperu.com/eng/payments";
 		}
 		else
 		{
@@ -561,7 +569,6 @@ public class pricingVM
 			{
 				pais.setNamePais(pais.getcNombreIdioma2());
 			}
-			urlPaytoPeru="http://desarrollo.paytoperu.com/eng/payments";
 		}
 		Sessions.getCurrent().setAttribute("etiqueta", etiqueta);
 		Sessions.getCurrent().setAttribute("language", language);
@@ -572,9 +579,17 @@ public class pricingVM
 	{
 		if(idioma.toString().equals("1"))
 		{
-			if(language.equals("es-ES"))return;
+			if(language.equals("es-ES")|| language.equals("es")||
+					language.equals("es-MX")|| language.equals("es-GT")||
+					language.equals("es-CR")|| language.equals("es-pa")||
+					language.equals("es-DO")|| language.equals("es-VE")||
+					language.equals("es-CO")|| language.equals("es-PE")||
+					language.equals("es-AR")|| language.equals("es-EC")||
+					language.equals("es-CL")|| language.equals("es-UY")||
+					language.equals("es-PY")|| language.equals("es-BO")||
+					language.equals("es-SV")|| language.equals("es-HN")||
+					language.equals("es-N"))return;
 			language="es-ES";
-			urlPaytoPeru="http://desarrollo.paytoperu.com/esp/payments";
 			etiqueta=etiquetaDao.getIdioma().getIdioma1();
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma1());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma1());
@@ -635,9 +650,9 @@ public class pricingVM
 		}
 		else if(idioma.toString().equals("3"))
 		{
-			if(language.equals("pt-BR"))return;
+			if(language.equals("pt-BR")||language.equals("pt-PT")||
+					language.equals("pt"))return;
 			language="pt-BR";
-			urlPaytoPeru="http://desarrollo.paytoperu.com/eng/payments";
 			etiqueta=etiquetaDao.getIdioma().getIdioma3();
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma3());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma3());
@@ -698,9 +713,14 @@ public class pricingVM
 		}
 		else
 		{
-			if(language.equals("en-US"))return;
+			if(language.equals("en-US")||language.equals("en")||
+					language.equals("en-GB")||
+					language.equals("en-AU")||language.equals("en-CA")||
+					language.equals("en-NZ")||language.equals("en-IE")||
+					language.equals("en-ZA")||language.equals("en-JM")||
+					language.equals("en-BZ")||
+					language.equals("en-TT"))return;
 			language="en-US";
-			urlPaytoPeru="http://desarrollo.paytoperu.com/eng/payments";
 			etiqueta=etiquetaDao.getIdioma().getIdioma2();
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma2());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma2());
@@ -2055,7 +2075,6 @@ public class pricingVM
 			valido=false;
 			Clients.showNotification(etiqueta[243],Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
-		
 		return valido;
 	}
 	/***
@@ -2069,14 +2088,18 @@ public class pricingVM
 		boolean valido=true;
 		for(CPasajero pax:listaPasajeros)
 		{
+			System.out.println("Entre aqui a analizar--> "+pax.getnNro()+" -> "+nroPasajeros);
 			if(pax.getnNro()>nroPasajeros)break;
 			if(pax.getcUrlDocumento().equals(""))
 			{
+				System.out.println("Entre hasta aqui 1: "+valido);
 				valido=false;
 				Clients.showNotification(etiqueta[174]+pax.getnNro(),Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",2700);
+				System.out.println("Entre hasta aqui 2: "+valido);
 				break;
 			}
 		}
+		System.out.println("Validez-> "+valido);
 		return valido;
 	}
 	public boolean analizarLLenadoDatosYsubirDoc(Component comp)
@@ -3151,9 +3174,16 @@ public class pricingVM
 		pagos.setTotalConImpuestoPaytoPeru(df.format(Double.parseDouble(monto_Pagar_sin_impuesto)+Double.parseDouble(pagos.getTaxPaytoPeru())));
 		/*****************/
 		CAgenciaDAO agenciaDao=new CAgenciaDAO();
+		agenciaDao.asignarAgencia(agenciaDao.recuperarAgenciaDB());
 		String cRuc=agenciaDao.getoAgencia().getcRuc();
 		/*****************/
-		String formPaytoPeru="<form method='POST' action='"+urlPaytoPeru+"'>"+
+		String url="";
+		if(language.equals("es-ES"))
+			url="http://desarrollo.paytoperu.com/esp/payments";
+		else
+			url="http://desarrollo.paytoperu.com/eng/payments";
+		/*****************/
+		String formPaytoPeru="<form method='POST' action='"+url+"'>"+
 			"<input type='hidden' name='keymerchant' value='"+cRuc+"'>"+
 			"<input type='hidden' name='codigo_transaccion' value='"+oReservar.getcReservaCod()+"'>"+
 			"<input type='hidden' name='importe' value='"+pagos.getTotalConImpuestoPaytoPeru()+"'>"+
@@ -3161,11 +3191,12 @@ public class pricingVM
 			"<input type='hidden' name='moneda' value='2'>"+
 			"<input type='hidden' name='email' value='"+oReservar.getcEmail()+"'>"+
 			"<input type='hidden' name='nombres' value='"+oReservar.getcContacto()+"'>"+
-			"<input type='hidden' name='apellidos' value='"+oReservar.getcContacto()+"'>"+
+			"<input type='hidden' name='apellidos' value=''>"+
 			"<input type='hidden' name='descripcion' value='"+oReservar.getoPaquete().getTitulo()+"'>"+
 			"<input type='submit' name='submit' border='0' style='width:200px;'"+
 				"class='button_payment' value='"+etiqueta[218]+"'/>"+
 		"</form>";
+		System.out.println("lenguaje: "+language+"\n Payto Peru: "+formPaytoPeru+"\n");
 		pagos.setUrlPaytoPeru(formPaytoPeru);
 		/*****************/
 		Window win_paytoPeru=(Window)Executions.createComponents("/montoPaymentPaytoPeru.zul", null, null);
@@ -3684,5 +3715,11 @@ public class pricingVM
 		}
 		public void setTextoTotal(String textoTotal) {
 			this.textoTotal = textoTotal;
+		}
+		public String getUrlPaytoPeru() {
+			return urlPaytoPeru;
+		}
+		public void setUrlPaytoPeru(String urlPaytoPeru) {
+			this.urlPaytoPeru = urlPaytoPeru;
 		}
 }
